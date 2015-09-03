@@ -1,94 +1,17 @@
-ls: cannot access /var/www/html/moviesowl.com/releases: No such file or directory
-/usr/local/bin/composer
-$ git --version
-git --version
-git version 2.1.4
-git version 2.1.4
-/usr/bin/php
-/usr/bin/php
-/usr/bin/php
-$ /usr/bin/php -m
-/usr/bin/php -m
-[PHP Modules]
-bcmath
-bz2
-calendar
-Core
-ctype
-curl
-date
-dba
-dom
-ereg
-exif
-fileinfo
-filter
-ftp
-gd
-gettext
-hash
-iconv
-json
-libxml
-mbstring
-mcrypt
-mhash
-mysql
-mysqli
-openssl
-pcntl
-pcre
-PDO
-pdo_mysql
-Phar
-posix
-readline
-Reflection
-session
-shmop
-SimpleXML
-soap
-sockets
-SPL
-standard
-sysvmsg
-sysvsem
-sysvshm
-tokenizer
-wddx
-xml
-xmlreader
-xmlwriter
-Zend OPcache
-zip
-zlib
-[Zend Modules]
-Zend OPcache
-$ mkdir /var/www/html/moviesowl.com/
-mkdir /var/www/html/moviesowl.com/
-
-$ mkdir -p /var/www/html/moviesowl.com/releases
-mkdir -p /var/www/html/moviesowl.com/releases
-
-$ mkdir -p /var/www/html/moviesowl.com/current
-mkdir -p /var/www/html/moviesowl.com/current
-
-$ mkdir -p /var/www/html/moviesowl.com/shared
-mkdir -p /var/www/html/moviesowl.com/shared
-
-$ git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903133230" --branch="master" --depth="1"
-git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903133230" --branch="master" --depth="1"
-Cloning into '/var/www/html/moviesowl.com/releases/20150903133230'...
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
+20150903133230
+$ git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903134133" --branch="master" --depth="1"
+git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903134133" --branch="master" --depth="1"
+Cloning into '/var/www/html/moviesowl.com/releases/20150903134133'...
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ git submodule update --init --recursive
-cd /var/www/html/moviesowl.com/releases/20150903133230
+cd /var/www/html/moviesowl.com/releases/20150903134133
 git submodule update --init --recursive
 
 
 /usr/local/bin/composer
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ /usr/local/bin/composer install --no-interaction --no-dev --prefer-dist
-cd /var/www/html/moviesowl.com/releases/20150903133230
+cd /var/www/html/moviesowl.com/releases/20150903134133
 /usr/local/bin/composer install --no-interaction --no-dev --prefer-dist
 Loading composer repositories with package information
 Installing dependencies from lock file
@@ -203,57 +126,56 @@ Generating autoload files
 Generating optimized class loader
 Compiling common classes
 
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ npm install
-cd /var/www/html/moviesowl.com/releases/20150903133230
+cd /var/www/html/moviesowl.com/releases/20150903134133
 npm install
 bash: npm: command not found
 
 
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
-$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-cd /var/www/html/moviesowl.com/releases/20150903133230
-chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
-chmod: cannot access ‘/var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite’: No such file or directory
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
-$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/storage
-$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/storage
-$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/storage
-cd /var/www/html/moviesowl.com/releases/20150903133230
-chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/storage
-chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/storage
-chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/storage
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+cd /var/www/html/moviesowl.com/releases/20150903134133
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite
+chmod: cannot access ‘/var/www/html/moviesowl.com/releases/20150903134133/app/database/production.sqlite’: No such file or directory
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/storage
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/storage
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/storage
+cd /var/www/html/moviesowl.com/releases/20150903134133
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/storage
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/storage
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/storage
 
-$ cd /var/www/html/moviesowl.com/releases/20150903133230
-$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/public
-$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/public
-$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/public
-cd /var/www/html/moviesowl.com/releases/20150903133230
-chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/public
-chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/public
-chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/public
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/public
+cd /var/www/html/moviesowl.com/releases/20150903134133
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/public
 
-$ mkdir -p /var/www/html/moviesowl.com/shared/storage
-mkdir -p /var/www/html/moviesowl.com/shared/storage
+$ rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 
-$ mv /var/www/html/moviesowl.com/releases/20150903133230/storage/logs /var/www/html/moviesowl.com/shared/storage/logs
-mv /var/www/html/moviesowl.com/releases/20150903133230/storage/logs /var/www/html/moviesowl.com/shared/storage/logs
+$ ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
+$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
+mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 
-$ ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp
-$ mv -Tf /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903133230/storage/logs
-ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp
-mv -Tf /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903133230/storage/logs
+$ ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
+$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
+ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
+mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
 
-$ rm -rf /var/www/html/moviesowl.com/current
-rm -rf /var/www/html/moviesowl.com/current
-
-$ ln -s /var/www/html/moviesowl.com/releases/20150903133230 /var/www/html/moviesowl.com/current-temp
+$ ln -s /var/www/html/moviesowl.com/releases/20150903134133 /var/www/html/moviesowl.com/current-temp
 $ mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
-ln -s /var/www/html/moviesowl.com/releases/20150903133230 /var/www/html/moviesowl.com/current-temp
+ln -s /var/www/html/moviesowl.com/releases/20150903134133 /var/www/html/moviesowl.com/current-temp
 mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
 
 |=> No releases to prune from the server
