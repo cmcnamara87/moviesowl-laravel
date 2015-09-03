@@ -140,46 +140,34 @@ class EventCinemasUpdater {
     Change poster url from rotten tomatoes to get higher resolution poster
     **/
     public function getHiResPosterUrl ($rtMovie) {
-        // $posterUrlParts = explode("movie", $url);
-        // if(count($posterUrlParts) < 2) {
-        //     return $posterUrlParts[0];
-        // }
-        // $hiResUrl = "http://content6.flixster.com/movie".$posterUrlParts[1];
-        // $img = Image::make($hiResUrl);
-        // $path = public_path() ."/images/posters/" . time() . ".jpg"; 
-        // $img->resize(700, 1000)->save($path);
-        // $this->output->writeln($hiResUrl);
+        $asset = "images/posters/" . $rtMovie->id . ".jpg";
+        $posterPath = public_path() ."/" . $asset; 
+        if(!file_exists($posterPath)) {
+            $posterUrl = getPosterUrl($rtMovie);
+            $img = Image::make($posterUrl);
+            $img->save($posterPath);
+        }
+        return $asset;
+    }
 
-        // return "/images/posters/" . time() . ".jpg"; 
+    public function getPosterUrl($rtMovie) {
         if (!isset($rtMovie->alternate_ids)) {
             return $rtMovie->posters->detailed;
         }
         if (!isset($rtMovie->alternate_ids->imdb)) {
             return $rtMovie->posters->detailed;
         }
-
         $imdbId = $rtMovie->alternate_ids->imdb;
         $omdbMovie = $this->omdbApi->getMovieByImdbId("tt" . $imdbId);
         if (!isset($omdbMovie->Poster)) {
             return $rtMovie->posters->detailed;
         }
-        $hiResPoster = str_replace("SX300", "SX400", $omdbMovie->Poster);
-        if ($hiResPoster == "N/A") {
+        $posterUrl = str_replace("SX300", "SX400", $omdbMovie->Poster);
+        if ($posterUrl == "N/A") {
             return $rtMovie->posters->detailed;
         }
-
-        // return $hiResPoster;
-        $asset = "images/posters/" . $imdbId . ".jpg";
-        $posterPath = public_path() ."/" . $asset; 
-        if(!file_exists($posterPath)) {
-            $data = file_get_contents($hiResPoster);
-            $img = Image::make($hiResPoster);
-            $img->save($posterPath);
-        }
-
-        return $asset;
+        return $posterUrl;
     }
-
 
     /**
      * @param EventCinemasSession $session

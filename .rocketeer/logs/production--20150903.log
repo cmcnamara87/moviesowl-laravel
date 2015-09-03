@@ -6,16 +6,16 @@ $ git pull
 cd /var/www/html/moviesowl.com/releases/20150903134133
 git reset --hard
 git pull
-HEAD is now at 7a64290 test
+HEAD is now at bfa9aaf feat(cron): add update task for movies owl
 From https://github.com/cmcnamara87/moviesowl-laravel
-   7a64290..bfa9aaf  master     -> origin/master
-Updating 7a64290..bfa9aaf
+   bfa9aaf..3b9f2ed  master     -> origin/master
+Updating bfa9aaf..3b9f2ed
 Fast-forward
- .gitignore                               |   1 +
- .idea/workspace.xml                      |  81 +++++++-------
- .rocketeer/logs/production--20150903.log | 182 +++++++++----------------------
- app/Console/Kernel.php                   |   2 +
- 4 files changed, 98 insertions(+), 168 deletions(-)
+ .gitignore                               |   3 +-
+ .idea/workspace.xml                      | 100 ++++++++-----------
+ .rocketeer/logs/production--20150903.log | 166 +++++++------------------------
+ app/EventCinemas/EventCinemasUpdater.php |   2 +-
+ 4 files changed, 79 insertions(+), 192 deletions(-)
 $ rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 
@@ -67,7 +67,19 @@ cd /var/www/html/moviesowl.com/releases/20150903134133
 chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/storage
 chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/storage
 chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/storage
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ed8e5a1e7ad3ab827714904d509bcc715b9f45ab’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/af2b0f41dfe924af6df793bd1994e9c181b91ab7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/652f02a956c54ac1523aad4d8e40a0a3f7c55c76’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/543adf31d995fe9533158abb4621f4ca02fc795f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/32eea9f155c5f03bc2a101dc7bc1337946e5f255’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bbb94012a6ce252821c92d1713741408070e238e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bae2ddbd2717c2fb80904a7ae9cd5905f1cc94d4’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f6eecf517ee0f3e273a054f4aaea336e4c9aec40’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6d7f50182bd549c6d5bc1d60a8fc424931d431c6’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5187b14b41f533187a0e7e834348fb0afaca55bc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fb7d64f7407b46635a95694a642c2f7bd4f3d970’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7fb06b89eb7efe8b7c6863d63d4a40789a840909’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/60853e2d6d053df2c9495de4be97ab87d801659e’: Operation not permitted
 $ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
 $ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
