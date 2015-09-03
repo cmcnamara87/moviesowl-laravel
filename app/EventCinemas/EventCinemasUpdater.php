@@ -141,9 +141,9 @@ class EventCinemasUpdater {
     **/
     public function getHiResPosterUrl ($rtMovie) {
         $asset = "images/posters/" . $rtMovie->id . ".jpg";
-        $posterPath = public_path() ."/" . $asset; 
+        $posterPath = public_path() . "/" . $asset;
         if(!file_exists($posterPath)) {
-            $posterUrl = getPosterUrl($rtMovie);
+            $posterUrl = $this->getPosterUrl($rtMovie);
             $img = Image::make($posterUrl);
             $img->save($posterPath);
         }

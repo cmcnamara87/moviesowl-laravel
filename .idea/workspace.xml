@@ -28,8 +28,8 @@
       <file leaf-file-name="EventCinemasUpdater.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/EventCinemas/EventCinemasUpdater.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5065312" vertical-offset="1946" max-vertical-offset="3660">
-              <caret line="158" column="9" selection-start-line="158" selection-start-column="9" selection-end-line="158" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.37590712" vertical-offset="1811" max-vertical-offset="3660">
+              <caret line="143" column="38" selection-start-line="143" selection-start-column="38" selection-end-line="143" selection-end-column="38" />
               <folding>
                 <element signature="e#131#149#0#PHP" expanded="true" />
               </folding>
@@ -619,8 +619,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/EventCinemas/EventCinemasUpdater.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5065312" vertical-offset="1946" max-vertical-offset="3660">
-          <caret line="158" column="9" selection-start-line="158" selection-start-column="9" selection-end-line="158" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.37590712" vertical-offset="1811" max-vertical-offset="3660">
+          <caret line="143" column="38" selection-start-line="143" selection-start-column="38" selection-end-line="143" selection-end-column="38" />
           <folding>
             <element signature="e#131#149#0#PHP" expanded="true" />
           </folding>

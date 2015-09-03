@@ -6,16 +6,15 @@ $ git pull
 cd /var/www/html/moviesowl.com/releases/20150903134133
 git reset --hard
 git pull
-HEAD is now at bfa9aaf feat(cron): add update task for movies owl
+HEAD is now at 3b9f2ed fix(poster): change poster url
 From https://github.com/cmcnamara87/moviesowl-laravel
-   bfa9aaf..3b9f2ed  master     -> origin/master
-Updating bfa9aaf..3b9f2ed
+   3b9f2ed..2ba5bcd  master     -> origin/master
+Updating 3b9f2ed..2ba5bcd
 Fast-forward
- .gitignore                               |   3 +-
- .idea/workspace.xml                      | 100 ++++++++-----------
- .rocketeer/logs/production--20150903.log | 166 +++++++------------------------
- app/EventCinemas/EventCinemasUpdater.php |   2 +-
- 4 files changed, 79 insertions(+), 192 deletions(-)
+ .idea/workspace.xml                      | 34 ++++++++++++++--------------
+ .rocketeer/logs/production--20150903.log | 28 ++++++++++++++++-------
+ app/EventCinemas/EventCinemasUpdater.php | 38 +++++++++++---------------------
+ 3 files changed, 50 insertions(+), 50 deletions(-)
 $ rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
 
@@ -67,19 +66,252 @@ cd /var/www/html/moviesowl.com/releases/20150903134133
 chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/storage
 chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/storage
 chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/storage
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/05567b13a1cbde1b2d283139f703dbcea83dcab3’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ed8e5a1e7ad3ab827714904d509bcc715b9f45ab’: Operation not permitted
-chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/af2b0f41dfe924af6df793bd1994e9c181b91ab7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3b164b037673754e1a58871d0945c28c6601eae5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0489466d237e370c2cf101f6145136ca55f3baf5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/31fb1f0f21d327dd5c51f9e545eb06a0e07200b9’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/396f5fc57b16d7ddbc518da0b46f007d2e5e8a5a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/041fff21311f256aba663e6a860fbb7a78ebfe40’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/270515ab8d62685d6f23159f0eb1859410a058be’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4bffdb75ac7a293e0c6c9b5b856a30f176f1267f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fd847a6d2d360e1942048c01ddc7132147bdc10c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0bc4bdc7e416f9b741a91288d2bd1d78b7d2e0b0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7c8916df22896faf95810bfa6c4b6e0c1587b1ba’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/19937ab486daa4c6d9e0465d8d5d16cc0e34ff97’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bea1fb217c7a855676ac1c054784b62d1b7c6ebc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/94420192896e7be2c78765c9859ac9093b910541’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/de8be3ccb5e1a7cdc005fb866f62dc5ad06f023a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/447cfc5b81e079f29efdd56550d3a60e38477ad5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/91c374f4e003c647c79e2aded414cfc0002baf64’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1d4a6b086b0d2781f9556658a59fcc5f0381f0c4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a99f95ac576fd2d577429f336f8dbe810aa4d0cd’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4ec05cf869301c6ca0f97eda9a6a322f04eecb54’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6f83c17871ff3ed5dcf6af92a3ba44d01c8e1fd1’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/52932fd5ddd5df10b6963c7ddae99df769ca8948’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3f035e2bf3f8b28614d3f32efbe878907d9a3a7d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/63b824c4f72e64c7d22310599ce6fc9352f2a0c4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1f8e48128aa3c1ab5c232390a8348b8963e3fbdf’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b997f6f809b290a9da01832cea0ce9a929a385d2’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a3150829561845d0c89cd8f215fa2f319c9cc8ab’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/652f02a956c54ac1523aad4d8e40a0a3f7c55c76’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7dd527b5b0d21460b077ba5faaba666d6890a5c0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6ebcbcdce369c0179e619e506ddeabbdf0465f22’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c0d23d13759c19440a185e47f338ffa0189c31d0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0480615ef90ef1cea97817fc2ab8d4a72e5a445c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c516f98458dacce53ca6969c288143eb88c81445’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/931eb5f0f7e93cce17ca571fac3e83a453030a40’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ec5818bb63f0aeb1140fb444e63e24f659f76306’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9895514b8e6bb4858ce12c54f499cfebb197af33’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/25ccc22e6a3a6a258522cdbf2e8c234247bc1345’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4ea73674e9ae5d9feff6441626fbd222914ec28c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c609ddb4f585e3b878da066a314cb97a58f21c79’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/720ada43ba14474fdfb98b99954422c9ee0ec7ce’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a069c03496b1ba73ffa8f0c83171be6c24d1df90’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0ad51126cee09d43ebab68ddb64fe90073c664b7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fa6cc9cbdb81c13f93bb7d85fc3e3d6f4ac83024’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bfda07770c514110ab38254c6529e4c39c9e85ba’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b56b7b1f116f408657604d247101989571732bda’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/418885e95250ef83f3848b7d2a71d76758cfedfc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f6a793321832a6361601ce95c70a49291ab2d97b’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d0d3fda13b29b7a46151a8ab2a5ebc9055bd01ab’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/29db914fe0d8a795f123e4aebda801794a070654’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/32699b2195650814871727c81034be8da215b67e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/8efb13ffa369c1f6ae057c4bdca5fa621639b539’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a0ee641f74fcd83392d1df929699cf48b1c5c0fb’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d322a606b441a4d96970d562f667346f0c28c490’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ceb020a97c11b77b0ec8d774367d50615bdb95b4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9b0297d54738a75867b2cec1db0bbdb0024a48da’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/2ee3dd17d9364dfca9f0a5efce8941e5315cf165’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/eaa914aaf62ec65a0238da20c6c2deb5ef684112’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fc87c48b21a97a4cf9d66bf926485dffb2b51e46’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e6df089ad49fd93249465bad73083bd6d9b1ab3a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/854ab290959f33bc8a27000340cb3e424518947c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/402e0ce9b0cee3ba480e33b00c04038af5659464’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/388c3cb79200f914a30594c6410a43e53d181fcf’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/10a667ef7dae847f5581e5fd393a77b2588797b1’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/543adf31d995fe9533158abb4621f4ca02fc795f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/35be1522a2c0a785190c151b75ee77dc84fe3e98’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/84af3c60f50e8fa5d9d210cdfad5ce7e5ce6b908’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9136a942e8b2cbb5e006878a93594fffcf9f1723’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0ba79c5f899cd1a78c1fcc4c46e7b1deade709fe’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/45231582524060f604fa85083a676d6d2c77444d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e540c9ad0eb8bd8b1be663460841891175a79412’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4d20eab95f802098c121df4dc35cd19074be1874’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5fcc480e9e5a769bba9e7a7698e30c2c1c2310d9’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b7fdcc544894a2c694e12e1489bf6ca74957e848’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5cafd82262487fa44fc0800c6ac9b2d9607ad053’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1e21c74b2c2543cc00bc1e8e99b8b7d80e2c3095’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d5a714de11314b943102cc2c5aa558d2c994c66f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/edc55064307dbfaeeccea3fa19ffdbc58c33dc59’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f8035da5ab64d7a30c369cdbd9cbd34400d63d30’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bf2974ce80b41feac301ccf088eb3bed93d4b527’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/936dbdf4ced54c8d42d02a22afe94e9eaf499361’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/32eea9f155c5f03bc2a101dc7bc1337946e5f255’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ff00df739190f8d25c0dd7ffeb1d12646384a03b’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bbb94012a6ce252821c92d1713741408070e238e’: Operation not permitted
-chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bae2ddbd2717c2fb80904a7ae9cd5905f1cc94d4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/08f0670c00b9e1a41e9070d4129c1f55f224ff55’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7eb4a8ce486750c2f8ee677651e53ce5f8cadf53’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/63925c62181656084eb785246ff23df1c980da54’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/93848496a5de6ab77af28e35dc0e5b72907d565a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/288d23d33804ac0470bcb7fe231184c944c0cc75’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b53f48bb3b7b57f08b8d94b754159a3595b0d66f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9e70a271a58098f65508afdc0a7658134b15de1f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0d605d698471103cd61f93fce17630157c799d2f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7570377bf62b2484e53e6c2ac6bd2eab996d9668’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3e8112f40bd92f12b567acd53ab3cc28cda3f082’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fe367b8e7066f384a2b76212494891a683841cd7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/542f2132007ec2bfaa794cd647d635d02ecf5266’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3fdb08dc2a45b7ddca3945b1182c0f5fb4dacfe1’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/35b70b4bf36bbdcaab8059a72ccba88e31f01036’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c5b51466cd8fc05ea4322451a2ded4f6a9dc4c5c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/497bce5ded194ca1caa435a829c4b6e59f0bdcbc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/404741a8d1fec0a38359939bac7d3eeefbbaf14f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/08b84880ef686893cffa9e8836ce0ecfe537c748’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/771234443d134df611217ea3b7ae9824e2511e3f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/cd6c7af89eadac45715b463efd88fba214ce36e3’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9241d3b599654b622842f9cc68716ad3287d38d0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/05c55936389bd8613b5ff67a7eac667a809e1e25’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/da1777ba1fac5c9e4e252752fc820eff5512690d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e3ef6ba6ac110c5ef35663832391d73f91ff110e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a5fcca9c682371665e98002b8701467b399fb533’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5c6349d6cc125cc943e284c2613ec7e1e06892c5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/85d128796e013f5f6dafa3cfd3c656f3f91b4c24’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ef3bf89ef5d66cee61503e1d62ff9a303e29aab7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/42c19b5db381f9ba6209735dbe5fe2feb8ffa6af’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c7ca3f7acf51d9c1a98ef746660d15c3a1d21885’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/8eaae616ca1cd0f8b0c312ae02a58a39f744ae6c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/06033434b668c3b68b52d0fff1b7d939814bbad0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/87f0aac06ca4724ce5637ce7f890303cc11f2a56’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d5a86ad1051735704da8814de8895f1f1015181c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0d316f42d80a6558e0fa78d1705df02b38516f18’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bcc9bfa2545f3fb88c989773726ed845c566a3e5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/858dd0aa91ca75e4c8af3eae7925dcf5a330abb8’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5eca6faef5b9342b5a78427b53eef0bfe74ec02e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/77c8a3d31b368a2a07ec136cb95b32743f6ca5ca’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5cc95a946953255f0f26f62c882d9484a53a11ef’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ab8961ecd50be670dc0c402f5b0d66bcc1214874’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7bc96f89c2ee87e125a72774dba21835fb0345e6’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a79b53bfea14eff233b9176c77ca73287c93ff56’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/46c512698c5d1dfe2011eb3b2ae17f8c5857393b’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9a6e95c6b2f6fb5646c98667681f8cabc16fb009’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/43b8b3a0cbf107a266d4909895a6011d4819bf00’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4ef15cd7fe62cb2769e27baeb2bcfd9e6f6645e6’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/84449d295bdcd07cb4dc43403505053e83692183’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/8de518d5cd1ad2f9ac894a7f8e391c9a28b912b4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/ac318f318437b918a1014433a5cce4e175174e74’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/aac6bb08bf34d0576ecb1f47549598b374555ecf’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a62aa43127562df1e86eaeaaa15905f790c5fc2a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/416a29363667fe9a4a41e4862f1723526660d9b3’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7183f325ea70b4c3de8e6e5127d065a5a3db4262’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/286ba5b5f72a6746b796649701ccbd520a753143’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/636e81741f8135b6699e1a9beff572aa44c479f6’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/52aa7b50329db8c69df62ad6eb26131e7b96b51c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/4c2cca3094bbf52e1fc2629565a0117d9b5ab186’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f6eecf517ee0f3e273a054f4aaea336e4c9aec40’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/cfe4133e13c905c4a4e9c56bc075ec4a21800159’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9c49b98e34783173b8e81f1af7debccbb37bbdec’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/249923fc452a987d0a00911dc3bdd85adfdd5f8e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d5b146eb2897fd0f7314f0fca798bfc777146847’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/2bde4d9600b581223fcd700406317159b5f8a23d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/40e928ea6b7d07001933b7c66c7d5822860b695f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a23a58338d6d89b6c1d626ad07bc3b77a0e0e847’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f10af6335478906f89a2a16fb44a8db5a0057aaf’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/555267e87827947039047e62b82362f3a0537288’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/75214a66a7ee86c084500aa2b7577a87f4fd342b’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d944f4479d5f7fed90a104e395ef1d3386a09685’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7e6f892542cad66f2cb96f47f19154f75395d14d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/06d1c6872b20e61807d16848beab655cecc6c87f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/de579660a5f3422c8494682375194c8d818be0ca’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/49eede1e3f523dfcd4bbfad99061e92ed74c7c90’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/edb71c2a8589fcb6502af5a808fc17728f8696c0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/18d95acd7edfd982fa055c917d39136464ff0305’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/aedbefad80d6ddae57912513267ca216b24296a5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e97aa53118a010e02997cdb9b24545e4f1002bf5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/722f4b23f7ebdb4f91b1b05239258f72f5671ec0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b5cd50488b68a2bed045633166369758f4a16afe’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/efa57cf071b0db7cdd767850898fb7586a57866f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7651aed53465aa2eb366683cec5e6943a5b5e9e5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/22f133b8717fd341779710ace22aa928b4c0dd36’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/60430db9c8fcaf26f072ac0f01a86099803b09ba’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e15316ffa8b727925491062cf8f7e6c27ce5fa4c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/71034d1ce086792b8f59496d95d11171d8a347fa’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c3ade3ed4b8467ba62edcc06ef33224b1ed05bce’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d756585c5a8c1e0c76c7b7665a292a91176ab261’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/eebea29a5cc140e47bdfb4b7e9a8557e17efa7f9’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0ba01afa297a27071d16eedb7ecdc109c941a72b’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/733be584e812156b1321b8bb9633febae1ea2f70’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6d22ebacf56b1de2d64f1d6cc7e7fe481c8e2ef4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/71c9d0beca5ba686eb890846c1156dbf3e98feaa’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5b2167151e7f78bbcad12d33ce51d9733eaaa02b’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d713dd153888090e69334c6b835760a434ff959f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5f7fa705893f6d8886dbca675170cd832cf3896c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e45f0d8ee08a30d746907413c1390d4687e0c75f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a945f240ce9ac18b47c778c354c6fec77d6ab358’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6d7f50182bd549c6d5bc1d60a8fc424931d431c6’: Operation not permitted
-chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5187b14b41f533187a0e7e834348fb0afaca55bc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/237ce220a170a38d71d6ac71f70a413fca052ad2’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d2a82c5c2cdaf03f554ef3ab4d6631af47ea93e7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9d537ca5ed93cdaf1be5b541a6945be90639a8f9’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/46e96c332dfcc3cfc2264542057765c494bb0a00’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a842b9f8442d2d8487a2a1d1c32e26b1dae2b676’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/8db369a8c487797c918ecda91e4334e320105104’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a691f10e53869a6a16952314aff3cda6a3a53fc3’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a5ad9a0ead5336de92d9b0808133153f7976ff9d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/398abc758392b21d54bb318c9ff83074a2d5a820’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3fc13cfc7d9a9e234ef75d974903a607f51234cd’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/881e7b818d0f3bd71f7736ccdd8d0540381f15e0’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/21bd3c71c3fc90e134bce30c5047e3c12b70e8d4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c5e9dc1e65c845ea20a0340241630977b7264eaa’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0a90c726d27c4e731cd9abc37dc51248c75347ea’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1c1f962a0dcfef244b5af667c5afce37d17a1802’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/fb7d64f7407b46635a95694a642c2f7bd4f3d970’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/e539b7c8a33f73280c70eb9ae3724f763453150d’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/24f826bb0eb72b1555581128d53b200f65f80a2a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b191fedab440edfd3f5f70dd2309eae860fb52f7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/49e82241712bfdd829803374db8f84b8bae1788c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a88203709274ea8e38a7a874e47fe22f83a980ef’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/bdae99aa93abb0bfd1872919131daaf2a1f08363’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/cdd0780307b3cd345d4da50734c4e18fbbfe431e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f67b2359b37e135cf63df53bd09297040fc44666’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/325c9466f7f0736656d74403a1347014a3079c4c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0310aa688a562aef391a36843d199a6f5f257277’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7234cca4942d0eb6a550f524bfdb09dde8d246f5’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7fb06b89eb7efe8b7c6863d63d4a40789a840909’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/c302b91c5403fc9df7bf63f20107eda26403e95e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/dec3fd1810ab370d70c672066109c1351737c45c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/b79e9bfff3f19bb282eeba67a3a4e01f6cc4e653’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/3faaf1b8ab6d84d9b2b138d120bc56997cee9aca’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/54d9266ad200a89d7486f5e904dda13b2f19a2b6’: Operation not permitted
 chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/60853e2d6d053df2c9495de4be97ab87d801659e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/042d97b02498aac89d903b430d3263441def4bdf’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/2a582740b5d74b4b62dae490f68dfdd2c0eedd3c’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1812189670b7b8d62c01d27b88bbd2ee44b20393’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/2bc95c0d6f6cd9ec334cb3daaae04c98a5349b62’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/d2bf78d9b906f7146c2817ea3e474ef781c98d01’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/525e8f4290ee4ddf18b4aef5ca0aff17d8f28bfc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6523108343fddbb7a702b864f20dc36fede853f4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/42326bf29cf2b1b552b17d69bbaab7551d3d26e3’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/238e453612738b90195a02540a4aebc02a1bc122’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/9d70dea035503eb5df8b08f67ef2326c18232ec4’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/1d7c384792fab868befb57002213dcab620a6922’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0b537c6213b236f145ca57b8a14d5dae282ffe2a’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/02640704514d1b91d65571b27e670aea85fde1be’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/7bdc44af67e4360ab96c0fbcbd54ecf6f2928cdc’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/723eafa9007680baf6de7e7e7e350cdb7af83817’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/2b036f52f4e88a4b2aaefd484820f9155c5479df’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/a154d2ca4770287a664bbcdc27c7bc7cf287efbe’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5a515e5da4ee4609a5f00b8c35b064d7500c713e’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/902940e91e935abbadc7f286ee0e8de3a536dd14’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/db4c56600aeaaa887e755d005f6314030d3a42a5’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/187639f1ae7f52b47e0c29a1b727a1a30e29f420’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/630c23bf8c485222b6d879019d3228255e96e22f’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/012eef3d84cb2a0bbcf8ec45650fcbd9ed488678’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/0b2487d15582c354e4ca39175f538b3cb9fa5511’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/6fc8953ab4a57c1f98530cf641d938a62db91f31’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/db7ada93c15dc5954a4627caa15487c65b0e8d63’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/5975ea8df424dd9f3716ed3bbda0bf9ae5500e97’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/cf134522c9b78cc5a7a207671ef019ba8daf99a7’: Operation not permitted
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/cdea76df46159404e6b1092203b8abf208cb100d’: Operation not permitted
 $ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
 $ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
