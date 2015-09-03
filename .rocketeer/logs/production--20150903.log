@@ -1,11 +1,33 @@
 20150903133230
-$ git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903134133" --branch="master" --depth="1"
-git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903134133" --branch="master" --depth="1"
-Cloning into '/var/www/html/moviesowl.com/releases/20150903134133'...
+20150903134133
 $ cd /var/www/html/moviesowl.com/releases/20150903134133
-$ git submodule update --init --recursive
+$ git reset --hard
+$ git pull
 cd /var/www/html/moviesowl.com/releases/20150903134133
-git submodule update --init --recursive
+git reset --hard
+git pull
+HEAD is now at 7a64290 test
+From https://github.com/cmcnamara87/moviesowl-laravel
+   7a64290..bfa9aaf  master     -> origin/master
+Updating 7a64290..bfa9aaf
+Fast-forward
+ .gitignore                               |   1 +
+ .idea/workspace.xml                      |  81 +++++++-------
+ .rocketeer/logs/production--20150903.log | 182 +++++++++----------------------
+ app/Console/Kernel.php                   |   2 +
+ 4 files changed, 98 insertions(+), 168 deletions(-)
+$ rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+
+$ ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
+$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
+mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
+
+$ ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
+$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
+ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
+mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
 
 
 /usr/local/bin/composer
@@ -15,116 +37,11 @@ cd /var/www/html/moviesowl.com/releases/20150903134133
 /usr/local/bin/composer install --no-interaction --no-dev --prefer-dist
 Loading composer repositories with package information
 Installing dependencies from lock file
-  - Installing league/fractal (0.12.0)
-    Loading from cache
-
-  - Installing vlucas/phpdotenv (v1.1.1)
-    Loading from cache
-
-  - Installing symfony/var-dumper (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/translation (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/routing (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/process (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/http-foundation (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/event-dispatcher (v2.7.3)
-    Loading from cache
-
-  - Installing psr/log (1.0.0)
-    Loading from cache
-
-  - Installing symfony/debug (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/http-kernel (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/finder (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/dom-crawler (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/css-selector (v2.7.3)
-    Loading from cache
-
-  - Installing symfony/console (v2.7.3)
-    Loading from cache
-
-  - Installing swiftmailer/swiftmailer (v5.4.1)
-    Loading from cache
-
-  - Installing nikic/php-parser (v1.4.0)
-    Loading from cache
-
-  - Installing jakub-onderka/php-console-color (0.1)
-    Loading from cache
-
-  - Installing jakub-onderka/php-console-highlighter (v0.3.2)
-    Loading from cache
-
-  - Installing dnoegel/php-xdg-base-dir (0.1)
-    Loading from cache
-
-  - Installing psy/psysh (v0.5.2)
-    Loading from cache
-
-  - Installing nesbot/carbon (1.20.0)
-    Loading from cache
-
-  - Installing mtdowling/cron-expression (v1.0.4)
-    Loading from cache
-
-  - Installing monolog/monolog (1.17.1)
-    Loading from cache
-
-  - Installing league/flysystem (1.0.11)
-    Loading from cache
-
-  - Installing jeremeamia/superclosure (2.1.0)
-    Loading from cache
-
-  - Installing doctrine/inflector (v1.0.1)
-    Loading from cache
-
-  - Installing danielstjules/stringy (1.10.0)
-    Loading from cache
-
-  - Installing classpreloader/classpreloader (2.0.0)
-    Loading from cache
-
-  - Installing laravel/framework (v5.1.13)
-    Loading from cache
-
-  - Installing cyvelnet/laravel5-fractal (1.2)
-    Loading from cache
-
-  - Installing psr/http-message (1.0)
-    Loading from cache
-
-  - Installing guzzlehttp/psr7 (1.2.0)
-    Loading from cache
-
-  - Installing intervention/image (2.3.2)
-    Loading from cache
-
-  - Installing yangqi/htmldom (dev-master 048b363)
-    Loading from cache
-
+Nothing to install or update
 Generating autoload files
 > php artisan clear-compiled
 > php artisan optimize
 Generating optimized class loader
-Compiling common classes
 
 $ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ npm install
@@ -150,7 +67,7 @@ cd /var/www/html/moviesowl.com/releases/20150903134133
 chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/storage
 chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/storage
 chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/storage
-
+chmod: changing permissions of ‘/var/www/html/moviesowl.com/releases/20150903134133/storage/framework/sessions/f6eecf517ee0f3e273a054f4aaea336e4c9aec40’: Operation not permitted
 $ cd /var/www/html/moviesowl.com/releases/20150903134133
 $ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
 $ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
@@ -160,22 +77,9 @@ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903134133/public
 chmod -R g+s /var/www/html/moviesowl.com/releases/20150903134133/public
 chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903134133/public
 
-$ rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
-rm -rf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
-
-$ ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
-$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
-ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp
-mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903134133/storage/logs
-
-$ ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
-$ mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
-ln -s /var/www/html/moviesowl.com/shared/.env /var/www/html/moviesowl.com/releases/20150903134133/.env-temp
-mv -Tf /var/www/html/moviesowl.com/releases/20150903134133/.env-temp /var/www/html/moviesowl.com/releases/20150903134133/.env
-
-$ ln -s /var/www/html/moviesowl.com/releases/20150903134133 /var/www/html/moviesowl.com/current-temp
-$ mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
-ln -s /var/www/html/moviesowl.com/releases/20150903134133 /var/www/html/moviesowl.com/current-temp
-mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
-
-|=> No releases to prune from the server
+/usr/bin/php
+$ cd /var/www/html/moviesowl.com/releases/20150903134133
+$ /usr/bin/php artisan cache:clear
+cd /var/www/html/moviesowl.com/releases/20150903134133
+/usr/bin/php artisan cache:clear
+Application cache cleared!

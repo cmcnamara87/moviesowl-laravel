@@ -177,7 +177,7 @@ class EventCinemasUpdater {
             $img->save($posterPath);
         }
 
-        return asset($asset);
+        return $asset;
     }
 
 
