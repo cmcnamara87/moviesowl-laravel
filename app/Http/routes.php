@@ -27,13 +27,16 @@ function getSubDomain() {
     }
 }
 
+Route::group(array('prefix' => 'api/v1'), function() {
+    Route::resource('cinemas.movies', 'Api\v1\CinemaMoviesController', ["only" => ["index"]]);
+    Route::resource('cinemas', 'Api\v1\CinemasController', ["only" => ["index", "show"]]);
+    Route::resource('showings', 'Api\v1\ShowingsController', ["only" => "show"]);
+});
+
+
 Route::group(array('domain' => getSubDomain()), function()
 {
-    Route::group(array('prefix' => 'v1'), function() {
-        Route::resource('cinemas.movies', 'Api\v1\CinemaMoviesController', ["only" => ["index"]]);
-        Route::resource('cinemas', 'Api\v1\CinemasController', ["only" => ["index", "show"]]);
-        Route::resource('showings', 'Api\v1\ShowingsController', ["only" => "show"]);
-    });
+
 });
 
 Route::get('/app', function() {

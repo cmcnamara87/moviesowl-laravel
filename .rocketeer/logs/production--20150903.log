@@ -1,0 +1,259 @@
+ls: cannot access /var/www/html/moviesowl.com/releases: No such file or directory
+/usr/local/bin/composer
+$ git --version
+git --version
+git version 2.1.4
+git version 2.1.4
+/usr/bin/php
+/usr/bin/php
+/usr/bin/php
+$ /usr/bin/php -m
+/usr/bin/php -m
+[PHP Modules]
+bcmath
+bz2
+calendar
+Core
+ctype
+curl
+date
+dba
+dom
+ereg
+exif
+fileinfo
+filter
+ftp
+gd
+gettext
+hash
+iconv
+json
+libxml
+mbstring
+mcrypt
+mhash
+mysql
+mysqli
+openssl
+pcntl
+pcre
+PDO
+pdo_mysql
+Phar
+posix
+readline
+Reflection
+session
+shmop
+SimpleXML
+soap
+sockets
+SPL
+standard
+sysvmsg
+sysvsem
+sysvshm
+tokenizer
+wddx
+xml
+xmlreader
+xmlwriter
+Zend OPcache
+zip
+zlib
+[Zend Modules]
+Zend OPcache
+$ mkdir /var/www/html/moviesowl.com/
+mkdir /var/www/html/moviesowl.com/
+
+$ mkdir -p /var/www/html/moviesowl.com/releases
+mkdir -p /var/www/html/moviesowl.com/releases
+
+$ mkdir -p /var/www/html/moviesowl.com/current
+mkdir -p /var/www/html/moviesowl.com/current
+
+$ mkdir -p /var/www/html/moviesowl.com/shared
+mkdir -p /var/www/html/moviesowl.com/shared
+
+$ git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903133230" --branch="master" --depth="1"
+git clone "https://github.com/cmcnamara87/moviesowl-laravel.git" "/var/www/html/moviesowl.com/releases/20150903133230" --branch="master" --depth="1"
+Cloning into '/var/www/html/moviesowl.com/releases/20150903133230'...
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ git submodule update --init --recursive
+cd /var/www/html/moviesowl.com/releases/20150903133230
+git submodule update --init --recursive
+
+
+/usr/local/bin/composer
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ /usr/local/bin/composer install --no-interaction --no-dev --prefer-dist
+cd /var/www/html/moviesowl.com/releases/20150903133230
+/usr/local/bin/composer install --no-interaction --no-dev --prefer-dist
+Loading composer repositories with package information
+Installing dependencies from lock file
+  - Installing league/fractal (0.12.0)
+    Loading from cache
+
+  - Installing vlucas/phpdotenv (v1.1.1)
+    Loading from cache
+
+  - Installing symfony/var-dumper (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/translation (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/routing (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/process (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/http-foundation (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/event-dispatcher (v2.7.3)
+    Loading from cache
+
+  - Installing psr/log (1.0.0)
+    Loading from cache
+
+  - Installing symfony/debug (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/http-kernel (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/finder (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/dom-crawler (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/css-selector (v2.7.3)
+    Loading from cache
+
+  - Installing symfony/console (v2.7.3)
+    Loading from cache
+
+  - Installing swiftmailer/swiftmailer (v5.4.1)
+    Loading from cache
+
+  - Installing nikic/php-parser (v1.4.0)
+    Loading from cache
+
+  - Installing jakub-onderka/php-console-color (0.1)
+    Loading from cache
+
+  - Installing jakub-onderka/php-console-highlighter (v0.3.2)
+    Loading from cache
+
+  - Installing dnoegel/php-xdg-base-dir (0.1)
+    Loading from cache
+
+  - Installing psy/psysh (v0.5.2)
+    Loading from cache
+
+  - Installing nesbot/carbon (1.20.0)
+    Loading from cache
+
+  - Installing mtdowling/cron-expression (v1.0.4)
+    Loading from cache
+
+  - Installing monolog/monolog (1.17.1)
+    Loading from cache
+
+  - Installing league/flysystem (1.0.11)
+    Loading from cache
+
+  - Installing jeremeamia/superclosure (2.1.0)
+    Loading from cache
+
+  - Installing doctrine/inflector (v1.0.1)
+    Loading from cache
+
+  - Installing danielstjules/stringy (1.10.0)
+    Loading from cache
+
+  - Installing classpreloader/classpreloader (2.0.0)
+    Loading from cache
+
+  - Installing laravel/framework (v5.1.13)
+    Loading from cache
+
+  - Installing cyvelnet/laravel5-fractal (1.2)
+    Loading from cache
+
+  - Installing psr/http-message (1.0)
+    Loading from cache
+
+  - Installing guzzlehttp/psr7 (1.2.0)
+    Loading from cache
+
+  - Installing intervention/image (2.3.2)
+    Loading from cache
+
+  - Installing yangqi/htmldom (dev-master 048b363)
+    Loading from cache
+
+Generating autoload files
+> php artisan clear-compiled
+> php artisan optimize
+Generating optimized class loader
+Compiling common classes
+
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ npm install
+cd /var/www/html/moviesowl.com/releases/20150903133230
+npm install
+bash: npm: command not found
+
+
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+cd /var/www/html/moviesowl.com/releases/20150903133230
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite
+chmod: cannot access ‘/var/www/html/moviesowl.com/releases/20150903133230/app/database/production.sqlite’: No such file or directory
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/storage
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/storage
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/storage
+cd /var/www/html/moviesowl.com/releases/20150903133230
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/storage
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/storage
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/storage
+
+$ cd /var/www/html/moviesowl.com/releases/20150903133230
+$ chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/public
+$ chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/public
+$ chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/public
+cd /var/www/html/moviesowl.com/releases/20150903133230
+chmod -R 775 /var/www/html/moviesowl.com/releases/20150903133230/public
+chmod -R g+s /var/www/html/moviesowl.com/releases/20150903133230/public
+chown -R craig:www-data /var/www/html/moviesowl.com/releases/20150903133230/public
+
+$ mkdir -p /var/www/html/moviesowl.com/shared/storage
+mkdir -p /var/www/html/moviesowl.com/shared/storage
+
+$ mv /var/www/html/moviesowl.com/releases/20150903133230/storage/logs /var/www/html/moviesowl.com/shared/storage/logs
+mv /var/www/html/moviesowl.com/releases/20150903133230/storage/logs /var/www/html/moviesowl.com/shared/storage/logs
+
+$ ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp
+$ mv -Tf /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903133230/storage/logs
+ln -s /var/www/html/moviesowl.com/shared/storage/logs /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp
+mv -Tf /var/www/html/moviesowl.com/releases/20150903133230/storage/logs-temp /var/www/html/moviesowl.com/releases/20150903133230/storage/logs
+
+$ rm -rf /var/www/html/moviesowl.com/current
+rm -rf /var/www/html/moviesowl.com/current
+
+$ ln -s /var/www/html/moviesowl.com/releases/20150903133230 /var/www/html/moviesowl.com/current-temp
+$ mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
+ln -s /var/www/html/moviesowl.com/releases/20150903133230 /var/www/html/moviesowl.com/current-temp
+mv -Tf /var/www/html/moviesowl.com/current-temp /var/www/html/moviesowl.com/current
+
+|=> No releases to prune from the server
