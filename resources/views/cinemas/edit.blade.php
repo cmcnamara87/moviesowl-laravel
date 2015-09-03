@@ -1,0 +1,1 @@
+/Users/cmcnamara87/Sites/moviesowl/moviesowl-server/app/views/cinemas/edit.blade.php

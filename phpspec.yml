@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: MoviesOwl
+        psr4_prefix: MoviesOwl
+        src_path: app
