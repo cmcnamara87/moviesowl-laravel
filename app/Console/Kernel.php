@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')
                  ->hourly();
 
-        $schedule->command('movies:load --force')->dailyAt('12:30');
+        $schedule->command('movies:load')->dailyAt('12:30');
     }
 }
