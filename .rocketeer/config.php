@@ -41,7 +41,7 @@ return [
             'host'      => '128.199.104.251',
             'username'  => 'craig',
             'password'  => '',
-            'key'       => '/Users/craig/.ssh/id_rsa',
+//            'key'       => '/Users/craig/.ssh/id_rsa',
             'keyphrase' => '',
             'agent'     => '',
             'db_role'   => true,
