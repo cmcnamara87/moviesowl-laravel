@@ -182,7 +182,7 @@ class EventCinemasUpdater {
         if (!isset($omdbMovie->Poster)) {
             return null;
         }
-        $posterUrl = str_replace("SX300", "SX400", $omdbMovie->Poster);
+        $posterUrl = str_replace("SX300", "SX700", $omdbMovie->Poster);
         if ($posterUrl == "N/A") {
             return null;
         }
