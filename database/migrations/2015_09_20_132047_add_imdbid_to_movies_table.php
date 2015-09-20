@@ -14,7 +14,7 @@ class AddImdbidToMoviesTable extends Migration
     {
         Schema::table('movies', function(Blueprint $table)
         {
-            $table->integer('imdb_id');
+            $table->string('imdb_id');
         });
     }
 
