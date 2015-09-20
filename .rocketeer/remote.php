@@ -32,7 +32,8 @@ return [
     'shared'         => [
         'storage/logs',
         'storage/sessions',
-        '.env'
+        '.env',
+        'public/images/posters'
     ],
 
     // Execution
