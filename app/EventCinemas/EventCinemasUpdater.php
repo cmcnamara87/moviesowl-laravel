@@ -92,6 +92,14 @@ class EventCinemasUpdater {
         }
         $this->output->writeln("-- Rotten Tomatoes Match " . $rtMovie->title);
 
+        $movie->tomato_meter = $rtMovie->ratings->critics_score;
+        $movie->rotten_tomatoes_id = $rtMovie->id;
+        if (!$movie->imdb_id) {
+            $movie->imdb_id = $this->getImdbIdFromRtmovie($rtMovie);
+        }
+        $movie->save();
+
+
         if (isset($rtMovie->abridged_directors)) {
             $abridged_directors = $rtMovie->abridged_directors;
         }
@@ -116,7 +124,7 @@ class EventCinemasUpdater {
                 }
                 return $carry . $castMember->name;
             }, ""),
-            "poster" => $this->getHiResPosterUrl($rtMovie),
+            "poster" => $this->getHiResPosterUrl($movie->imdb_id),
             "tomato_meter" => $rtMovie->ratings->critics_score,
             "genre" => array_reduce($rtMovie->genres, function($carry, $genres) {
                 if(strlen($carry)) {
@@ -125,9 +133,7 @@ class EventCinemasUpdater {
                 return $carry . $genres;
             }, ""),
         ]);
-        $movie->tomato_meter = $rtMovie->ratings->critics_score;
-        $movie->rotten_tomatoes_id = $rtMovie->id;
-        $movie->save();
+
         $movieDetails->save();
         // Need to touch in case there was no change in data
         $movieDetails->touch();
@@ -135,36 +141,45 @@ class EventCinemasUpdater {
         return $movie;
     }
 
+    public function getImdbIdFromRtmovie ($rtMovie) {
+        if (!isset($rtMovie->alternate_ids)) {
+            return null;
+        }
+        if (!isset($rtMovie->alternate_ids->imdb)) {
+            return null;
+        }
+        return $rtMovie->alternate_ids->imdb;
+    }
+
     /**
     get high resolution poster
     Change poster url from rotten tomatoes to get higher resolution poster
     **/
-    public function getHiResPosterUrl ($rtMovie) {
-        $asset = "images/posters/" . $rtMovie->id . ".jpg";
+    public function getHiResPosterUrl ($imdbId) {
+        if (!$imdbId) {
+            return "images/no_poster.jpg";
+        }
+        $asset = "images/posters/" . $imdbId . ".jpg";
         $posterPath = public_path() . "/" . $asset;
         if(!file_exists($posterPath)) {
-            $posterUrl = $this->getPosterUrl($rtMovie);
+            $posterUrl = $this->getPosterUrl($imdbId);
+            if (!$posterUrl) {
+                return "images/no_poster.jpg";
+            }
             $img = Image::make($posterUrl);
             $img->save($posterPath);
         }
         return $asset;
     }
 
-    public function getPosterUrl($rtMovie) {
-        if (!isset($rtMovie->alternate_ids)) {
-            return $rtMovie->posters->detailed;
-        }
-        if (!isset($rtMovie->alternate_ids->imdb)) {
-            return $rtMovie->posters->detailed;
-        }
-        $imdbId = $rtMovie->alternate_ids->imdb;
+    public function getPosterUrl($imdbId) {
         $omdbMovie = $this->omdbApi->getMovieByImdbId("tt" . $imdbId);
         if (!isset($omdbMovie->Poster)) {
-            return $rtMovie->posters->detailed;
+            return null;
         }
         $posterUrl = str_replace("SX300", "SX400", $omdbMovie->Poster);
         if ($posterUrl == "N/A") {
-            return $rtMovie->posters->detailed;
+            return null;
         }
         return $posterUrl;
     }
