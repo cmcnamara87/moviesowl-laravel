@@ -166,8 +166,13 @@ class EventCinemasUpdater {
             if (!$posterUrl) {
                 return "images/no_poster.jpg";
             }
-            $img = Image::make($posterUrl);
-            $img->save($posterPath);
+            try {
+                $img = Image::make($posterUrl);
+                $img->save($posterPath);
+                $this->output->writeln("---  Saved poster");
+            } catch (Exception $e) {
+                return "images/no_poster.jpg";
+            }
         }
         return $asset;
     }
