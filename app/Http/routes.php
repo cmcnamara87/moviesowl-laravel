@@ -43,7 +43,7 @@ Route::get('/app', function() {
     Redirect::to('https://launchkit.io/websites/5SdrKqfmmjY');
 });
 
-Route::get('/', 'MoviesController@index');
+Route::get('/', 'CinemasController@index');
 
 Route::bind('movies', function($value, $route)
 {

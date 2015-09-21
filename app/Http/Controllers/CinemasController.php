@@ -1,9 +1,12 @@
 <?php
 
+namespace MoviesOwl\Http\Controllers;
+
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
 use Carbon\Carbon;
 use MoviesOwl\Repos\Movie\MovieRepository;
+
 class CinemasController extends Controller {
 
     protected $movieRepo;
@@ -26,7 +29,7 @@ class CinemasController extends Controller {
         $cinemas = Cinema::all();
 
         // load the view and pass the nerds
-        return View::make('cinemas.index', compact('cinemas'));
+        return view('cinemas.index', compact('cinemas'));
 	}
 
 	/**
