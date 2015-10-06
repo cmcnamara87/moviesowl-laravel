@@ -39,7 +39,7 @@ class EventCinemasUpdater {
 
     public function update() {
 
-        $this->output->writeln("Updating cinemas:");
+        Log::info("Updating cinemas:");
         // Update cinemas list
         $eventCinemas = $this->eventCinemasApi->getCinemas('QLD');
 
@@ -72,14 +72,14 @@ class EventCinemasUpdater {
     {
         $movie = Movie::firstOrCreate(array('title' => $eventMovie->title));
 
-        $this->output->writeln("- " . $movie->title);
+        Log::info("- " . $movie->title);
 
         if($this->hasRecentMovieInfo($movie)) {
-            $this->output->writeln("-- Up to date");
+            Log::info("-- Up to date");
             return $movie;
         }
 
-        $this->output->writeln("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
+        Log::info("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
         
         if($movie->rotten_tomatoes_id) {
             $rtMovie = $this->rottenTomatoesApi->getMovieById($movie->rotten_tomatoes_id);
@@ -90,7 +90,7 @@ class EventCinemasUpdater {
         if(!$rtMovie) {
             return null;
         }
-        $this->output->writeln("-- Rotten Tomatoes Match " . $rtMovie->title);
+        Log::info("-- Rotten Tomatoes Match " . $rtMovie->title);
 
         $movie->tomato_meter = $rtMovie->ratings->critics_score;
         $movie->rotten_tomatoes_id = $rtMovie->id;
@@ -169,7 +169,7 @@ class EventCinemasUpdater {
             try {
                 $img = Image::make($posterUrl);
                 $img->save($posterPath);
-                $this->output->writeln("---  Saved poster");
+                Log::info("---  Saved poster");
             } catch (Exception $e) {
                 return "images/no_poster.jpg";
             }
@@ -217,7 +217,7 @@ class EventCinemasUpdater {
      */
     public function updateMoviesAndShowings($cinema)
     {
-        $this->output->writeln($cinema->location);
+        Log::info($cinema->location);
         $eventMovies = $this->eventCinemasApi->getMovies($cinema->eventcinema_id);
 
         foreach ($eventMovies as $eventMovie) {
