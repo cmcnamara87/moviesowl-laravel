@@ -2,7 +2,7 @@
 @section('title', 'What\'s Good at the Movies - MoviesOwl')
 @section('content')
 
-    <h2>What's Good at the Movies</h2>
+    <h2>MoviesOwl - Find out what's Good at the Movies</h2>
 
     <ul>
         @foreach ($cinemas as $cinema)
