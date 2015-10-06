@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \MoviesOwl\Console\Commands\Inspire::class,
+        \MoviesOwl\Console\Commands\ClearAllMoviesCommand::class,
+        \MoviesOwl\Console\Commands\ClearMovieDetailsCommand::class,
         'MoviesOwl\Console\Commands\LoadMoviesCommand'
     ];
 
