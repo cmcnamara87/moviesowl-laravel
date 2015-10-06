@@ -4,7 +4,14 @@ namespace MoviesOwl\Cinemas;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 
-class Cinema extends \Eloquent {
+class Cinema extends \Eloquent implements SluggableInterface {
+
+    use SluggableTrait;
+
+    protected $sluggable = [
+        'build_from' => 'location',
+        'save_to'    => 'slug',
+    ];
 
 	// Add your validation rules here
 	public static $rules = [

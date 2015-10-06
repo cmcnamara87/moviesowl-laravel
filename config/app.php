@@ -145,6 +145,7 @@ return [
         MoviesOwl\Providers\EventServiceProvider::class,
         MoviesOwl\Providers\RouteServiceProvider::class,
         Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class
 
     ],
 

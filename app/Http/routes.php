@@ -44,18 +44,7 @@ Route::get('/app', function() {
 });
 
 Route::get('/', 'CinemasController@index');
-
-Route::bind('movies', function($value, $route)
-{
-    return Movie::findOrFail($value);
-});
-Route::bind('cinemas', function($value, $route)
-{
-    return Cinema::findOrFail($value);
-});
-Route::model('showings', 'MoviesOwl\Showings\Showing');
-
-Route::resource('movies', 'MoviesController');
+//Route::resource('movies', 'MoviesController');
 Route::resource('cinemas', 'CinemasController');
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');

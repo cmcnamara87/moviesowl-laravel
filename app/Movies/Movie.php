@@ -8,7 +8,13 @@ use Carbon\Carbon;
 use MoviesOwl\Showings\Showing;
 use Illuminate\Support\Facades\Log;
 
-class Movie extends \Eloquent {
+class Movie extends \Eloquent implements SluggableInterface {
+
+    use SluggableTrait;
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to'    => 'slug',
+    ];
 
 	// Add your validation rules here
 	public static $rules = [

@@ -2,10 +2,12 @@
 
 namespace MoviesOwl\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
 use Carbon\Carbon;
 use MoviesOwl\Repos\Movie\MovieRepository;
+use MoviesOwl\Showings\Showing;
 
 class CinemasController extends Controller {
 
@@ -54,6 +56,17 @@ class CinemasController extends Controller {
 		//
 	}
 
+    public function getStartingAfter()
+    {
+        // TODO: extract this
+        $now = Input::get('starting_after');
+        if (!$now) {
+            // by default show movies that have just started up to 20 minutes ago.
+            return Carbon::now()->subMinutes(20);
+        }
+        return Carbon::createFromTimestamp($now);
+    }
+
 	/**
 	 * Display the specified resource.
 	 * GET /cinemas/{id}
@@ -63,11 +76,31 @@ class CinemasController extends Controller {
 	 */
 	public function show(Cinema $cinema)
 	{
+        $startingAfter = $this->getStartingAfter();
+        $endOfDay = $startingAfter->copy()->endOfDay();
+
+
+        $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+
+        $movies = Movie::whereIn('id', $movieIds)->with(array('details', 'showings' => function($q) use ($startingAfter, $endOfDay, $cinema)
+        {
+            $q->where('start_time', '>=', $startingAfter->toDateTimeString());
+            $q->where('start_time', '<=', $endOfDay->toDateTimeString());
+            $q->where('cinema_id', $cinema->id);
+
+        }))->orderBy('tomato_meter', 'desc')->get();
+
+
+        foreach($movies as $movie) {
+            $movie->details->poster = str_replace('http://moviesowl.com/', '', $movie->details->poster);
+        }
 //        $cinema = Cinema::findOrFail($id);
-        $movies = $this->movieRepo->getWatchableAtCinema($cinema->id);
+//        $movies = $this->movieRepo->getWatchableAtCinema($cinema->id);
 //        $movies = Movie::watchable($now)->orderBy('tomato_meter', 'desc')->get();
 
-        return View::make('cinemas.show', compact('movies', 'cinema'));
+        return view('cinemas.show', compact('movies', 'cinema'));
 	}
 
 	/**

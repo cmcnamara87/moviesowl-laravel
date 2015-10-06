@@ -4,6 +4,8 @@ namespace MoviesOwl\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use MoviesOwl\Cinemas\Cinema;
+use MoviesOwl\Movies\Movie;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,9 +26,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-
         parent::boot($router);
+        $router->model('cinemas', Cinema::class);
+        $router->model('movies', Movie::class);
+//        $router->bind('cinema', function($value) {
+//            $cinema = Cinema::find(12);
+//            return $cinema;
+//        });
     }
 
     /**

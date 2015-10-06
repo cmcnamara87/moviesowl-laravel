@@ -25,7 +25,6 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
-
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     MoviesOwl\Http\Kernel::class
@@ -39,6 +38,11 @@ $app->singleton(
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     MoviesOwl\Exceptions\Handler::class
+);
+
+$app->singleton(
+    'router',
+    \Cviebrock\EloquentSluggable\SluggableRouter::class
 );
 
 /*
