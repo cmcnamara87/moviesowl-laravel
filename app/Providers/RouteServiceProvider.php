@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
+use MoviesOwl\Showings\Showing;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
         $router->model('cinemas', Cinema::class);
         $router->model('movies', Movie::class);
+        $router->model('showings', Showing::class);
 //        $router->bind('cinema', function($value) {
 //            $cinema = Cinema::find(12);
 //            return $cinema;
