@@ -41,7 +41,7 @@ class EventCinemasUpdater {
 
         Log::info("Updating cinemas:");
         // Update cinemas list
-        $eventCinemas = $this->eventCinemasApi->getCinemas('QLD');
+        $eventCinemas = $this->eventCinemasApi->getCinemas();
 
         $cinemas = array_map(function($eventCinema) {
             return $this->getOrCreateCinema($eventCinema);
