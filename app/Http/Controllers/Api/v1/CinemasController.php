@@ -16,7 +16,7 @@ class CinemasController extends Controller {
 	 */
 	public function index()
 	{
-		$cinemas = Cinema::all();
+		$cinemas = Cinema::orderBy('name', 'asc')->get();
         return Fractal::collection($cinemas, new CinemaTransformer)->responseJson(200);
 	}
 
