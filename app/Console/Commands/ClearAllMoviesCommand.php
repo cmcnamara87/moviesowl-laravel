@@ -38,6 +38,7 @@ class ClearAllMoviesCommand extends Command
      */
     public function handle()
     {
+        DB::table('cinemas')->truncate();
         DB::table('movies')->truncate();
         DB::table('moviedetails')->truncate();
 
