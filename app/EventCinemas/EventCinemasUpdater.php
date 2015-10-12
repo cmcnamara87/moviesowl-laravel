@@ -13,6 +13,7 @@ use MoviesOwl\EventCinemas\EventCinemasApi;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
 use MoviesOwl\Movies\MovieDetails;
+use MoviesOwl\Posters\PosterService;
 use MoviesOwl\RottenTomatoes\RottenTomatoesApi;
 use MoviesOwl\Showings\Showing;
 use Illuminate\Support\Facades\Log;
@@ -26,15 +27,17 @@ class EventCinemasUpdater {
     protected $rottenTomatoesApi;
     protected $omdbApi;
     protected $output;
+    protected $posterService;
 
     function __construct(EventCinemasApi $eventCinemasApi,
                          RottenTomatoesApi $rottenTomatoesApi,
-                         OMDBApi $omdbApi, ConsoleOutput $output)
+                         OMDBApi $omdbApi, ConsoleOutput $output, PosterService $posterService)
     {
         $this->eventCinemasApi = $eventCinemasApi;
         $this->rottenTomatoesApi = $rottenTomatoesApi;
         $this->omdbApi = $omdbApi;
         $this->output = $output;
+        $this->posterService = $posterService;
     }
 
     public function update() {
@@ -95,7 +98,7 @@ class EventCinemasUpdater {
         $movie->tomato_meter = $rtMovie->ratings->critics_score;
         $movie->rotten_tomatoes_id = $rtMovie->id;
         if (!$movie->imdb_id) {
-            $movie->imdb_id = $this->getImdbIdFromRtmovie($rtMovie);
+            $movie->imdb_id = 'tt'.$this->getImdbIdFromRtmovie($rtMovie);
         }
         $movie->save();
 
@@ -124,7 +127,7 @@ class EventCinemasUpdater {
                 }
                 return $carry . $castMember->name;
             }, ""),
-            "poster" => $this->getHiResPosterUrl($movie->imdb_id),
+            "poster" => $this->getHiResPosterUrl($movie->imdb_id, $movie->title),
             "tomato_meter" => $rtMovie->ratings->critics_score,
             "genre" => array_reduce($rtMovie->genres, function($carry, $genres) {
                 if(strlen($carry)) {
@@ -141,6 +144,23 @@ class EventCinemasUpdater {
         return $movie;
     }
 
+    public function getHiResPosterUrl ($imdbId, $movieTitle) {
+        if (!$imdbId) {
+           return "images/no_poster.jpg";
+        }
+        $url = $this->posterService->getImdbPosterUrl($imdbId);
+        if (!$url) {
+            return "images/no_poster.jpg";
+        }
+        $asset = $this->posterService->savePosterFromUrl($url, $movieTitle);
+
+        if(!$asset) {
+            return "images/no_poster.jpg";
+        }
+        return $asset;
+    }
+
+
     public function getImdbIdFromRtmovie ($rtMovie) {
         if (!isset($rtMovie->alternate_ids)) {
             return null;
@@ -151,43 +171,7 @@ class EventCinemasUpdater {
         return $rtMovie->alternate_ids->imdb;
     }
 
-    /**
-    get high resolution poster
-    Change poster url from rotten tomatoes to get higher resolution poster
-    **/
-    public function getHiResPosterUrl ($imdbId) {
-        if (!$imdbId) {
-            return "images/no_poster.jpg";
-        }
-        $asset = "images/posters/" . $imdbId . ".jpg";
-        $posterPath = public_path() . "/" . $asset;
-        if(!file_exists($posterPath)) {
-            $posterUrl = $this->getPosterUrl($imdbId);
-            if (!$posterUrl) {
-                return "images/no_poster.jpg";
-            }
-            try {
-                $img = Image::make($posterUrl);
-                $img->save($posterPath);
-                Log::info("---  Saved poster");
-            } catch (Exception $e) {
-                return "images/no_poster.jpg";
-            }
-        }
-        return $asset;
-    }
 
-    public function getPosterUrl($imdbId) {
-        $omdbMovie = $this->omdbApi->getMovieByImdbId("tt" . $imdbId);
-        if (!isset($omdbMovie->Poster)) {
-            return null;
-        }
-        $posterUrl = str_replace("SX300", "SX700", $omdbMovie->Poster);
-        if ($posterUrl == "N/A") {
-            return null;
-        }
-        return $posterUrl;
-    }
 
     /**
      * @param EventCinemasSession $session
