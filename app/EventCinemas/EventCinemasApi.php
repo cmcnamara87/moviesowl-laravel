@@ -18,12 +18,13 @@ class EventCinemasApi {
     /**
      * @return mixed
      */
-    public function getCinemas($state)
+    public function getCinemas()
     {
         $url = "http://www.eventcinemas.com.au";
         $eventCinemas = @file_get_contents($url);
         $html = new Htmldom($eventCinemas);
-        $cinemasElements = $html->find('[data-value="QLD"] a');
+//        $cinemasElements = $html->find('[data-value="QLD"] a');
+        $cinemasElements = $html->find('#cinema-select .top-select-option a');
         return array_map(function($cinemaElement) {
             return new EventCinemasCinema($cinemaElement->{'data-id'}, $cinemaElement->{'data-name'});
         }, $cinemasElements);

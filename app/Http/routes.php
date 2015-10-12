@@ -18,14 +18,6 @@ use MoviesOwl\Movies\Movie;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Showings\Showing;
 
-function getSubDomain() {
-    if (App::environment('local')) {
-        return 'localhost';
-    }
-    if(App::environment('production')) {
-        return 'api.moviesowl.com';
-    }
-}
 
 Route::group(array('prefix' => 'api/v1'), function() {
     Route::resource('cinemas.movies', 'Api\v1\CinemaMoviesController', ["only" => ["index"]]);
@@ -33,14 +25,10 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::resource('showings', 'Api\v1\ShowingsController', ["only" => "show"]);
 });
 
-
-Route::group(array('domain' => getSubDomain()), function()
-{
-
-});
-
 Route::get('/app', function() {
-    Redirect::to('https://launchkit.io/websites/5SdrKqfmmjY');
+    return redirect('https://launchkit.io/websites/5SdrKqfmmjY');
+//    Redirect::to('https://launchkit.io/websites/5SdrKqfmmjY');
+//    Redirect::to('http://google.com');
 });
 
 Route::get('/', 'CinemasController@index');
@@ -49,3 +37,4 @@ Route::resource('cinemas', 'CinemasController');
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
+
