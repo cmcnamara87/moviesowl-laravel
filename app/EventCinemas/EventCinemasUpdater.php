@@ -27,9 +27,7 @@ class EventCinemasUpdater {
     protected $omdbApi;
     protected $output;
 
-    function __construct(EventCinemasApi $eventCinemasApi,
-                         RottenTomatoesApi $rottenTomatoesApi,
-                         OMDBApi $omdbApi, ConsoleOutput $output)
+    function __construct(EventCinemasApi $eventCinemasApi, ConsoleOutput $output)
     {
         $this->eventCinemasApi = $eventCinemasApi;
         $this->output = $output;
