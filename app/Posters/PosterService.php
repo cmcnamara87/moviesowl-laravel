@@ -32,6 +32,7 @@ class PosterService
 
     public function getImdbPosterUrl($imdbId) {
         $omdbMovie = $this->omdbApi->getMovieByImdbId($imdbId);
+
         if (!isset($omdbMovie->Poster)) {
             return null;
         }
