@@ -64,6 +64,7 @@ class LoadMoviesCommand extends Command
      */
     public function handle()
     {
+        Log::useFiles('php://stdout');
         $this->info('Running EventCinemas Update');
         $this->eventCinemasUpdater->update();
         $this->googleMoviesUpdater->update();
