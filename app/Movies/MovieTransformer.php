@@ -9,6 +9,7 @@
 namespace MoviesOwl\Movies;
 
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use League\Fractal\TransformerAbstract;
 use Illuminate\Support\Facades\App;
 use MoviesOwl\Showings\MovieShowingTransformer;
@@ -37,12 +38,13 @@ class MovieTransformer extends TransformerAbstract {
 
     public function transform(Movie $movie) {
         if(!count($movie->details)) {
+            Log::error('No details for ' . $movie->title);
             return [
                 'id' => (int) $movie->id,
                 'title' => $movie->title
             ];
         }
-        
+
         return [
             'id' => (int) $movie->id,
             'title' => $movie->title,
