@@ -80,7 +80,7 @@ class MovieDetailsUpdater {
                 "director" => "",
                 "cast" => "",
                 "poster" => $this->getHiResPosterUrl($movie->imdb_id, $movie->title),
-                "tomato_meter" => 0,
+                "tomato_meter" => -1,
                 "genre" => "",
             ]);
 
