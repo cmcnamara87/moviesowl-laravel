@@ -36,6 +36,13 @@ class MovieTransformer extends TransformerAbstract {
 
 
     public function transform(Movie $movie) {
+        if(!count($movie->details)) {
+            return [
+                'id' => (int) $movie->id,
+                'title' => $movie->title
+            ];
+        }
+        
         return [
             'id' => (int) $movie->id,
             'title' => $movie->title,
