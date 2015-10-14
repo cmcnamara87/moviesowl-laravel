@@ -71,7 +71,21 @@ class MovieDetailsUpdater {
         }
 
         if(!$rtMovie) {
-            return null;
+
+            $movieDetails = MovieDetails::firstOrCreate(array('movie_id' => $movie->id));
+            $movieDetails->fill([
+                "title" => $movie->title,
+                "synopsis" => "No Synopsis",
+                "run_time" => "0",
+                "director" => "",
+                "cast" => "",
+                "poster" => $this->getHiResPosterUrl($movie->imdb_id, $movie->title),
+                "tomato_meter" => 0,
+                "genre" => "",
+            ]);
+
+            $movieDetails->save();
+            return $movie;
         }
         Log::info("-- Rotten Tomatoes Match " . $rtMovie->title);
 
