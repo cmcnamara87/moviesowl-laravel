@@ -44,6 +44,9 @@ class EventCinemasUpdater {
         }, $eventCinemas);
 
         foreach($cinemas as $cinema) {
+            if(!$cinema) {
+                continue;
+            }
             $this->updateMoviesAndShowings($cinema);
         }
     }
@@ -52,9 +55,18 @@ class EventCinemasUpdater {
     {
         $cinema = Cinema::where('location', $eventCinema->name)->first();
         if (!$cinema) {
+            $allCinemasLocationData = json_decode(file_get_contents(app_path() . '/EventCinemas/timezones.json'));
+            if(!isset($allCinemasLocationData->{$eventCinema->name})) {
+                Log::error('Missing cinema in timezones data ' . $eventCinema->name);
+                return false;
+            }
+            $cinemaLocationData = $allCinemasLocationData->{$eventCinema->name};
             $cinema = Cinema::create([
                 "location" => $eventCinema->name,
-                "eventcinema_id" => $eventCinema->id
+                "eventcinema_id" => $eventCinema->id,
+                "city" => $cinemaLocationData->city,
+                "timezone" => $cinemaLocationData->timezone,
+                "country" => $cinemaLocationData->country
             ]);
         }
         return $cinema;
@@ -100,7 +112,7 @@ class EventCinemasUpdater {
     public function updateMoviesAndShowings($cinema)
     {
         Log::info($cinema->location);
-        $eventMovies = $this->eventCinemasApi->getMovies($cinema->eventcinema_id);
+        $eventMovies = $this->eventCinemasApi->getMovies($cinema);
 
         foreach ($eventMovies as $eventMovie) {
             $movie = $this->getOrCreateMovie($eventMovie);

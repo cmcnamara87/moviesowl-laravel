@@ -27,19 +27,20 @@ class GoogleMoviesUpdater {
     public function update()
     {
         Log::info('Updating from Google Movies for Brisbane');
-        $this->updateForCity('brisbane', 'australia');
+        $this->updateForCity('Brisbane', 'Australia', 'Australia/Brisbane');
+        $this->updateForCity('Sydney', 'Australia', 'Australia/Sydney');
     }
 
-    public function updateForCity($city, $county)
+    public function updateForCity($city, $country, $timezone)
     {
         $page = 0;
         do {
-            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $county) . "&start=" . ($page * 10);
+            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10);
             $googleMovies = @file_get_contents($url);
             $html = new Htmldom($googleMovies);
             // how many pages
             $pageCount = count($html->find('#navbar td')) - 2;
-            $this->processPage($html);
+            $this->processPage($html, $city, $country, $timezone);
             $page++;
         } while($page < $pageCount);
     }
@@ -47,7 +48,7 @@ class GoogleMoviesUpdater {
     /**
      * @param $html
      */
-    public function processPage($html)
+    public function processPage($html, $city, $country, $timezone)
     {
 // Find all article blocks
         foreach ($html->find('.theater') as $cinemaElement) {
@@ -58,7 +59,10 @@ class GoogleMoviesUpdater {
                 continue;
             }
             $cinema = Cinema::firstOrCreate([
-                'location' => $cinemaName
+                'location' => $cinemaName,
+                'timezone' => $timezone,
+                'city' => $city,
+                'country' => $country
             ]);
 
             foreach ($cinemaElement->find('.movie') as $movieElement) {
@@ -84,7 +88,7 @@ class GoogleMoviesUpdater {
                     }
                     $minutes = intval($parts[1]);
                     $timestamp = Carbon::today()->timestamp + ($hours * 60 * 60) + ($minutes * 60);
-                    $startTime = Carbon::createFromTimestamp($timestamp);
+                    $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
                     Log::info('Session: ' . $startTime->toDateTimeString());
                     $showing = Showing::firstOrCreate([

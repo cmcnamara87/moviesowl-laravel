@@ -43,6 +43,7 @@ class ClearAllMoviesCommand extends Command
         DB::table('moviedetails')->truncate();
         DB::table('cinemas')->truncate();
         DB::table('movies')->truncate();
+        DB::table('showings')->truncate();
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity

@@ -8,6 +8,7 @@
 
 namespace MoviesOwl\EventCinemas;
 
+use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\EventCinemas\EventCinemasMoviesParser;
 use MoviesOwl\EventCinemas\EventCinemasCinema;
 use Yangqi\Htmldom\Htmldom;
@@ -37,14 +38,15 @@ class EventCinemasApi {
         return 'standard';
     }
 
-    public function getMovies($eventCinemaId) {
+    public function getMovies(Cinema $cinema) {
+        $eventCinemaId = $cinema->eventcinema_id;
         $moviesData = json_decode(@file_get_contents("https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=" . $eventCinemaId));
 
-        $movies = array_map(function($movieData) {
-            $sessions = array_map(function($sessionData) {
+        $movies = array_map(function($movieData) use ($cinema) {
+            $sessions = array_map(function($sessionData) use ($cinema) {
 
                 return new EventCinemasSession(
-                    Carbon::parse($sessionData->StartTime),
+                    Carbon::parse($sessionData->StartTime, $cinema->timezone),
                     $this->getTypeName($sessionData->ScreenTypeId),
                     $sessionData->Is3d == true ? '3D' : 'standard',
                     $sessionData->Id,

@@ -19,7 +19,7 @@ class Cinema extends \Eloquent implements SluggableInterface {
 	];
 
 	// Don't forget to fill this array
-	protected $fillable = ["location", "eventcinema_id"];
+	protected $fillable = ["location", "eventcinema_id", 'timezone', 'city', 'country'];
 
     public function showings()
     {
