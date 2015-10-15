@@ -17,7 +17,10 @@ class CinemaTransformer extends TransformerAbstract {
     public function transform(Cinema $cinema) {
         return [
             'id' => (int)$cinema->id,
-            'location' => $cinema->location
+            'location' => $cinema->location,
+            'timezone' => $cinema->timezone,
+            'city' => $cinema->city,
+            'country' => $cinema->country
         ];
     }
 }
