@@ -3,11 +3,11 @@
  $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location)
 @section('content')
 
-    <h1>Book Tickets {{ $movie->title }} at {{ $showing->start_time->toDateTimeString() }} at {{ $cinema->location }}</h1>
+    <h1>Book Tickets {{ $movie->title }} at {{ $showing->start_time->toTimeString() }} at {{ $cinema->location }}</h1>
 
     <div class="row">
         <div class="col-sm-3">
-            <img src="{{ $movie->poster }}" alt="{{ $movie->title  }}" style="width:100%">
+            <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
         </div>
         <div class="col-sm-6">
             {{ $movie->synopsis }}
@@ -41,7 +41,7 @@
                     Rotten Tomatoes
                 </dt>
                 <dd>
-                    {{ $movie->tomato_meter }}
+                    {{ $movie->tomato_meter }}%
                 </dd>
 
                 <dt>

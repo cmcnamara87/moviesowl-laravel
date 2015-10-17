@@ -1,5 +1,7 @@
 <?php
 
+namespace MoviesOwl\Http\Controllers;
+
 use Carbon\Carbon;
 use MoviesOwl\Repos\Showing\ShowingRepository;
 use MoviesOwl\Service\SeatingService;
@@ -40,7 +42,7 @@ class CinemaMovieShowingsController extends Controller {
             // FIXME: might spam event...need to investigate this
             $this->seatingService->updateSeating($showing);
         }
-        return View::make('showings.index', compact('cinema', 'movie', 'showings'));
+        return view('showings.index', compact('cinema', 'movie', 'showings'));
 	}
 
 	/**

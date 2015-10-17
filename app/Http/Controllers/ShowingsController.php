@@ -1,5 +1,7 @@
 <?php
 
+namespace MoviesOwl\Http\Controllers;
+
 use MoviesOwl\Service\SeatingService;
 use MoviesOwl\Showings\Showing;
 
@@ -59,7 +61,7 @@ class ShowingsController extends Controller {
         $movie = $showing->movie;
         $cinema = $showing->cinema;
         $this->seatingService->updateSeating($showing);
-        return View::make('showings.show', compact('showing', 'movie', 'cinema'));
+        return view('showings.show', compact('showing', 'movie', 'cinema'));
 	}
 
 	/**

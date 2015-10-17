@@ -16,7 +16,7 @@
     php artisan movies:load
 @endtask
 
-@task('log')
+@task('tail')
     cd /var/www/html/moviesowl.com/current
     tail -f storage/logs/laravel.log
 @endtask

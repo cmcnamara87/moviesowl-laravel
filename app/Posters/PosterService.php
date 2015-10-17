@@ -43,7 +43,6 @@ class PosterService
         return $posterUrl;
     }
 
-
     public function savePosterFromUrl ($url, $name) {
         $asset = "images/posters/" . snake_case($name) . ".jpg";
         $posterPath = public_path() . "/" . $asset;
