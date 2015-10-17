@@ -45,19 +45,18 @@ class EventCinemasApi {
         $movies = array_map(function($movieData) use ($cinema) {
             $sessions = array_map(function($sessionData) use ($cinema) {
 
-                return new EventCinemasSession(
+                $ticketsUrl = "https://www.eventcinemas.com.au/Ticketing/Order#sessionId=". $sessionData->Id . "&bookingSource=www|sessions";
+                $eventCinemaSession = new EventCinemasSession(
                     Carbon::parse($sessionData->StartTime, $cinema->timezone),
                     $this->getTypeName($sessionData->ScreenTypeId),
                     $sessionData->Is3d == true ? '3D' : 'standard',
                     $sessionData->Id,
-                    $sessionData->BookingUrl
+                    $ticketsUrl
                 );
+                return $eventCinemaSession;
             }, $movieData->CinemaModels[0]->Sessions);
-
             return new EventCinemasMovie(html_entity_decode($movieData->Name),$sessions);
-
         }, $moviesData->Data->Movies);
-
         return $movies;
     }
 

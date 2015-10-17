@@ -69,6 +69,6 @@ class EventCinemasSessionParser {
 
     public function getTicketsUrl() {
         $sessionId = $this->getEventSessionId();
-        return "https://www.eventcinemas.com.au/Tickets/Order/Step2?sessionId=$sessionId&bookingSource=msite2";
+        return "https://www.eventcinemas.com.au/Ticketing/Order#sessionId=$sessionId&bookingSource=www|sessions";
     }
 }
