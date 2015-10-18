@@ -64,14 +64,14 @@ class AddMissingImdbIdsCommand extends Command
             if (!$asset) {
                 continue;
             }
-            $movieDetails = $movie->details;
-            if(!count($movieDetails)) {
+            if(is_null($movie->details)) {
                 // Create a stub movie details if we havent got one
                 MovieDetails::create([
                     'title' => $movie->title,
                     'movie_id' => $movie->id
                 ]);
             }
+            $movieDetails = $movie->details;
             $movieDetails->poster = $asset;
             $movieDetails->save();
             $movie->save();
