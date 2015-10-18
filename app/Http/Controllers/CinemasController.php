@@ -105,11 +105,28 @@ class CinemasController extends Controller {
         foreach($movies as $movie) {
             $movie->details->poster = str_replace('http://moviesowl.com/', '', $movie->details->poster);
         }
+
+        // group the movies
+        $moviesByRating = array_reduce($movies->all(), function($carry, $movie) {
+            $rating = '';
+            if($movie->tomato_meter > 75) {
+                $rating = 'Great';
+            } else if ($movie->tomato_meter > 50) {
+                $rating = 'Good';
+            } else {
+                $rating = 'Bad';
+            }
+            if(!isset($carry[$rating])) {
+                $carry[$rating] = [];
+            }
+            $carry[$rating][] = $movie;
+            return $carry;
+        }, []);
 //        $cinema = Cinema::findOrFail($id);
 //        $movies = $this->movieRepo->getWatchableAtCinema($cinema->id);
 //        $movies = Movie::watchable($now)->orderBy('tomato_meter', 'desc')->get();
 
-        return view('cinemas.show', compact('movies', 'cinema'));
+        return view('cinemas.show', compact('moviesByRating', 'cinema'));
 	}
 
 	/**

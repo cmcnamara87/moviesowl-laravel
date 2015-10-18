@@ -4,7 +4,9 @@
 
     <h1>{{ $cinema->location }} (Event)</h1>
 
-    @foreach (array_chunk($movies->all(), 4) as $movieRow)
+    @foreach ($moviesByRating as $rating => $movies)
+        <h2>{{ $rating }} Movies</h2>
+    @foreach (array_chunk($movies, 4) as $movieRow)
         <div class="row">
             @foreach ($movieRow as $movie)
                 <div class="col-xs-12 col-sm-3">
@@ -20,5 +22,6 @@
                 </div>
             @endforeach
         </div>
+    @endforeach
     @endforeach
 @stop
