@@ -5,6 +5,7 @@ namespace MoviesOwl\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use MoviesOwl\Movies\Movie;
+use MoviesOwl\Movies\MovieDetails;
 use MoviesOwl\Posters\PosterService;
 
 class AddMissingImdbIdsCommand extends Command
@@ -64,6 +65,13 @@ class AddMissingImdbIdsCommand extends Command
                 continue;
             }
             $movieDetails = $movie->details;
+            if(!count($movieDetails)) {
+                // Create a stub movie details if we havent got one
+                MovieDetails::create([
+                    'title' => $movie->title,
+                    'movie_id' => $movie->id
+                ]);
+            }
             $movieDetails->poster = $asset;
             $movieDetails->save();
             $movie->save();
