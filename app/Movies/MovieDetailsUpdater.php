@@ -57,11 +57,6 @@ class MovieDetailsUpdater {
     public function updateMovie($movie) {
         Log::info("- " . $movie->title);
 
-        if($this->hasRecentMovieInfo($movie)) {
-            Log::info("-- Up to date");
-            return $movie;
-        }
-
         Log::info("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
 
         if($movie->rotten_tomatoes_id) {
@@ -168,36 +163,5 @@ class MovieDetailsUpdater {
             return null;
         }
         return 'tt' . $rtMovie->alternate_ids->imdb;
-    }
-
-    /**
-     * @param $movie
-     * @return mixed
-     */
-    private function hasRecentMovieInfo($movie)
-    {
-        // Is it new?
-        if (!$movie->details) {
-            return false;
-        }
-        return $this->wasUpdatedToday($movie->details);
-    }
-
-    /**
-     * @param $movie
-     * @return bool
-     */
-    private function isJustCreated($movie)
-    {
-        return $movie->updated_at->eq($movie->created_at);
-    }
-
-    /**
-     * @param $movie
-     * @return mixed
-     */
-    private function wasUpdatedToday($movieDetails)
-    {
-        return $movieDetails->updated_at->gte(Carbon::today());
     }
 }

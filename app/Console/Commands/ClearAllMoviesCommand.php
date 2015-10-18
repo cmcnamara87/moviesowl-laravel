@@ -40,9 +40,7 @@ class ClearAllMoviesCommand extends Command
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        DB::table('moviedetails')->truncate();
         DB::table('cinemas')->truncate();
-        DB::table('movies')->truncate();
         DB::table('showings')->truncate();
 
         // supposed to only apply to a single connection and reset it's self
