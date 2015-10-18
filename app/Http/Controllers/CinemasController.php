@@ -30,8 +30,17 @@ class CinemasController extends Controller {
         // get all the nerds
         $cinemas = Cinema::all();
 
+        // lets group it
+        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
+            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
+            if(!isset($carry[$cinemaLocation])) {
+                $carry[$cinemaLocation] = [];
+            }
+            $carry[$cinemaLocation][] = $cinema;
+            return $carry;
+        }, []);
         // load the view and pass the nerds
-        return view('cinemas.index', compact('cinemas'));
+        return view('cinemas.index', compact('cinemasByCity'));
 	}
 
 	/**
