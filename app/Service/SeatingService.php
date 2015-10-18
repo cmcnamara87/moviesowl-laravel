@@ -27,6 +27,9 @@ class SeatingService {
      * @param Showing $showing
      */
     public function updateSeating(Showing $showing) {
+        if(!$showing->{"event_session_id"}) {
+            return;
+        }
         if(!$this->isSeatingDataOld($showing))  {
             return;
         }
