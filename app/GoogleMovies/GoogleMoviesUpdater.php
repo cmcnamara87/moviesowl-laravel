@@ -33,7 +33,8 @@ class GoogleMoviesUpdater {
         $this->updateForCity('Adelaide', 'Australia', 'Australia/Adelaide');
         $this->updateForCity('Perth', 'Australia', 'Australia/Perth');
         $this->updateForCity('Darwin', 'Australia', 'Australia/Darwin');
-        $this->updateForCity('Cairns', 'Australia', 'Australia/Cairns');
+        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane');
+        $this->updateForCity('Canberra', 'Australia', 'Australia/Canberra');
     }
 
     public function updateForCity($city, $country, $timezone)
