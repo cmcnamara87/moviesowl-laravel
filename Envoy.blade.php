@@ -12,7 +12,7 @@
 
 @task('load')
     cd /var/www/html/moviesowl.com/current
-    php artisan movies:cleardetails
+    php artisan movies:clearall
     php artisan movies:load
 @endtask
 

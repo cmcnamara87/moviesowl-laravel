@@ -29,6 +29,11 @@ class GoogleMoviesUpdater {
         Log::info('Updating from Google Movies for Brisbane');
         $this->updateForCity('Brisbane', 'Australia', 'Australia/Brisbane');
         $this->updateForCity('Sydney', 'Australia', 'Australia/Sydney');
+        $this->updateForCity('Melbourne', 'Australia', 'Australia/Melbourne');
+        $this->updateForCity('Adelaide', 'Australia', 'Australia/Adelaide');
+        $this->updateForCity('Perth', 'Australia', 'Australia/Perth');
+        $this->updateForCity('Darwin', 'Australia', 'Australia/Darwin');
+        $this->updateForCity('Cairns', 'Australia', 'Australia/Cairns');
     }
 
     public function updateForCity($city, $country, $timezone)
