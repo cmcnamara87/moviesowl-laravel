@@ -44,38 +44,51 @@ class AddMissingImdbIdsCommand extends Command
      */
     public function handle()
     {
-        $movies = Movie::where('imdb_id', '=', '')->orderBy('id', 'desc')->get();
+        // Get movie posters for movies that are on today
+        // Do this every day
+        $startOfDay = Carbon::today();
+        $endOfDay = $startOfDay->copy()->endOfDay();
+
+        $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
+
+        $movies = Movie::whereIn('id', $movieIds)->get();
+        
         foreach($movies as $movie) {
-            $imdbId = $this->ask($movie->title . ' (IMDB ID)', false);
-            $url = null;
-            if($imdbId) {
-                $movie->imdb_id = $imdbId;
-                $url = $this->posterService->getImdbPosterUrl($imdbId);
-            }
-            Log::info('ID ' . $movie->imdb_id);
-            if (!$url) {
-                $url = $this->ask($movie->title . ' (URL)', false);
-            }
-            if(!$url) {
-                continue;
-            }
-            $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
-            Log::info('Saved poster to disk');
-            if (!$asset) {
-                continue;
-            }
-            if(is_null($movie->details) || !count($movie->details)) {
-                // Create a stub movie details if we havent got one
-                MovieDetails::create([
-                    'title' => $movie->title,
-                    'movie_id' => $movie->id
-                ]);
-            }
-            $movieDetails = $movie->details;
-            $movieDetails->poster = $asset;
-            $movieDetails->save();
-            $movie->save();
-            Log::info('Movie updated');
+            $this->updateImdbId($movie);
         }
+    }
+
+    private function updateImdbId($movie) {
+        $imdbId = $this->ask($movie->title . ' (IMDB ID)', false);
+        $url = null;
+        if($imdbId) {
+            $movie->imdb_id = $imdbId;
+            $url = $this->posterService->getImdbPosterUrl($imdbId);
+        }
+        Log::info('ID ' . $movie->imdb_id);
+        if (!$url) {
+            $url = $this->ask($movie->title . ' (URL)', false);
+        }
+        if(!$url) {
+            return;
+        }
+        $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
+        Log::info('Saved poster to disk');
+        if (!$asset) {
+            return;
+        }
+        if(is_null($movie->details) || !count($movie->details)) {
+            // Create a stub movie details if we havent got one
+            MovieDetails::create([
+                'title' => $movie->title,
+                'movie_id' => $movie->id
+            ]);
+        }
+        $movieDetails = $movie->details;
+        $movieDetails->poster = $asset;
+        $movieDetails->save();
+        $movie->save();
+        Log::info('Movie updated');
     }
 }
