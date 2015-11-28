@@ -2,6 +2,7 @@
 
 namespace MoviesOwl\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use MoviesOwl\Movies\Movie;
@@ -53,7 +54,7 @@ class AddMissingImdbIdsCommand extends Command
             ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
 
         $movies = Movie::whereIn('id', $movieIds)->get();
-        
+
         foreach($movies as $movie) {
             $this->updateImdbId($movie);
         }
