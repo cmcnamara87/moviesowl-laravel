@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use MoviesOwl\Movies\Movie;
 use MoviesOwl\Movies\MovieDetails;
 use MoviesOwl\Posters\PosterService;
+use MoviesOwl\Showings\Showing;
 
 class AddMissingImdbIdsCommand extends Command
 {
