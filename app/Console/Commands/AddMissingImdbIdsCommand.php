@@ -44,7 +44,7 @@ class AddMissingImdbIdsCommand extends Command
      */
     public function handle()
     {
-        $movies = Movie::where('imdb_id', '=', '')->get();
+        $movies = Movie::where('imdb_id', '=', '')->orderBy('id', 'desc')->get();
         foreach($movies as $movie) {
             $imdbId = $this->ask($movie->title . ' (IMDB ID)', false);
             $url = null;
