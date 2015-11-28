@@ -54,7 +54,9 @@ class AddMissingImdbIdsCommand extends Command
         $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
 
-        $movies = Movie::whereIn('id', $movieIds)->get();
+        $movies = Movie::whereIn('id', $movieIds)
+            ->where('imdb_id', '=', '')
+            ->orderBy('id', 'desc')->get();
 
         foreach($movies as $movie) {
             $this->updateImdbId($movie);
