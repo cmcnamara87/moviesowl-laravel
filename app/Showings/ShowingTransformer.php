@@ -26,7 +26,8 @@ class ShowingTransformer extends TransformerAbstract {
             "cinema_size"       => $showing->cinema_size,
             "seats"             => $showing->seats,
             "seats_count"       => $showing->seats_count,
-            "seats_updated_at"  => $showing->seats_updated_at->timestamp
+            "seats_updated_at"  => $showing->seats_updated_at->timestamp,
+            "event_session_id"  => $showing->event_session_id
         ];
     }
 }
