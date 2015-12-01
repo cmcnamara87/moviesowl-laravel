@@ -19,7 +19,8 @@ class MovieShowingTransformer extends TransformerAbstract {
 //            "cinema_id" => (int)$showing->cinema_id,
             "showing_type" => $showing->showing_type,
             "screen_type" => $showing->screen_type,
-            "tickets_url" => $showing->tickets_url
+            "tickets_url" => $showing->tickets_url,
+            "event_session_id" => $showing->event_session_id
         ];
     }
 }
