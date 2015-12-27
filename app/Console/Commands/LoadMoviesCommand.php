@@ -40,7 +40,7 @@ class LoadMoviesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Get showings from sources';
 
     /**
      * Create a new command instance.

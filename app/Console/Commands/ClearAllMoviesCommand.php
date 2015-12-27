@@ -19,7 +19,7 @@ class ClearAllMoviesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Remove cinemas and showings';
 
     /**
      * Create a new command instance.

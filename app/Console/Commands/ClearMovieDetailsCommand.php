@@ -19,7 +19,7 @@ class ClearMovieDetailsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Clear movie details (dont run very often)';
 
     /**
      * Create a new command instance.

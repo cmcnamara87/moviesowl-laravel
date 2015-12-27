@@ -21,7 +21,7 @@ class UpdateDetailsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Get details for active movies';
 
     /**
      * Create a new command instance.

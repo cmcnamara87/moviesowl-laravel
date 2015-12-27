@@ -25,7 +25,7 @@ class AddMissingImdbIdsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Load details from IMDB.';
 
     protected $posterService;
     /**
