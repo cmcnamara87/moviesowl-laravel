@@ -14,13 +14,12 @@
 
 <style>
     body {
-        background-color: #313748;
-        color: white;
+        /*background-color: #313748;*/
+        /*color: white;*/
     }
     h1, h2, h3, h4 {
         text-align: center;
     }
-
     .thumbnail {
         text-align: center;
     }

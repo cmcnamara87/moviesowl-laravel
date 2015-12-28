@@ -2,7 +2,7 @@
 @section('title', $cinema->location . ' - What\'s Good at the Movies - MoviesOwl')
 @section('content')
 
-    <div class="jumbotron" style="background-color: #1A1E27; text-align: left;">
+    <div class="jumbotron">
         <h1 style="text-align: left;">{{ $cinema->location }}</h1>
         <p>Cinema</p>
     </div>
