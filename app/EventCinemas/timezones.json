@@ -89,6 +89,11 @@
     "city": "Sydney",
     "country": "Australia"
   },
+  "Kotara": {
+    "timezone": "Australia/Sydney",
+    "city": "Sydney",
+    "country": "Australia"
+  },
   "Parramatta": {
     "timezone": "Australia/Sydney",
     "city": "Sydney",
@@ -135,8 +140,18 @@
   },
 
 
+  "Springfield": {
+    "timezone": "Australia/Brisbane",
+    "city": "Brisbane",
+    "country": "Australia"
+  },
 
   "Australia Fair Cinemas": {
+    "timezone": "Australia/Brisbane",
+    "city": "Gold Coast",
+    "country": "Australia"
+  },
+  "Pacific Fair": {
     "timezone": "Australia/Brisbane",
     "city": "Gold Coast",
     "country": "Australia"
