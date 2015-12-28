@@ -24,7 +24,7 @@
                 @foreach ($showing->seats as $seatRow)
                     <div>
                         @foreach ($seatRow as $seat)<div style="position:relative;float:left;width:<?php echo 100 / count($seatRow); ?>%; padding-bottom:<?php echo 100 / count($seatRow); ?>%;">
-                            <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if($seat=='taken') echo 'red'; elseif($seat=='available') echo 'grey'; else echo 'white';?>"></div>
+                            <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if($seat=='taken') echo 'red'; elseif($seat=='available') echo 'grey'; else echo 'transparent';?>"></div>
                         </div>@endforeach
                     </div>
                 @endforeach
