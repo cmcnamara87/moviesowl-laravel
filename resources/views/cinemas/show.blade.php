@@ -2,7 +2,10 @@
 @section('title', $cinema->location . ' - What\'s Good at the Movies - MoviesOwl')
 @section('content')
 
-    <h1>{{ $cinema->location }} (Event)</h1>
+    <div class="jumbotron" style="background-color: #1A1E27; text-align: left;">
+        <h1 style="text-align: left;">{{ $cinema->location }}</h1>
+        <p>Cinema</p>
+    </div>
 
     @foreach ($moviesByRating as $rating => $movies)
         <h2>{{ $rating }} Movies</h2>
