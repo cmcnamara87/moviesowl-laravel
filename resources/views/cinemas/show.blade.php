@@ -6,10 +6,10 @@
 
     @foreach ($moviesByRating as $rating => $movies)
         <h2>{{ $rating }} Movies</h2>
-    @foreach (array_chunk($movies, 4) as $movieRow)
+    @foreach (array_chunk($movies, 3) as $movieRow)
         <div class="row">
             @foreach ($movieRow as $movie)
-                <div class="col-xs-12 col-sm-3">
+                <div class="col-xs-12 col-sm-4">
                     <div class="thumbnail">
                         <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings') }}">
                             <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">

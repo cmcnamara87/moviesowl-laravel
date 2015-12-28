@@ -13,8 +13,15 @@
 
 
 <style>
+    body {
+        background-color: #313748;
+        color: white;
+    }
+    h1, h2, h3, h4 {
+        text-align: center;
+    }
     .container {
-        max-width: 960px;
+        max-width: 760px;
     }
 
     .thumbnail {
