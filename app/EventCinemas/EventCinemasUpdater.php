@@ -62,7 +62,7 @@ class EventCinemasUpdater {
             }
             $cinemaLocationData = $allCinemasLocationData->{$eventCinema->name};
             $cinema = Cinema::create([
-                "location" => $eventCinema->name,
+                "location" => $eventCinema->name . ' Event',
                 "eventcinema_id" => $eventCinema->id,
                 "city" => $cinemaLocationData->city,
                 "timezone" => $cinemaLocationData->timezone,
