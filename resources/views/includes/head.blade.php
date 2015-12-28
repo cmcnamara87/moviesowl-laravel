@@ -20,6 +20,19 @@
     h1, h2, h3, h4 {
         text-align: center;
     }
+
+    .thumbnail {
+        text-align: center;
+    }
+    .thumbnail .caption {
+        color: #666;
+    }
+    .great-movie {
+        background-color:
+    }
+    .tomato-rating {
+        width: 30px;
+    }
     .container {
         max-width: 760px;
     }
