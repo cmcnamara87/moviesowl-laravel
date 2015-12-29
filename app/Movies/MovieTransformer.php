@@ -56,7 +56,8 @@ class MovieTransformer extends TransformerAbstract {
             "director" => $movie->details->director,
             'created_at' => $movie->created_at->timestamp,
             'genre' => $movie->details->genre,
-            'critics' => ""
+            'critics' => "",
+            'new' => $movie->created_at->gt(Carbon::now()->subDays(7))
         ];
     }
 
