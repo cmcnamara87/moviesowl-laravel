@@ -73,7 +73,7 @@ class GoogleMoviesUpdater {
 
             foreach ($cinemaElement->find('.movie') as $movieElement) {
                 $movie = Movie::firstOrCreate([
-                    'title' => $movieElement->find('.name a', 0)->plaintext
+                    'title' => html_entity_decode($movieElement->find('.name a', 0)->plaintext)
                 ]);
                 Log::info('Movie: ' . $movie->title);
 
