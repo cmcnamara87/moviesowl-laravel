@@ -46,7 +46,7 @@ class MovieTransformer extends TransformerAbstract {
         }
 
         $new = $movie->showings()->where('start_time', '>', Carbon::today()->subDays(7))
-            ->where('start_time', '<', Carbon::today())->count() > 0;
+            ->where('start_time', '<', Carbon::today())->count();
 
         return [
             'id' => (int) $movie->id,
