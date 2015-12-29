@@ -48,6 +48,7 @@ class MovieTransformer extends TransformerAbstract {
         return [
             'id' => (int) $movie->id,
             'title' => $movie->title,
+            'new' => $movie->created_at->gt(Carbon::now()->subDays(7)),
             'poster' => $movie->details->poster,
             'tomato_meter' => $movie->details->{"tomato_meter"},
             "synopsis" => $movie->details->synopsis,
@@ -56,8 +57,7 @@ class MovieTransformer extends TransformerAbstract {
             "director" => $movie->details->director,
             'created_at' => $movie->created_at->timestamp,
             'genre' => $movie->details->genre,
-            'critics' => "",
-            'new' => $movie->created_at->gt(Carbon::now()->subDays(7))
+            'critics' => ""
         ];
     }
 
