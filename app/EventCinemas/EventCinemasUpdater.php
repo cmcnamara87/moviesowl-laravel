@@ -9,6 +9,7 @@
 namespace MoviesOwl\EventCinemas;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use MoviesOwl\EventCinemas\EventCinemasApi;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
@@ -83,28 +84,28 @@ class EventCinemasUpdater {
 
 
 
-    /**
-     * @param EventCinemasSession $session
-     * @param Cinema $cinema
-     * @param Movie $movie
-     * @return
-     * @internal param $startTime
-     */
-    public function getOrCreateShowing(EventCinemasSession $session, Cinema $cinema, Movie $movie)
-    {
-        $showing = Showing::firstOrCreate(array('event_session_id' => $session->eventSessionId));
-        $showing->fill([
-            "movie_id" => $movie->id,
-            "cinema_id" => $cinema->id,
-            "start_time" => $session->startTime,
-            "screen_type" => $session->type,
-            "showing_type" => $session->sessionType,
-            "tickets_url" => $session->ticketsUrl,
-            "event_session_id" => $session->eventSessionId
-        ]);
-        $showing->save();
-        return $showing;
-    }
+//    /**
+//     * @param EventCinemasSession $session
+//     * @param Cinema $cinema
+//     * @param Movie $movie
+//     * @return
+//     * @internal param $startTime
+//     */
+//    public function getOrCreateShowing(EventCinemasSession $session, Cinema $cinema, Movie $movie)
+//    {
+//        $showing = Showing::firstOrCreate(array('event_session_id' => $session->eventSessionId));
+//        $showing->fill([
+//            "movie_id" => $movie->id,
+//            "cinema_id" => $cinema->id,
+//            "start_time" => $session->startTime,
+//            "screen_type" => $session->type,
+//            "showing_type" => $session->sessionType,
+//            "tickets_url" => $session->ticketsUrl,
+//            "event_session_id" => $session->eventSessionId
+//        ]);
+//        $showing->save();
+//        return $showing;
+//    }
 
     /**
      * @param $cinema
@@ -112,6 +113,7 @@ class EventCinemasUpdater {
     public function updateMoviesAndShowings($cinema)
     {
         Log::info($cinema->location);
+        $now = Carbon::now()->toDateTimeString();
         $eventMovies = $this->eventCinemasApi->getMovies($cinema);
 
         foreach ($eventMovies as $eventMovie) {
@@ -119,8 +121,26 @@ class EventCinemasUpdater {
             if(!$movie) {
                 continue;
             }
-            foreach ($eventMovie->sessions as $session) {
-                $this->getOrCreateShowing($session, $cinema, $movie);
+
+            // Get all the showings all together
+            $showings = array_map(function($session) use ($movie, $cinema, $now) {
+                return [
+                    "movie_id" => $movie->id,
+                    "cinema_id" => $cinema->id,
+                    "start_time" => $session->startTime,
+                    "screen_type" => $session->type,
+                    "showing_type" => $session->sessionType,
+                    "tickets_url" => $session->ticketsUrl,
+                    "event_session_id" => $session->eventSessionId,
+                    'created_at' => $now,
+                    'updated_at' => $now
+                ];
+            }, $eventMovie->sessions);
+
+            // Chunk it for mass insert
+            $showingsChunks = array_chunk($showings, 100);
+            foreach($showingsChunks as $chunk) {
+                DB::table('showings')->insert($chunk);
             }
         }
     }

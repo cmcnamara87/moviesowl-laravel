@@ -10,6 +10,7 @@ namespace MoviesOwl\GoogleMovies;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 use MoviesOwl\Cinemas\Cinema;
@@ -80,7 +81,9 @@ class GoogleMoviesUpdater {
                 Log::info('Movie: ' . $movie->title);
 
                 $isPm = false;
-                foreach (array_reverse($movieElement->find('.times span[style^="color:"]')) as $showingElement) {
+
+                // Get all the showings all together
+                $showings = array_map(function($showingElement) use ($movie, $cinema, $isPm) {
                     $timeString = $showingElement->plaintext;
                     $parts = explode(':', $timeString);
 
@@ -99,11 +102,17 @@ class GoogleMoviesUpdater {
                     $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
                     Log::info('Session: ' . $startTime->toDateTimeString());
-                    $showing = Showing::firstOrCreate([
+                    return [
                         "movie_id" => $movie->id,
                         "cinema_id" => $cinema->id,
                         "start_time" => $timestamp
-                    ]);
+                    ];
+                }, array_reverse($movieElement->find('.times span[style^="color:"]')));
+
+                // Chunk it for mass insert
+                $showingsChunks = array_chunk($showings, 100);
+                foreach($showingsChunks as $chunk) {
+                    DB::table('showings')->insert($chunk);
                 }
             }
         }
