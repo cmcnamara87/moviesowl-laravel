@@ -41,7 +41,7 @@ class GoogleMoviesUpdater {
     {
         $page = 0;
         do {
-            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10);
+            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . '&date=1';
             $googleMovies = @file_get_contents($url);
             $html = new Htmldom($googleMovies);
             // how many pages
