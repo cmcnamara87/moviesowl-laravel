@@ -40,8 +40,10 @@ class GoogleMoviesUpdater {
     public function updateForCity($city, $country, $timezone)
     {
         $page = 0;
+        // 0 = today, 1 = tomorrow
+        $date = 0;
         do {
-            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . '&date=1';
+            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . "&date=$date";
             $googleMovies = @file_get_contents($url);
             $html = new Htmldom($googleMovies);
             // how many pages
