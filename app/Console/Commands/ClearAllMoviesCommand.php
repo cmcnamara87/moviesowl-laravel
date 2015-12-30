@@ -12,14 +12,14 @@ class ClearAllMoviesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'movies:clearall';
+    protected $signature = 'movies:clear-showings';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Remove cinemas and showings';
+    protected $description = 'Remove showings';
 
     /**
      * Create a new command instance.
@@ -40,7 +40,7 @@ class ClearAllMoviesCommand extends Command
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        DB::table('cinemas')->truncate();
+//        DB::table('cinemas')->truncate();
         DB::table('showings')->truncate();
 
         // supposed to only apply to a single connection and reset it's self
