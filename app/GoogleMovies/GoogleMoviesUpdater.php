@@ -42,7 +42,7 @@ class GoogleMoviesUpdater {
     {
         $page = 0;
         // 0 = today, 1 = tomorrow
-        $date = 0;
+        $date = 1;
         do {
             $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . "&date=$date";
             $googleMovies = @file_get_contents($url);

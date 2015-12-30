@@ -41,7 +41,7 @@ class EventCinemasApi {
     public function getMovies(Cinema $cinema) {
         $eventCinemaId = $cinema->eventcinema_id;
 
-        $dateString = Carbon::today()->toDateString();
+        $dateString = Carbon::tomorrow()->toDateString();
         // https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=48&date=2015-12-31
         $moviesData = json_decode(@file_get_contents("https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=" . $eventCinemaId . "&date=$dateString"));
 
