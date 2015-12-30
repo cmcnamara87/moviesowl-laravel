@@ -13,6 +13,12 @@ class RottenTomatoesApi {
 
     protected $apiKey = "akr6ay2seh8r2uhdjfdrrwm4";
 
+    public function getMovies($title) {
+        $title = urlencode($this->removePunctuation($title));
+        $url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey={$this->apiKey}&q=$title";
+        $movies = json_decode(@file_get_contents($url));
+        return $movies;
+    }
     public function getMovie($title) {
         $title = urlencode($this->removePunctuation($title));
         $url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey={$this->apiKey}&q=$title&page_limit=1";

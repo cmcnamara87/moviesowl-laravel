@@ -11,6 +11,11 @@ namespace MoviesOwl\OMDB;
 
 class OMDBApi {
 
+    public function getMovies($title) {
+        $encodedTitle = urlencode($title);
+        $url = "http://www.omdbapi.com/?s=$encodedTitle&r=json&type=movie";
+        return json_decode(@file_get_contents($url));
+    }
     public function getMovie($title) {
         $encodedTitle = urlencode($title);
         $url = "http://www.omdbapi.com/?t=$encodedTitle&plot=short&r=json&tomatoes=true";

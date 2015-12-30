@@ -34,10 +34,12 @@ class PosterService
         $omdbMovie = $this->omdbApi->getMovieByImdbId($imdbId);
 
         if (!isset($omdbMovie->Poster)) {
+            Log::info('No poster found');
             return null;
         }
         $posterUrl = str_replace("SX300", "SX700", $omdbMovie->Poster);
         if ($posterUrl == "N/A") {
+            Log::info('No poster available');
             return null;
         }
         return $posterUrl;
