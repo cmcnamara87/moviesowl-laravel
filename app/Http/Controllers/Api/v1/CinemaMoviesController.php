@@ -22,23 +22,22 @@ class CinemaMoviesController extends Controller
      */
     public function index(Cinema $cinema)
     {
-        //return Movie::with('showings')->take(1)->get();
         $startingAfter = $this->getStartingAfter();
         $endOfDay = $startingAfter->copy()->endOfDay();
-
-        /*
-         * with(array('showings' => function($q) use ($startingAfter, $endOfDay)
-     	{
-            $q->where('start_time', '>=', $startingAfter->toDateTimeString());
-            $q->where('start_time', '<=', $endOfDay->toDateTimeString());
-            $q->where('cinema_id', $cinemaId);
-
-        }))
-*/
 
         $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
             ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+
+        // There are no movies left for today, try tomorrow (this should be moved to the app in the future)
+        if(!count($movieIds)) {
+            $startingAfter = Carbon::tomorrow();
+            $endOfDay = $startingAfter->copy()->endOfDay();
+
+            $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+                ->where('start_time', '<=', $endOfDay->toDateTimeString())
+                ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+        }
 
         $movies = Movie::whereIn('id', $movieIds)->with(array('details', 'showings' => function($q) use ($startingAfter, $endOfDay, $cinema)
         {
