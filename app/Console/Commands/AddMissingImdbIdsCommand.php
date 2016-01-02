@@ -80,6 +80,7 @@ class AddMissingImdbIdsCommand extends Command
 
         $movies = Movie::whereIn('id', $movieIds)
             ->where('imdb_id', '=', '')
+            ->orWhere('rotten_tomatoes_id', '=', '')
             ->orderBy('id', 'desc')->get();
 
         foreach($movies as $movie) {
@@ -92,80 +93,129 @@ class AddMissingImdbIdsCommand extends Command
 
         // running rotten tomatoes search
         $this->info('Checking rotten tomatoes');
-        $response = $this->rottenTomatoesApi->getMovies($movie->title);
 
-        if(isset($response->movies) && count($response->movies)) {
+        // Update rotten tomatoes
+        $rottenTomatoesId = $this->getRottenTomatoesId($movie->title);
+        if(!$rottenTomatoesId) {
+            $movieTitle = $this->ask('No matches, enter movie title', false);
+            if($movieTitle) {
+                $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);
+            }
+        }
+        if($rottenTomatoesId) {
+            $movie->rotten_tomatoes_id = $rottenTomatoesId;
+            $movie->save();
+            $this->movieDetailsUpdater->updateMovie($movie);
+            $movie = Movie::find($movie->id);
+        }
+
+
+        $url = null;
+
+        // Setup IMDB
+        if($movie->imdb_id) {
+            $this->info('Already has IMDb');
+        } else {
+            $this->info('Checking IMDB');
+            $imdbId = $this->getImdbId($movie->title);
+            if(!$imdbId) {
+                $movieTitle = $this->ask('No matches, enter movie title', false);
+                if($movieTitle) {
+                    $imdbId = $this->getImdbId($movieTitle);
+                }
+            }
+            // No imdb yet, ask manually
+            if(!$imdbId) {
+                $imdbId = $this->ask($movie->title . ' (Manual IMDB ID)', false);
+            }
+            if($imdbId) {
+                $movie->imdb_id = $imdbId;
+                $movie->save();
+            }
+        }
+
+        // Update IMDB
+        Log::info('ID ' . $movie->imdb_id);
+
+        // does the poster exists
+        if($this->posterService->exists($movie->title)) {
+            $this->info('Already has poster');
+        } else {
+            if($movie->imdb_id) {
+                $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
+            }
+                // No url yet
+            if (!$url) {
+                $url = $this->ask($movie->title . ' (URL)', false);
+            }
+            if(!$url) {
+                return;
+            }
+            $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
+            Log::info('Saved poster to disk');
+            if (!$asset) {
+                return;
+            }
+            if(is_null($movie->details) || !count($movie->details) || !$movie->details) {
+                // Create a stub movie details if we havent got one
+                MovieDetails::create([
+                    'title' => $movie->title,
+                    'movie_id' => $movie->id
+                ]);
+            }
+
+            $movieDetails = $movie->details;
+            $movieDetails->poster = $asset;
+            $movieDetails->save();
+            $movie->save();
+        }
+        Log::info('Movie updated');
+    }
+
+    /**
+     * @param $movieTitle
+     * @return array
+     */
+    private function getRottenTomatoesId($movieTitle)
+    {
+        $this->info('Searching Rotten Tomatoes for ' . $movieTitle);
+        $response = $this->rottenTomatoesApi->getMovies($movieTitle);
+
+        if (isset($response->movies) && count($response->movies)) {
             $index = 0;
-            foreach($response->movies as $rtMovie) {
-                $this->info(($index + 1) . ' ' . $rtMovie->title . ' ' . $rtMovie->year . ' ' . $rtMovie->id);
+            foreach ($response->movies as $rtMovie) {
+                $this->info(($index + 1) . ' ' . $rtMovie->year . ' ' . $rtMovie->title . ' ' . $rtMovie->id);
                 $index += 1;
             }
             $rtIndex = $this->ask('Select a movie', false);
-            if($rtIndex) {
-                $movie->rotten_tomatoes_id = $response->movies[$rtIndex - 1]->id;
-                $movie->save();
-                $this->movieDetailsUpdater->updateMovie($movie);
-                $movie = Movie::find($movie->id);
+            if ($rtIndex) {
+                // rotten tomatoes id
+                return $response->movies[$rtIndex - 1]->id;
             }
         }
+        return false;
+    }
 
-
-        // No need to continue, its all done
-        if($movie->imdb_id) {
-            return;
-        }
-
-        // Setup IMDB
-        $url = null;
-
-        $this->info('Checking omdb');
-        $response = $this->OMDBApi->getMovies($movie->title);
-        if(isset($response->Search) && count($response->Search)) {
+    /**
+     * @param $movieTitle
+     * @return mixed|null
+     */
+    private function getImdbId($movieTitle)
+    {
+        $this->info('Searching IMDB for ' . $movieTitle);
+        $response = $this->OMDBApi->getMovies($movieTitle);
+        if (isset($response->Search) && count($response->Search)) {
             $index = 0;
-            foreach($response->Search as $omdbMovie) {
-                $this->info(($index + 1) . ' ' . $omdbMovie->Title . ' ' . $omdbMovie->Year . ' ' . $omdbMovie->imdbID);
+            foreach ($response->Search as $omdbMovie) {
+                $this->info(($index + 1) . ' ' . $omdbMovie->Year . ' ' .  $omdbMovie->Title . ' ' . $omdbMovie->imdbID);
                 $index += 1;
             }
             $movieIndex = $this->ask('Select a movie', false);
-            if($movieIndex) {
-                $movie->imdb_id = $response->Search[$movieIndex - 1]->imdbID;
-                $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
+            if ($movieIndex) {
+                // imdb id
+                return $response->Search[$movieIndex - 1]->imdbID;
             }
         }
-
-        // No imdb yet, ask manually
-        if(!$movie->imdb_id) {
-            $imdbId = $this->ask($movie->title . ' (Manual IMDB ID)', false);
-            if($imdbId) {
-                $movie->imdb_id = $imdbId;
-                $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
-            }
-        }
-        Log::info('ID ' . $movie->imdb_id);
-
-        // No url yet
-        if (!$url) {
-            $url = $this->ask($movie->title . ' (URL)', false);
-        }
-        if(!$url) {
-            return;
-        }
-        $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
-        Log::info('Saved poster to disk');
-        if (!$asset) {
-            return;
-        }
-        if(is_null($movie->details) || !count($movie->details)) {
-            // Create a stub movie details if we havent got one
-            MovieDetails::create([
-                'title' => $movie->title,
-                'movie_id' => $movie->id
-            ]);
-        }
-        $movieDetails = $movie->details;
-        $movieDetails->poster = $asset;
-        $movieDetails->save();
-        $movie->save();
-        Log::info('Movie updated');
+        return false;
     }
 }
