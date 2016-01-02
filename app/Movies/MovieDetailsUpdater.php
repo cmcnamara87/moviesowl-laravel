@@ -40,7 +40,7 @@ class MovieDetailsUpdater {
 
     public function updateAll() {
         Log::info('Updating Movie Details For Today');
-        $startOfDay = Carbon::today();
+        $startOfDay = Carbon::tomorrow();
         $endOfDay = $startOfDay->copy()->endOfDay();
 
         $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
