@@ -35,6 +35,7 @@ class AddMissingImdbIdsCommand extends Command
     protected $rottenTomatoesApi;
     protected $movieDetailsUpdater;
     protected $OMDBApi;
+
     /**
      * Create a new command instance.
      *
@@ -61,12 +62,12 @@ class AddMissingImdbIdsCommand extends Command
     {
         Log::useFiles('php://stdout');
 
-        // Get movie posters for movies that are on today
-        // Do this every day
+        // Get movie posters for movies that are on today and tomorrow
         $startOfDay = Carbon::today();
         $endOfDay = $startOfDay->copy()->tomorrow()->endOfDay();
 
 
+        // Get the movies with the most showings (those are a priority, vs the one off movies)
         $movieIds = DB::table('showings')
             ->select('movie_id', DB::raw('count(*) as total'))
             ->where('start_time', '>=', $startOfDay->toDateTimeString())
@@ -75,20 +76,22 @@ class AddMissingImdbIdsCommand extends Command
             ->orderBy('total', 'desc')
             ->lists('movie_id');
 
-//        $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
-//            ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
+        $movies = array_reduce($movieIds, function ($carry, $movieId) {
+            $movie = Movie::find($movieId);
+            if ($movie->rotten_tomatoes_id == '' || $movie->imdb_id == '') {
+                $this->info($movie->title);
+                $carry[] = $movie;
+            }
+        }, []);
 
-        $movies = Movie::whereIn('id', $movieIds)
-            ->where('imdb_id', '=', '')
-            ->orWhere('rotten_tomatoes_id', '=', '')
-            ->orderBy('id', 'desc')->get();
-
-        foreach($movies as $movie) {
+        // Update each movie
+        foreach ($movies as $movie) {
             $this->updateImdbId($movie);
         }
     }
 
-    private function updateImdbId($movie) {
+    private function updateImdbId($movie)
+    {
         $this->info($movie->title);
 
         // running rotten tomatoes search
@@ -96,13 +99,13 @@ class AddMissingImdbIdsCommand extends Command
 
         // Update rotten tomatoes
         $rottenTomatoesId = $this->getRottenTomatoesId($movie->title);
-        if(!$rottenTomatoesId) {
+        if (!$rottenTomatoesId) {
             $movieTitle = $this->ask('No matches, enter movie title', false);
-            if($movieTitle) {
+            if ($movieTitle) {
                 $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);
             }
         }
-        if($rottenTomatoesId) {
+        if ($rottenTomatoesId) {
             $movie->rotten_tomatoes_id = $rottenTomatoesId;
             $movie->save();
             $this->movieDetailsUpdater->updateMovie($movie);
@@ -113,22 +116,22 @@ class AddMissingImdbIdsCommand extends Command
         $url = null;
 
         // Setup IMDB
-        if($movie->imdb_id) {
+        if ($movie->imdb_id) {
             $this->info('Already has IMDb');
         } else {
             $this->info('Checking IMDB');
             $imdbId = $this->getImdbId($movie->title);
-            if(!$imdbId) {
+            if (!$imdbId) {
                 $movieTitle = $this->ask('No matches, enter movie title', false);
-                if($movieTitle) {
+                if ($movieTitle) {
                     $imdbId = $this->getImdbId($movieTitle);
                 }
             }
             // No imdb yet, ask manually
-            if(!$imdbId) {
+            if (!$imdbId) {
                 $imdbId = $this->ask($movie->title . ' (Manual IMDB ID)', false);
             }
-            if($imdbId) {
+            if ($imdbId) {
                 $movie->imdb_id = $imdbId;
                 $movie->save();
             }
@@ -138,17 +141,17 @@ class AddMissingImdbIdsCommand extends Command
         Log::info('ID ' . $movie->imdb_id);
 
         // does the poster exists
-        if($this->posterService->exists($movie->title)) {
+        if ($this->posterService->exists($movie->title)) {
             $this->info('Already has poster');
         } else {
-            if($movie->imdb_id) {
+            if ($movie->imdb_id) {
                 $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
             }
-                // No url yet
+            // No url yet
             if (!$url) {
                 $url = $this->ask($movie->title . ' (URL)', false);
             }
-            if(!$url) {
+            if (!$url) {
                 return;
             }
             $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
@@ -156,7 +159,7 @@ class AddMissingImdbIdsCommand extends Command
             if (!$asset) {
                 return;
             }
-            if(is_null($movie->details) || !count($movie->details) || !$movie->details) {
+            if (is_null($movie->details) || !count($movie->details) || !$movie->details) {
                 // Create a stub movie details if we havent got one
                 MovieDetails::create([
                     'title' => $movie->title,
@@ -207,7 +210,7 @@ class AddMissingImdbIdsCommand extends Command
         if (isset($response->Search) && count($response->Search)) {
             $index = 0;
             foreach ($response->Search as $omdbMovie) {
-                $this->info(($index + 1) . ' ' . $omdbMovie->Year . ' ' .  $omdbMovie->Title . ' ' . $omdbMovie->imdbID);
+                $this->info(($index + 1) . ' ' . $omdbMovie->Year . ' ' . $omdbMovie->Title . ' ' . $omdbMovie->imdbID);
                 $index += 1;
             }
             $movieIndex = $this->ask('Select a movie', false);
