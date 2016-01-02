@@ -2,13 +2,15 @@
 @section('title', 'Book Tickets ' . $movie->title . ' at ' .$cinema->location)
 @section('content')
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>{{ $cinema->location }}</h1>
-            <p>{{ $cinema->city }}, {{ $cinema->country }} Cinema</p>
-        </div>
-    </div>
+    @include('includes.cinema-jumbotron')
 
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ URL::to('cinemas/') }}">{{ $cinema->city }}</a></li>
+            <li><a href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . $startingAfter->timestamp) }}">{{ $cinema->location }}</a></li>
+            <li class="active">{{ $movie->title }}</li>
+        </ol>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">

@@ -57,15 +57,23 @@
     {{--</div>--}}
     {{----}}
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>{{ $cinema->location }}</h1>
-            <p>{{ $cinema->city }}, {{ $cinema->country }} Cinema</p>
-        </div>
-    </div>
+    @include('includes.cinema-jumbotron')
 
     <div class="container">
-        @if($showing->seats)
+        <ol class="breadcrumb">
+            <li><a href="{{ URL::to('cinemas/') }}">{{ $cinema->city }}</a></li>
+            <li><a href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . $startingAfter->timestamp) }}">{{ $cinema->location }}</a></li>
+            <li>
+                <a href="{{ URL::to('cinemas/'.$cinema->id .'/movies/' . $movie->id .'/showings?starting_after=' . $startingAfter->timestamp) }}">
+                    {{ $movie->title }}
+                </a>
+            </li>
+            <li class="active">{{ $showing->start_time->format('h:i A') }}</li>
+        </ol>
+    </div>
+
+
+    <div class="container">
             <div style="padding: 48px;border:1px solid #ddd;text-align: center;">
                 <div class="row">
                     <div class="col-sm-4">
@@ -73,9 +81,7 @@
                     </div>
                     <div class="col-sm-8">
                         <h3 style="margin-top:0;margin-bottom: 10px;">
-                            <a href="{{ URL::to('cinemas/'.$cinema->id .'/movies/' . $movie->id .'/showings') }}">
-                                {{ $movie->title }}
-                            </a>
+                            {{ $movie->title }}
                         </h3>
 
                         <p class="text-muted"
@@ -100,6 +106,7 @@
                             </a>
                         </div>
 
+                        @if($showing->seats)
                         <div style="text-align:center;margin-bottom:24px;">
                             Front of Cinema
                         </div>
@@ -107,7 +114,7 @@
                             <div>
                                 @foreach ($seatRow as $seat)
                                     <div style="position:relative;float:left;width:<?php echo 100 / count($seatRow); ?>%; padding-bottom:<?php echo 100 / count($seatRow); ?>%;">
-                                        <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if ($seat == 'taken') echo 'red'; elseif ($seat == 'available') echo 'grey';
+                                        <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if ($seat == 'taken') echo '#F76394'; elseif ($seat == 'available') echo 'grey';
                                         else echo 'transparent';?>"></div>
                                     </div>@endforeach
                             </div>
@@ -115,10 +122,11 @@
                         <div style="text-align:center;">
                             Rear of Cinema
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
-        @endif
+
     </div>
 
 

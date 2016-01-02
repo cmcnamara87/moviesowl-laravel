@@ -3,6 +3,7 @@
 namespace MoviesOwl\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 use MoviesOwl\Repos\Showing\ShowingRepository;
 use MoviesOwl\Service\SeatingService;
 use MoviesOwl\Showings\Showing;
@@ -37,12 +38,19 @@ class CinemaMovieShowingsController extends Controller {
      */
 	public function index(Cinema $cinema, Movie $movie)
 	{
-        $showings = $this->showingRepo->getWatchableAtCinema($movie->id, $cinema->id, Carbon::now());
+        $startingAfter = Input::get('starting_after');
+        if ($startingAfter) {
+            $startingAfter = Carbon::createFromTimestamp($startingAfter);
+        } else {
+            // by default show movies that have just started up to 20 minutes ago.
+            $startingAfter = Carbon::now()->subMinutes(20);
+        }
+        $showings = $this->showingRepo->getWatchableAtCinema($movie->id, $cinema->id, $startingAfter);
 //        foreach($showings as $showing) {
 //            // FIXME: might spam event...need to investigate this
 //            $this->seatingService->updateSeating($showing);
 //        }
-        return view('showings.index', compact('cinema', 'movie', 'showings'));
+        return view('showings.index', compact('cinema', 'movie', 'showings', 'startingAfter'));
 	}
 
 	/**

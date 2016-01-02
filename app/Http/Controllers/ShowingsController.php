@@ -2,6 +2,8 @@
 
 namespace MoviesOwl\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 use MoviesOwl\Service\SeatingService;
 use MoviesOwl\Showings\Showing;
 
@@ -58,10 +60,18 @@ class ShowingsController extends Controller {
      */
 	public function show(Showing $showing)
 	{
+        $startingAfter = Input::get('starting_after');
+        if ($startingAfter) {
+            $startingAfter = Carbon::createFromTimestamp($startingAfter);
+        } else {
+            // by default show movies that have just started up to 20 minutes ago.
+            $startingAfter = Carbon::now()->subMinutes(20);
+        }
+
         $movie = $showing->movie;
         $cinema = $showing->cinema;
         $this->seatingService->updateSeating($showing);
-        return view('showings.show', compact('showing', 'movie', 'cinema'));
+        return view('showings.show', compact('showing', 'movie', 'cinema', 'startingAfter'));
 	}
 
 	/**

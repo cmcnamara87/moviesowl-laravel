@@ -2,20 +2,21 @@
 @section('title', $cinema->location . ' - What\'s Good at the Movies - MoviesOwl')
 @section('content')
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>{{ $cinema->location }}</h1>
-            <p>{{ $cinema->city }}, {{ $cinema->country }} Cinema</p>
-        </div>
-    </div>
+    @include('includes.cinema-jumbotron')
 
     <div class="container">
 
         @if(!count($movies))
             <div style="text-align: center">
                 <p class="text-muted">
-                    No more movies showing today, check back tomorrow.
+                    No more movies showing today.
                 </p>
+                <p>
+                    <a  class="btn btn-primary btn-lg"  href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . \Carbon\Carbon::tomorrow()->timestamp) }}">
+                        View Tomorrow
+                    </a>
+                </p>
+
                 <div>
                     <img style="width:100%; max-width:250px;" src="{{ URL::asset('images/no-movies-owl.png') }}" alt=""/>
                 </div>
@@ -38,7 +39,7 @@
                     @foreach ($movieRow as $movie)
                         <div class="col-xs-12 col-sm-3">
                             <div class="thumbnail">
-                                <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings') }}">
+                                <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">
                                     <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
                                 </a>
                                 <div class="caption {{ $rating }}">
