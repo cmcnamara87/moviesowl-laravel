@@ -78,8 +78,9 @@ class AddMissingImdbIdsCommand extends Command
 
         $movies = array_reduce($movieIds, function ($carry, $movieId) {
             $movie = Movie::find($movieId);
-            if ($movie->rotten_tomatoes_id == '' || $movie->imdb_id == '') {
-                $this->info($movie->title);
+            $this->info($movie->title . ' ' . $movie->rotten_tomatoes_id . ' ' . $movie->imdb_id);
+            if ($movie->rotten_tomatoes_id == '' || $movie->rotten_tomatoes_id == 0 || $movie->imdb_id == '') {
+                $this->info('- Missing ' . $movie->title);
                 $carry[] = $movie;
             }
             return $carry;
