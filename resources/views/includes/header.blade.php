@@ -13,16 +13,16 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 {{--<li class="active"><a href="{{ URL::to('/movies') }}">Movies <span class="sr-only">(current)</span></a></li>--}}
-                <li><a href="{{ URL::to('/cinemas') }}">Cinemas</a></li>
+                <li><a href="{{ URL::to('/cinemas') }}">All Cinemas</a></li>
             </ul>
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            {{--<form class="navbar-form navbar-right" role="search">--}}
+                {{--<div class="form-group">--}}
+                    {{--<input type="text" class="form-control" placeholder="Search">--}}
+                {{--</div>--}}
+                {{--<button type="submit" class="btn btn-default">Submit</button>--}}
+            {{--</form>--}}
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
