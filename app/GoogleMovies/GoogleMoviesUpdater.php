@@ -59,6 +59,8 @@ class GoogleMoviesUpdater {
      */
     public function processPage($html, $city, $country, $timezone)
     {
+        $now = Carbon::now()->toDateTimeString();
+
 // Find all article blocks
         foreach ($html->find('.theater') as $cinemaElement) {
             $cinemaName = $cinemaElement->find('h2.name a', 0)->plaintext;
@@ -82,8 +84,10 @@ class GoogleMoviesUpdater {
 
                 $isPm = false;
 
+                $showTimeElements = array_reverse($movieElement->find('.times span[style^="color:"]'));
                 // Get all the showings all together
-                $showings = array_map(function($showingElement) use ($movie, $cinema, $isPm) {
+                $showings = [];
+                foreach($showTimeElements as $showingElement) {
                     $timeString = $showingElement->plaintext;
                     $parts = explode(':', $timeString);
 
@@ -98,16 +102,18 @@ class GoogleMoviesUpdater {
                         $hours += 12;
                     }
                     $minutes = intval($parts[1]);
-                    $timestamp = Carbon::today()->timestamp + ($hours * 60 * 60) + ($minutes * 60);
+                    $timestamp = Carbon::tomorrow()->timestamp + ($hours * 60 * 60) + ($minutes * 60);
                     $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
                     Log::info('Session: ' . $startTime->toDateTimeString());
-                    return [
+                    $showings[] = [
                         "movie_id" => $movie->id,
                         "cinema_id" => $cinema->id,
-                        "start_time" => $timestamp
+                        "start_time" => $startTime->toDateTimeString(),
+                        'created_at' => $now,
+                        'updated_at' => $now
                     ];
-                }, array_reverse($movieElement->find('.times span[style^="color:"]')));
+                }
 
                 // Chunk it for mass insert
                 $showingsChunks = array_chunk($showings, 100);
