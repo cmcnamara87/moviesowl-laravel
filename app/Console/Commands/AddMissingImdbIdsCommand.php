@@ -64,7 +64,7 @@ class AddMissingImdbIdsCommand extends Command
         // Get movie posters for movies that are on today
         // Do this every day
         $startOfDay = Carbon::today();
-        $endOfDay = $startOfDay->copy()->endOfDay();
+        $endOfDay = $startOfDay->copy()->tomorrow()->endOfDay();
 
 
         $movieIds = DB::table('showings')
