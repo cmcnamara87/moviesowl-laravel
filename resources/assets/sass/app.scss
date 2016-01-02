@@ -11,6 +11,10 @@ $navbar-border-radius:             0;
 
 $licorice: #313748;
 $crimson: #F76394;
+
+$brand-primary:         $crimson;
+//$brand-info: $crimson;
+
 $navbar-default-color:            white;
 $navbar-default-bg:               $licorice;
 // $navbar-default-border:            darken($navbar-default-bg, 6.5%)
@@ -183,14 +187,14 @@ h3 {
   }
   .time__3d {
     @extend .time__part;
-    background-color: #FF3E3E;
-    color: white;
+//    background-color: #FF3E3E;
+    color: $brand-primary;
     margin-left:-5px;
   }
   .time__gold-class {
     @extend .time__part;
-    background-color: #FFD04A;
-    color: #8E6900;
+//    background-color: white; //FFD04A;
+    color: #FFBD00;
     margin-left:-5px;
   }
   .time__vmax {
