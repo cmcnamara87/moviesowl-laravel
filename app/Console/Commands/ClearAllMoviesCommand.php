@@ -40,11 +40,12 @@ class ClearAllMoviesCommand extends Command
      */
     public function handle()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
 
         $this->info('1. Today');
         $this->info('2. Tomorrow');
         $this->info('3. Both');
+        $this->info('4. All');
         $dayToClear = $this->ask('Clear', false);
 
         if(!$dayToClear) {
@@ -63,6 +64,12 @@ class ClearAllMoviesCommand extends Command
             $startingAfter = Carbon::today();
             $endOfDay = $startingAfter->copy()->tomorrow()->endOfDay();
         }
+        if($dayToClear == '4') {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            DB::table('showings')->truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            return;
+        }
 
         $showings = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
@@ -74,6 +81,6 @@ class ClearAllMoviesCommand extends Command
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
     }
 }
