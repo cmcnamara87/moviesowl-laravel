@@ -77,9 +77,12 @@ class GoogleMoviesUpdater {
             ]);
 
             foreach ($cinemaElement->find('.movie') as $movieElement) {
+                $title = html_entity_decode($movieElement->find('.name a', 0)->plaintext);
+                $title = str_replace('&#39;', "'", $title);
                 $movie = Movie::firstOrCreate([
-                    'title' => html_entity_decode($movieElement->find('.name a', 0)->plaintext)
+                    'title' => $title
                 ]);
+                
                 Log::info('Movie: ' . $movie->title);
 
                 $isPm = false;
