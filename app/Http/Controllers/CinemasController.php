@@ -126,7 +126,7 @@ class CinemasController extends Controller {
 //        $movies = $this->movieRepo->getWatchableAtCinema($cinema->id);
 //        $movies = Movie::watchable($now)->orderBy('tomato_meter', 'desc')->get();
 
-        return view('cinemas.show', compact('moviesByRating', 'cinema'));
+        return view('cinemas.show', compact('moviesByRating', 'cinema', 'movies'));
 	}
 
 	/**

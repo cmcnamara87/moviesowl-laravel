@@ -11,6 +11,18 @@
 
     <div class="container">
 
+        @if(!count($movies))
+            <div style="text-align: center">
+                <p class="text-muted">
+                    No more movies showing today, check back tomorrow.
+                </p>
+                <div>
+                    <img style="width:100%; max-width:250px;" src="{{ URL::asset('images/no-movies-owl.png') }}" alt=""/>
+                </div>
+
+            </div>
+
+        @endif
         {{--<img class="owl" src="{{ URL::asset('images/owl.png') }}" alt=""/>--}}
         @foreach ($moviesByRating as $rating => $movies)
             <div class="group">
