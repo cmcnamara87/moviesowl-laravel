@@ -10,17 +10,25 @@
     </div>
 
     <div class="container">
-
-        @foreach ($cinemasByCity as $city => $cinemas)
-            <h3>{{ $city }}</h3>
-            <ul>
-                @foreach ($cinemas as $cinema)
-                    <li>
-                        <a href="{{ URL::to('cinemas/' . $cinema->slug) }}">{{ $cinema->location }}</a>
-                    </li>
+        <?php $count = 0; ?>
+        <div class="row">
+            <div class="col-sm-4">
+                @foreach ($cinemasByCity as $city => $cinemas)
+                    <?php $count += 1; ?>
+                    @if ($count % (count($cinemasByCity) / 3) == 0)
+                        </div><div class="col-sm-4">
+                    @endif
+                    <h3>{{ $city }}</h3>
+                    <ul>
+                    @foreach ($cinemas as $cinema)
+                        <li>
+                            <a href="{{ URL::to('cinemas/' . $cinema->slug) }}">{{ $cinema->location }}</a>
+                        </li>
+                    @endforeach
+                </ul>
                 @endforeach
-            </ul>
-        @endforeach
+            </div>
+        </div>
     </div>
 
 @stop
