@@ -65,7 +65,19 @@ class LoadMoviesCommand extends Command
     public function handle()
     {
         Log::useFiles('php://stdout');
-        $this->info('Running EventCinemas Update');
+        $this->info('Running Cinema Update');
+
+        $this->info('Clearing all sessions for tomorrow');
+        $startingAfter = Carbon::tomorrow();
+        $endOfDay = $startingAfter->copy()->endOfDay();
+        $showings = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->get();
+
+        foreach($showings as $showing) {
+            $showing->delete();
+        }
+
         $this->eventCinemasUpdater->update();
         $this->googleMoviesUpdater->update();
         $this->movieDetailsUpdater->updateAll();
