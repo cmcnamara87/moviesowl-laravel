@@ -5678,7 +5678,7 @@ tbody.collapse.in {
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333;
+  color: white;
   background-color: transparent;
 }
 
@@ -5728,7 +5728,7 @@ tbody.collapse.in {
 
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #333;
+    color: white;
     background-color: transparent;
   }
 
@@ -5752,7 +5752,7 @@ tbody.collapse.in {
 }
 
 .navbar-default .navbar-link:hover {
-  color: #333;
+  color: white;
 }
 
 .navbar-default .btn-link {
@@ -5761,7 +5761,7 @@ tbody.collapse.in {
 
 .navbar-default .btn-link:hover,
 .navbar-default .btn-link:focus {
-  color: #333;
+  color: white;
 }
 
 .navbar-default .btn-link[disabled]:hover,
@@ -8380,7 +8380,7 @@ h3 {
   position: absolute;
   bottom: 0;
   text-align: center;
-  padding: 12px 48px;
+  padding: 0px 48px;
   width: 100%;
   opacity: 0.95;
   background-color: #313748;
