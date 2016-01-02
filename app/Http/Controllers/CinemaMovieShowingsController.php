@@ -46,11 +46,26 @@ class CinemaMovieShowingsController extends Controller {
             $startingAfter = Carbon::now()->subMinutes(20);
         }
         $showings = $this->showingRepo->getWatchableAtCinema($movie->id, $cinema->id, $startingAfter);
+
+        $showingsByTime = array_reduce($showings->all(), function($carry, $showing) {
+            if($showing->start_time->hour < 12) {
+                $carry['morning'][] = $showing;
+            } else if($showing->start_time->hour < 17) {
+                $carry['afternoon'][] = $showing;
+            } else {
+                $carry['night'][] = $showing;
+            }
+            return $carry;
+        }, [
+            'morning' => [],
+            'afternoon' => [],
+            'night' => []
+        ]);
 //        foreach($showings as $showing) {
 //            // FIXME: might spam event...need to investigate this
 //            $this->seatingService->updateSeating($showing);
 //        }
-        return view('showings.index', compact('cinema', 'movie', 'showings', 'startingAfter'));
+        return view('showings.index', compact('cinema', 'movie', 'showingsByTime', 'startingAfter'));
 	}
 
 	/**
