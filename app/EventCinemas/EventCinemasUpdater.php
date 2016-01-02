@@ -54,7 +54,8 @@ class EventCinemasUpdater {
 
     function getOrCreateCinema($eventCinema)
     {
-        $cinema = Cinema::where('location', $eventCinema->name)->first();
+        $cinemaName = $eventCinema->name  . ' Event';
+        $cinema = Cinema::where('location', $cinemaName)->first();
         if (!$cinema) {
             $allCinemasLocationData = json_decode(file_get_contents(app_path() . '/EventCinemas/timezones.json'));
             if(!isset($allCinemasLocationData->{$eventCinema->name})) {
@@ -63,7 +64,7 @@ class EventCinemasUpdater {
             }
             $cinemaLocationData = $allCinemasLocationData->{$eventCinema->name};
             $cinema = Cinema::create([
-                "location" => $eventCinema->name . ' Event',
+                "location" => $cinemaName,
                 "eventcinema_id" => $eventCinema->id,
                 "city" => $cinemaLocationData->city,
                 "timezone" => $cinemaLocationData->timezone,
