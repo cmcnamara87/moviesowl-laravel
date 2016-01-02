@@ -131,10 +131,11 @@ class EventCinemasUpdater {
                     "movie_id" => $movie->id,
                     "cinema_id" => $cinema->id,
                     "start_time" => $session->startTime->toDateTimeString(),
-                    "screen_type" => $session->type,
-                    "showing_type" => $session->sessionType,
+                    "screen_type" => $session->type, // gold class, vmax
+                    "showing_type" => $session->sessionType, // 3d
                     "tickets_url" => $session->ticketsUrl,
                     "event_session_id" => $session->eventSessionId,
+                    "cinema_size" => Showing::getScreenSizeFromSeats($session->seatsAvailable),
                     'created_at' => $now,
                     'updated_at' => $now
                 ];

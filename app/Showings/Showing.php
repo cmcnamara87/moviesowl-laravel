@@ -36,11 +36,18 @@ class Showing extends \Eloquent {
     }
     public function setSeatsAttribute($seats)
     {
+        $seatsCount = 0;
+        foreach($seats as $row) {
+            foreach($row as $seat) {
+                if($seat != 'spacer') {
+                    $seatsCount++;
+                }
+            }
+        }
         $this->_seats = $seats;
         $this->attributes['seats'] = json_encode($this->_seats);
-        $seatsCount = count($seats, COUNT_RECURSIVE);
         $this->attributes['seats_count'] = $seatsCount;
-        $this->attributes['cinema_size'] =  $this->getScreenSizeFromSeats($seatsCount);
+        $this->attributes['cinema_size'] =  Showing::getScreenSizeFromSeats($seatsCount);
         $this->attributes['seats_updated_at'] = Carbon::now();
         $this->attributes['percent_full'] = 0;
 
@@ -82,7 +89,7 @@ class Showing extends \Eloquent {
      * @return string
      * @internal param $seatCount
      */
-    public function getScreenSizeFromSeats($seatsCount)
+    public static function getScreenSizeFromSeats($seatsCount)
     {
         if(!isset($seatsCount) || $seatsCount == 0) {
             return 'unknown';

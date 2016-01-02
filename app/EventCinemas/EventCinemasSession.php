@@ -15,13 +15,15 @@ class EventCinemasSession {
     public $sessionType;
     public $ticketsUrl;
     public $eventSessionId;
+    public $seatsAvailable;
 
-    function __construct($startTime, $screenType, $sessionType, $eventSessionId, $ticketsUrl)
+    function __construct($startTime, $screenType, $sessionType, $eventSessionId, $ticketsUrl, $seatsAvailable)
     {
         $this->startTime = $startTime;
         $this->type = $screenType;
         $this->sessionType = $sessionType;
         $this->eventSessionId = $eventSessionId;
         $this->ticketsUrl = $ticketsUrl;
+        $this->seatsAvailable = $seatsAvailable;;
     }
 }

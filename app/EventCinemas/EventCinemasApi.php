@@ -54,7 +54,8 @@ class EventCinemasApi {
                     $this->getTypeName($sessionData->ScreenTypeId),
                     $sessionData->Is3d == true ? '3D' : 'standard',
                     $sessionData->Id,
-                    $ticketsUrl
+                    $ticketsUrl,
+                    $sessionData->SeatsAvailable ? $sessionData->SeatsAvailable : 0
                 );
                 return $eventCinemaSession;
             }, $movieData->CinemaModels[0]->Sessions);
