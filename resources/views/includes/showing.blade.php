@@ -1,17 +1,17 @@
-<a class="time" href="{{ URL::to('showings/'. $showing->id . '?starting_after=' . $startingAfter->timestamp) }}">
+<a data-showing-id="{{ $showing->id }}" class="time" href="{{ URL::to('showings/'. $showing->id . '?starting_after=' . $startingAfter->timestamp) }}">
                             <span class="time__time">
                                 {{ $showing->start_time->format('h:i A') }}
                             </span>
 
     @if($showing->screen_type != "standard")
         <span class="time__{{ str_replace(" ", "-", $showing->screen_type) }}">
-                                {{ $showing->screen_type }}
-                            </span>
+            {{ $showing->screen_type }}
+        </span>
     @endif
     @if($showing->showing_type != "standard" && $showing->showing_type != "")
         <span class="time__3d">
-                                {{ $showing->showing_type }}
-                            </span>
+            {{ $showing->showing_type }}
+        </span>
     @endif
 
     @if($showing->cinema_size && $showing->screen_type == 'standard')

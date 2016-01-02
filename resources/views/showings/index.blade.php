@@ -74,4 +74,21 @@
         </div>
 
     </div>
+
+    <script>
+
+        $('.time').each(function() {
+            // get showing id
+            var $time = $(this);
+            var showingId = $time.attr('data-showing-id');
+            $.get('/api/v1/showings/' + showingId, function(data) {
+                $time.find('.time__type').text(data.cinema_size + ' cinema');
+
+                $time.find('.progress-bar').css('width', (data.percent_full) + '%')
+                        .text(Math.round(data.percent_full) + '% Full');
+//            $('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
+            });
+        });
+
+    </script>
 @stop

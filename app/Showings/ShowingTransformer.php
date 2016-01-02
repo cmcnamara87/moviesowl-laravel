@@ -16,14 +16,6 @@ class ShowingTransformer extends TransformerAbstract {
 
 
     public function transform(Showing $showing) {
-        $availableCount = 0;
-        foreach($showing->seats as $row) {
-            foreach($row as $seat) {
-                if($seat == 'available') {
-                    $availableCount += 1;
-                }
-            }
-        }
 
         return [
             'id'                => (int)$showing->id,
@@ -35,7 +27,7 @@ class ShowingTransformer extends TransformerAbstract {
             "cinema_size"       => $showing->cinema_size,
             "seats"             => $showing->seats,
             "seats_count"       => $showing->seats_count,
-            "full"              => floor($availableCount / $showing->seats_count * 100),
+            "percent_full"      => $showing->percent_full,
             "seats_updated_at"  => $showing->seats_updated_at->timestamp,
             "event_session_id"  => $showing->event_session_id
         ];
