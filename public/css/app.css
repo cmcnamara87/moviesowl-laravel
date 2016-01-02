@@ -8363,6 +8363,7 @@ button.close {
 }
 
 .thumbnail .caption {
+  transition: all 0.5s;
   position: absolute;
   bottom: 0;
   text-align: center;

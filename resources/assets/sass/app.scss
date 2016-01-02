@@ -126,8 +126,14 @@ $jumbotron-bg:                   $licorice;
 }
 
 .thumbnail {
+//  overflow: hidden;
+  &:hover {
+    .caption {
+    }
+  }
   position: relative;
   .caption {
+    transition: all 0.5s;
     position: absolute;
     bottom: 0;
     text-align: center;

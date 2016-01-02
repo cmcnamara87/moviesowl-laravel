@@ -21,10 +21,10 @@
                 <p class="text-muted">Movies with {{ $rating }} Rotten Tomatoes and IMDB Ratings</p>
             </div>
 
-            @foreach (array_chunk($movies, 3) as $movieRow)
+            @foreach (array_chunk($movies, 4) as $movieRow)
                 <div class="row">
                     @foreach ($movieRow as $movie)
-                        <div class="col-xs-12 col-sm-4">
+                        <div class="col-xs-12 col-sm-3">
                             <div class="thumbnail">
                                 <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings') }}">
                                     <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
