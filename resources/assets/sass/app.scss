@@ -1,4 +1,3 @@
-
 $font-size-base:          16px;
 $line-height-base:        1.5;
 $thumbnail-padding:           0;
@@ -73,6 +72,17 @@ $jumbotron-bg:                   $licorice;
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+h1 {
+  font-weight: 100;
+  text-align: center;
+}
+h2 {
+  font-weight: 200;
+  text-align: center;
+}
+h3 {
+  font-weight: 200;
+}
 .owl {
   width:20px;
 }
@@ -109,14 +119,12 @@ $jumbotron-bg:                   $licorice;
   text-align: center;
 }
 
-
 .jumbotron {
   text-align: center;
   h1 {
     margin-top: 2px;
     font-weight: 100;
     margin-bottom: 21px;
-    font-weight: 100;
   }
   p {
     font-size: 12px;
@@ -155,5 +163,52 @@ $jumbotron-bg:                   $licorice;
         width: 23px;
       }
     }
+  }
+}
+
+
+.time {
+  display: inline-block;
+  border: 1px solid black;
+  margin-right: 12px;
+  margin-bottom: 24px;
+  &:hover {
+    text-decoration: none;
+  }
+  .time__part {
+    display: inline-block;
+    padding: 12px 12px;
+    background-color: $licorice;
+    text-transform: capitalize;
+  }
+  .time__3d {
+    @extend .time__part;
+    background-color: #FF3E3E;
+    color: white;
+    margin-left:-5px;
+  }
+  .time__gold-class {
+    @extend .time__part;
+    background-color: #FFD04A;
+    color: #8E6900;
+    margin-left:-5px;
+  }
+  .time__vmax {
+    @extend .time__part;
+    background-color: #737B90;
+    color: white;
+    margin-left:-5px;
+  }
+  .time__type {
+    @extend .time__part;
+    background-color: white;
+  }
+  .time__time {
+    @extend .time__part;
+    color: white;
+  }
+  .progress {
+    margin-bottom: 0;
+    border-radius: 0;
   }
 }

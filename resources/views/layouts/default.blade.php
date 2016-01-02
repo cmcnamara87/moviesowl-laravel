@@ -11,11 +11,9 @@
     <div id="main">
         @yield('content')
     </div>
-
     <footer>
         @include('includes.footer')
     </footer>
-
 </div>
 @include('includes.analyticstracking')
 </body>

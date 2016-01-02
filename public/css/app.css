@@ -8300,6 +8300,20 @@ button.close {
   }
 }
 
+h1 {
+  font-weight: 100;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 200;
+  text-align: center;
+}
+
+h3 {
+  font-weight: 200;
+}
+
 .owl {
   width: 20px;
 }
@@ -8349,7 +8363,6 @@ button.close {
   margin-top: 2px;
   font-weight: 100;
   margin-bottom: 21px;
-  font-weight: 100;
 }
 
 .jumbotron p {
@@ -8386,4 +8399,58 @@ button.close {
 
 .thumbnail .caption p img {
   width: 23px;
+}
+
+.time {
+  display: inline-block;
+  border: 1px solid black;
+  margin-right: 12px;
+  margin-bottom: 24px;
+}
+
+.time:hover {
+  text-decoration: none;
+}
+
+.time .time__part,
+.time .time__3d,
+.time .time__gold-class,
+.time .time__vmax,
+.time .time__type,
+.time .time__time {
+  display: inline-block;
+  padding: 12px 12px;
+  background-color: #313748;
+  text-transform: capitalize;
+}
+
+.time .time__3d {
+  background-color: #FF3E3E;
+  color: white;
+  margin-left: -5px;
+}
+
+.time .time__gold-class {
+  background-color: #FFD04A;
+  color: #8E6900;
+  margin-left: -5px;
+}
+
+.time .time__vmax {
+  background-color: #737B90;
+  color: white;
+  margin-left: -5px;
+}
+
+.time .time__type {
+  background-color: white;
+}
+
+.time .time__time {
+  color: white;
+}
+
+.time .progress {
+  margin-bottom: 0;
+  border-radius: 0;
 }

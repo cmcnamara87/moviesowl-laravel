@@ -10,6 +10,8 @@
 <!-- webmaster verification -->
 <meta name="google-site-verification" content="5qA-_e3WDYgZXrQAjROFaafiyXPLWsWTQ5Xu75rq154" />
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}" />
 
 
