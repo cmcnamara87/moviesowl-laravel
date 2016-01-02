@@ -124,10 +124,12 @@ class EventCinemasUpdater {
 
             // Get all the showings all together
             $showings = array_map(function($session) use ($movie, $cinema, $now) {
+                Log::info('Session: ' . $session->startTime->toDateTimeString());
+
                 return [
                     "movie_id" => $movie->id,
                     "cinema_id" => $cinema->id,
-                    "start_time" => $session->startTime,
+                    "start_time" => $session->startTime->toDateTimeString(),
                     "screen_type" => $session->type,
                     "showing_type" => $session->sessionType,
                     "tickets_url" => $session->ticketsUrl,
