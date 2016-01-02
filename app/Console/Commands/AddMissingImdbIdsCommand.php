@@ -82,6 +82,7 @@ class AddMissingImdbIdsCommand extends Command
                 $this->info($movie->title);
                 $carry[] = $movie;
             }
+            return $carry;
         }, []);
 
         // Update each movie
