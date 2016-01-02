@@ -23,13 +23,23 @@
                 {{ $movie->synopsis }}
 
                 @foreach ($showingsByTime as $timeOfDay => $showings)
-                <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 24px;">{{ $timeOfDay }}</h4>
-                <ul class="list-unstyled">
+                    <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 24px;">{{ $timeOfDay }}</h4>
+                    @foreach (array_chunk($showings, 2) as $showingsRow)
+                        <div class="row">
+                            @foreach ($showingsRow as $showing)
+                            <div class="col-sm-6">
+                                @include('includes.showing')
+                            </div>
+                            @endforeach
+                        </div>
+                    @endforeach
 
-                        @foreach ($showings as $showing)
-                            @include('includes.showing')
-                        @endforeach
-                </ul>
+                {{--<ul class="list-unstyled">--}}
+                        {{----}}
+                        {{--@foreach ($showings as $showing)--}}
+                            {{----}}
+                        {{--@endforeach--}}
+                {{--</ul>--}}
                 @endforeach
 
                 {{--<a class="btn btn-default" href="{{ URL::to('movies/' . $movie->id) }}">Find other cinemas</a>--}}

@@ -8402,8 +8402,8 @@ h3 {
 }
 
 .time {
-  display: inline-block;
-  border: 1px solid black;
+  display: block;
+  border: 1px solid #ddd;
   margin-right: 12px;
   margin-bottom: 24px;
 }
@@ -8420,7 +8420,7 @@ h3 {
 .time .time__time {
   display: inline-block;
   padding: 12px 12px;
-  background-color: #313748;
+  padding-right: 0;
   text-transform: capitalize;
 }
 
@@ -8430,13 +8430,12 @@ h3 {
 }
 
 .time .time__gold-class {
-  color: #FFBD00;
+  color: #D69F00;
   margin-left: -5px;
 }
 
 .time .time__vmax {
-  background-color: #737B90;
-  color: white;
+  color: #313748;
   margin-left: -5px;
 }
 
@@ -8446,9 +8445,16 @@ h3 {
 
 .time .time__time {
   color: white;
+  background-color: #313748;
+  padding-right: 12px;
+  font-weight: 400;
 }
 
 .time .progress {
   margin-bottom: 0;
   border-radius: 0;
+}
+
+.time .progress .progress-bar {
+  background-color: #64AD13;
 }

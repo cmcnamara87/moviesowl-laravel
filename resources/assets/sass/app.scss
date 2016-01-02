@@ -172,17 +172,20 @@ h3 {
 
 
 .time {
-  display: inline-block;
-  border: 1px solid black;
+  display: block;
+  border: 1px solid #ddd;
   margin-right: 12px;
   margin-bottom: 24px;
+//  background-color: $licorice;
+
   &:hover {
     text-decoration: none;
   }
   .time__part {
     display: inline-block;
     padding: 12px 12px;
-    background-color: $licorice;
+    padding-right: 0;
+//    background-color: $licorice;
     text-transform: capitalize;
   }
   .time__3d {
@@ -194,13 +197,14 @@ h3 {
   .time__gold-class {
     @extend .time__part;
 //    background-color: white; //FFD04A;
-    color: #FFBD00;
+    color: #D69F00;//#FFBD00;
     margin-left:-5px;
   }
   .time__vmax {
     @extend .time__part;
-    background-color: #737B90;
-    color: white;
+//    background-color: #737B90;
+//    color: white;
+    color: $licorice;
     margin-left:-5px;
   }
   .time__type {
@@ -210,9 +214,18 @@ h3 {
   .time__time {
     @extend .time__part;
     color: white;
+//    color: $licorice;
+    background-color: $licorice;
+    padding-right: 12px;
+    font-weight: 400;
+//    color: black;
   }
   .progress {
     margin-bottom: 0;
     border-radius: 0;
+    .progress-bar {
+      background-color: #64AD13; //#9099B1;
+//      background-color: #9099B1;
+    }
   }
 }
