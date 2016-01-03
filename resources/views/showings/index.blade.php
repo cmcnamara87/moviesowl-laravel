@@ -25,7 +25,7 @@
                 @foreach ($showingsByTime as $timeOfDay => $showings)
                     <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 16px;">{{ $timeOfDay }}</h4>
                     @if (!count($showings))
-                        <p class="text-muted" style="margin-bottom: 24px;">No sessions</p>
+                        <p class="text-muted" style="margin-bottom: 24px;color:#aaa;">No sessions</p>
                     @endif
                     @foreach (array_chunk($showings, 2) as $showingsRow)
                         <div class="row">
