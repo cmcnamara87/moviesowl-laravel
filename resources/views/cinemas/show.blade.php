@@ -37,7 +37,7 @@
             @foreach (array_chunk($movies, 4) as $movieRow)
                 <div class="row">
                     @foreach ($movieRow as $movie)
-                        <div class="col-xs-12 col-sm-3">
+                        <div class="col-xs-6 col-sm-3">
                             <div class="thumbnail">
                                 <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">
                                     <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
