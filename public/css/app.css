@@ -8373,6 +8373,32 @@ h3 {
 
 .thumbnail {
   position: relative;
+  border: none;
+  transition: -webkit-transform .2s ease-in-out;
+  transition: transform .2s ease-in-out;
+  position: relative;
+}
+
+.thumbnail:after {
+  content: '';
+  top: -20px;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease-in-out, top 0.2s ease-in-out;
+}
+
+.thumbnail:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.thumbnail:hover:after {
+  top: 0px;
+  opacity: 1;
 }
 
 .thumbnail .caption {
@@ -8391,6 +8417,14 @@ h3 {
   margin-bottom: 8px;
   margin-top: 6px;
   font-size: 16px;
+}
+
+.thumbnail .caption h4 a {
+  color: white;
+}
+
+.thumbnail .caption h4 a:hover {
+  text-decoration: none;
 }
 
 .thumbnail .caption p {

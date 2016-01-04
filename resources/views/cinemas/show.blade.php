@@ -43,7 +43,11 @@
                                     <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
                                 </a>
                                 <div class="caption {{ $rating }}">
-                                    <h4>{{ $movie->title }}</h4>
+                                    <h4>
+                                        <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">
+                                        {{ $movie->title }}
+                                        </a>
+                                    </h4>
                                     <p>
                                         @if ($movie->tomato_meter > 75)
                                             <img src="/images/CF_240x240.png" alt="" class="tomato-rating"/>

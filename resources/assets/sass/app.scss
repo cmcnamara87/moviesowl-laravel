@@ -138,11 +138,29 @@ h3 {
 }
 
 .thumbnail {
-//  overflow: hidden;
-  &:hover {
-    .caption {
-    }
+  position: relative;
+  border: none;
+  transition: transform .2s ease-in-out;
+
+  &:after {
+    content: '';
+    top: -20px;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: opacity 0.2s ease-in-out, top 0.2s ease-in-out;
   }
+  &:hover {
+    transform: scale(1.1);
+    &:after {
+      top: 0px;
+      opacity: 1;
+    }
+ }
+
   position: relative;
   .caption {
     transition: all 0.5s;
@@ -159,6 +177,12 @@ h3 {
       margin-bottom: 8px;
       margin-top: 6px;
       font-size: 16px;
+      a {
+        color: white;
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
     p {
       font-size: 12px;
