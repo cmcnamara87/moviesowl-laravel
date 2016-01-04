@@ -53,13 +53,13 @@ class CinemaMovieShowingsController extends Controller {
             } else if($showing->start_time->hour < 17) {
                 $carry['afternoon'][] = $showing;
             } else {
-                $carry['night'][] = $showing;
+                $carry['evening'][] = $showing;
             }
             return $carry;
         }, [
             'morning' => [],
             'afternoon' => [],
-            'night' => []
+            'evening' => []
         ]);
 //        foreach($showings as $showing) {
 //            // FIXME: might spam event...need to investigate this

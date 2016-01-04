@@ -23,7 +23,16 @@
                 {{ $movie->synopsis }}
 
                 @foreach ($showingsByTime as $timeOfDay => $showings)
-                    <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 16px;">{{ $timeOfDay }}</h4>
+                    <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 16px;">
+                        @if($timeOfDay == 'evening')
+                        <i class="fa fa-moon-o"></i>
+                        @elseif($timeOfDay == 'morning')
+                        <i class="fa fa-coffee"></i>
+                        @else
+                        <i class="fa fa-sun-o"></i>
+                        @endif
+                         {{ $timeOfDay }}
+                    </h4>
                     @if (!count($showings))
                         <p class="text-muted" style="margin-bottom: 24px;color:#aaa;">No sessions</p>
                     @endif
