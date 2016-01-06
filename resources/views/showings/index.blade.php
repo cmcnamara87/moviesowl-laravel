@@ -20,7 +20,10 @@
             <div class="col-sm-8">
                 <h3 style="margin-top:0;margin-bottom: 30px;">{{ $movie->title }}</h3>
 
-                {{ $movie->synopsis }}
+                <p style="margin-bottom: 40px;">
+                    {{ $movie->details->synopsis }}
+                </p>
+
 
                 @foreach ($showingsByTime as $timeOfDay => $showings)
                     <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 16px;">
