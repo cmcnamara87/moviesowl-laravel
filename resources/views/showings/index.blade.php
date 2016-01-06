@@ -62,7 +62,7 @@
 
 
                 @foreach ($showingsByTime as $timeOfDay => $showings)
-                    <h4 class="text-uppercase text-muted" style="font-size:14px;margin-bottom: 16px;">
+                    <h4 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
                         @if($timeOfDay == 'evening')
                         <i class="fa fa-moon-o"></i>
                         @elseif($timeOfDay == 'morning')
