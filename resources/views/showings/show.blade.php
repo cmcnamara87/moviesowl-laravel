@@ -101,7 +101,7 @@
                         </p>
 
                         <div style="margin-bottom: 30px;">
-                            <a class="btn btn-lg btn-primary" href="{{ $showing->tickets_url }}">
+                            <a class="btn btn-lg btn-primary" target="_blank" href="{{ $showing->tickets_url }}">
                                 Buy Tickets <i class="fa fa-external-link"></i>
                             </a>
                         </div>
