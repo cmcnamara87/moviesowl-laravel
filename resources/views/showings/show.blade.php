@@ -101,7 +101,9 @@
                         </p>
 
                         <div style="margin-bottom: 30px;">
-                            <a class="btn btn-lg btn-primary" target="_blank" href="{{ $showing->tickets_url }}">
+                            <a class="btn btn-lg btn-primary" target="_blank"
+                               href="{{ $showing->tickets_url }}"
+                               onclick="ga('send', 'event', 'button', 'buy-tickets', '{{ $cinema->location }}', '{{ $movie->title }}');">
                                 Buy Tickets <i class="fa fa-external-link"></i>
                             </a>
                         </div>
