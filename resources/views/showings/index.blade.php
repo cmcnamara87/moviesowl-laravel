@@ -70,7 +70,7 @@
                         @else
                         <i class="fa fa-sun-o"></i>
                         @endif
-                         {{ $timeOfDay }}
+                         {{ $timeOfDay }} Sessions
                     </h4>
                     @if (!count($showings))
                         <p class="text-muted" style="margin-bottom: 24px;color:#aaa;">No sessions</p>
