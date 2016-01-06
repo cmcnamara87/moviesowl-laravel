@@ -162,12 +162,18 @@ h3 {
  }
 
   position: relative;
+
+  @media (min-width: $screen-sm-min) {
+    .caption {
+      padding: 0px 48px;
+    }
+  }
   .caption {
     transition: all 0.5s;
     position: absolute;
     bottom: 0;
+    padding: 0px 12px;
     text-align: center;
-    padding: 0px 48px;
     width: 100%;
     opacity: 0.95;
     background-color: $licorice; //$crimson;
