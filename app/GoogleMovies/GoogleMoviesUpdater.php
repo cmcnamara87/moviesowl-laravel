@@ -61,14 +61,23 @@ class GoogleMoviesUpdater {
     {
         $now = Carbon::now()->toDateTimeString();
 
-// Find all article blocks
         foreach ($html->find('.theater') as $cinemaElement) {
-            $cinemaName = $cinemaElement->find('h2.name a', 0)->plaintext;
+            $cinemaNameElement = $cinemaElement->find('h2.name a', 0);
+            if(!$cinemaNameElement) {
+                Log::error('Couldnt find a cinema name...thats not good');
+                continue;
+            }
+            $cinemaName = $cinemaNameElement->plaintext;
             Log::info('Cinema: ' . $cinemaName);
             if (strpos($cinemaName, 'Event') !== false) {
                 Log::info('- Skipping Event');
                 continue;
             }
+            if (strpos($cinemaName, 'Moonlight Cinema') !== false) {
+                Log::info('- Skipping Event Moonlight Cinema');
+                continue;
+            }
+
             $cinema = Cinema::firstOrCreate([
                 'location' => $cinemaName,
                 'timezone' => $timezone,
@@ -84,6 +93,23 @@ class GoogleMoviesUpdater {
                 ]);
                 
                 Log::info('Movie: ' . $movie->title);
+
+                // get the ticket-ish url
+                // goes a google search, and takes the first url
+                $ticketUrl = '';
+                $searchUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
+                $searchHtml = @file_get_contents($searchUrl);
+                $searchDom = new Htmldom($searchHtml);
+                $searchLink = $searchDom->find('#search a', 0);
+                if($searchLink) {
+                    $searchHref = $searchLink->href;
+                    parse_str($searchHref, $params);
+                    if(isset($params['/url?q'])) {
+                        $ticketUrl = $params['/url?q'];
+                        Log::info('Ticket url: ' . $ticketUrl);
+                    }
+                }
+
 
                 $isPm = false;
 
@@ -114,7 +140,8 @@ class GoogleMoviesUpdater {
                         "cinema_id" => $cinema->id,
                         "start_time" => $startTime->toDateTimeString(),
                         'created_at' => $now,
-                        'updated_at' => $now
+                        'updated_at' => $now,
+                        "tickets_url" => $ticketUrl,
                     ];
                 }
 
