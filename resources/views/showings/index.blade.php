@@ -61,8 +61,9 @@
 
 
 
-                <h4>Pick a Time</h4>
+                <h4 style="margin-bottom: 30px;font-weight:200">Pick a Time</h4>
                 @foreach ($showingsByTime as $timeOfDay => $showings)
+                    @if (count($showings))
                     <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
                         @if($timeOfDay == 'evening')
                         <i class="fa fa-moon-o"></i>
@@ -73,9 +74,6 @@
                         @endif
                          {{ $timeOfDay }} Sessions
                     </h5>
-                    @if (!count($showings))
-                        <p class="text-muted" style="margin-bottom: 24px;color:#aaa;">No sessions</p>
-                    @endif
                     @foreach (array_chunk($showings, 2) as $showingsRow)
                         <div class="row">
                             @foreach ($showingsRow as $showing)
@@ -85,6 +83,7 @@
                             @endforeach
                         </div>
                     @endforeach
+                    @endif
 
                 {{--<ul class="list-unstyled">--}}
                         {{----}}
@@ -116,7 +115,7 @@
                     $time.find('.progress-bar').css('width', (data.percent_full) + '%')
                             .text(Math.round(data.percent_full) + '% Full');
                 } else {
-                    $time.find('.progress-bar').hide();
+                    $time.find('.progress').hide();
                 }
 
             });
