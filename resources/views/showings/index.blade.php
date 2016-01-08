@@ -61,8 +61,9 @@
 
 
 
+                <h4>Pick a Time</h4>
                 @foreach ($showingsByTime as $timeOfDay => $showings)
-                    <h4 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
+                    <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
                         @if($timeOfDay == 'evening')
                         <i class="fa fa-moon-o"></i>
                         @elseif($timeOfDay == 'morning')
@@ -71,7 +72,7 @@
                         <i class="fa fa-sun-o"></i>
                         @endif
                          {{ $timeOfDay }} Sessions
-                    </h4>
+                    </h5>
                     @if (!count($showings))
                         <p class="text-muted" style="margin-bottom: 24px;color:#aaa;">No sessions</p>
                     @endif
@@ -111,9 +112,13 @@
             $.get('/api/v1/showings/' + showingId, function(data) {
                 $time.find('.time__type').text(data.cinema_size + ' cinema');
 
-                $time.find('.progress-bar').css('width', (data.percent_full) + '%')
-                        .text(Math.round(data.percent_full) + '% Full');
-//            $('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
+                if(data.percent_full > 0) {
+                    $time.find('.progress-bar').css('width', (data.percent_full) + '%')
+                            .text(Math.round(data.percent_full) + '% Full');
+                } else {
+                    $time.find('.progress-bar').hide();
+                }
+
             });
         });
 
