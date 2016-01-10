@@ -56,7 +56,7 @@ class PosterService
     }
 
     public function savePosterFromUrl ($url, $name) {
-        $asset = getAssetPath($name);
+        $asset = $this->getAssetPath($name);
         $posterPath = public_path() . "/" . $asset;
         if(!file_exists($posterPath)) {
             try {
