@@ -146,8 +146,10 @@ class AddMissingImdbIdsCommand extends Command
         Log::info('ID ' . $movie->imdb_id);
 
         // does the poster exists
+        $url = '';
         if ($this->posterService->exists($movie->title)) {
             $this->info('Already has poster');
+            $asset = $this->posterService->getAssetPath($movie->title);
         } else {
             if ($movie->imdb_id) {
                 $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
@@ -171,12 +173,12 @@ class AddMissingImdbIdsCommand extends Command
                     'movie_id' => $movie->id
                 ]);
             }
-
-            $movieDetails = $movie->details;
-            $movieDetails->poster = $asset;
-            $movieDetails->save();
-            $movie->save();
         }
+        $movieDetails = $movie->details;
+        $movieDetails->poster = $asset;
+        $movieDetails->save();
+        $movie->save();
+
         Log::info('Movie updated');
     }
 

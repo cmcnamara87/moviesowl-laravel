@@ -51,8 +51,12 @@ class PosterService
         return file_exists($posterPath);
     }
 
+    public function getAssetPath($name) {
+        return "images/posters/" . snake_case($name) . ".jpg";
+    }
+
     public function savePosterFromUrl ($url, $name) {
-        $asset = "images/posters/" . snake_case($name) . ".jpg";
+        $asset = getAssetPath($name);
         $posterPath = public_path() . "/" . $asset;
         if(!file_exists($posterPath)) {
             try {
