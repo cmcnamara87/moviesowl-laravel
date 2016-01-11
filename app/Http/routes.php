@@ -25,17 +25,7 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::resource('cinemas.movies', 'Api\v1\CinemaMoviesController', ["only" => ["index"]]);
     Route::resource('cinemas', 'Api\v1\CinemasController', ["only" => ["index", "show"]]);
     Route::resource('showings', 'Api\v1\ShowingsController', ["only" => "show"]);
-    Route::post('/devices', function() {
-        // Save the device
-        $data = \Illuminate\Support\Facades\Input::all();
-        $device = \App\Device::firstOrCreate($data);
-        return response()->json($device);
-    });
-
-    Route::get('/devices', function() {
-        $devices = \App\Device::all();
-        return response()->json($devices);
-    });
+    Route::resource('devices', 'Api\v1\DevicesController');
 });
 
 Route::get('/app', function() {
