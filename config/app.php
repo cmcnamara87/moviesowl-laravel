@@ -145,8 +145,8 @@ return [
         MoviesOwl\Providers\EventServiceProvider::class,
         MoviesOwl\Providers\RouteServiceProvider::class,
         Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class,
-        Cviebrock\EloquentSluggable\SluggableServiceProvider::class
-
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        'Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider'
     ],
 
     /*
@@ -195,7 +195,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Fractal' => Cyvelnet\Laravel5Fractal\Facades\Fractal::class
+        'Fractal' => Cyvelnet\Laravel5Fractal\Facades\Fractal::class,
+        'PushNotification' => 'Davibennun\LaravelPushNotification\Facades\PushNotification'
 
     ],
 

@@ -13,7 +13,8 @@
     "yangqi/htmldom": "dev-master",
     "intervention/image": "~2.2",
     "cyvelnet/laravel5-fractal": "^1.2",
-    "cviebrock/eloquent-sluggable": "^3.0"
+    "cviebrock/eloquent-sluggable": "^3.0",
+    "davibennun/laravel-push-notification": "dev-laravel5"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

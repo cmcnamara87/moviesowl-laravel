@@ -25,6 +25,17 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::resource('cinemas.movies', 'Api\v1\CinemaMoviesController', ["only" => ["index"]]);
     Route::resource('cinemas', 'Api\v1\CinemasController', ["only" => ["index", "show"]]);
     Route::resource('showings', 'Api\v1\ShowingsController', ["only" => "show"]);
+    Route::post('/devices', function() {
+        // Save the device
+        $data = \Illuminate\Support\Facades\Input::all();
+        $device = \App\Device::firstOrCreate($data);
+        return response()->json($device);
+    });
+
+    Route::get('/devices', function() {
+        $devices = \App\Device::all();
+        return response()->json($devices);
+    });
 });
 
 Route::get('/app', function() {
@@ -41,3 +52,16 @@ Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
 
+
+Route::get('/push', function() {
+    $devices = \App\Device::all();
+    foreach($devices as $device) {
+        echo '<pre>';
+        print_r($device);
+        echo '</pre>';
+        \Davibennun\LaravelPushNotification\Facades\PushNotification::app('appNameIOS')
+            ->to($device->token)
+            ->send('Check out today\'s movies!');
+    }
+    echo 'Pushed';
+});
