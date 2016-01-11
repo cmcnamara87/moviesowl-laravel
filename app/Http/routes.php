@@ -44,7 +44,7 @@ Route::resource('showings', 'ShowingsController');
 
 
 Route::get('/push', function() {
-    $devices = \App\Device::all();
+    $devices = \MoviesOwl\Device::all();
     foreach($devices as $device) {
         echo '<pre>';
         print_r($device);
