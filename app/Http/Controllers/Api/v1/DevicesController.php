@@ -1,10 +1,10 @@
 <?php
 namespace MoviesOwl\Http\Controllers\Api\v1;
 
-use App\Device;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
+use MoviesOwl\Device;
 use MoviesOwl\Http\Requests;
 use MoviesOwl\Http\Controllers\Controller;
 

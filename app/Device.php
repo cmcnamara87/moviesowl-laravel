@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace MoviesOwl;
 
 use Illuminate\Database\Eloquent\Model;
 
