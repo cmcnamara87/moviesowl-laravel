@@ -59,6 +59,8 @@ class PushController extends Controller
                 ->to($token)
                 ->send($request->input('message'));
         }
+
+        echo 'Push Notifications sent!!!';
     }
 
     /**
