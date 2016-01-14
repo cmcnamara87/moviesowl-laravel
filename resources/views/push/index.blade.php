@@ -19,7 +19,7 @@
             @foreach($devices as $device)
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="devices[]" value="{{ $device->id }}" />
+                    <input type="checkbox" name="devices[]" value="{{ $device->token }}" checked />
                     {{ $device->device_type }} - {{ $device->token }}
                 </label>
             </div>
