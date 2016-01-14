@@ -53,8 +53,8 @@ class PushController extends Controller
      */
     public function store(Request $request)
     {
-        $devices = Device::where('device_type', '=', 'iOS')->first();
-        $devices = [$devices];
+        dd($request->input('devices'));
+        $devices = Device::where('device_type', '=', 'iOS')->get();
         foreach($devices as $device) {
             \Davibennun\LaravelPushNotification\Facades\PushNotification::app('appNameIOS')
                 ->to($device->token)
