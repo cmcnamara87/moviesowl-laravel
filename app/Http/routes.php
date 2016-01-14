@@ -42,16 +42,4 @@ Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
 
-
-Route::get('/push', function() {
-    $devices = \MoviesOwl\Device::where('device_type', '=', 'iOS')->get();
-    foreach($devices as $device) {
-        echo '<pre>';
-        print_r($device);
-        echo '</pre>';
-        \Davibennun\LaravelPushNotification\Facades\PushNotification::app('appNameIOS')
-            ->to($device->token)
-            ->send('Check out today\'s movies!');
-    }
-    echo 'Pushed';
-});
+Route::resource('push', 'PushController');
