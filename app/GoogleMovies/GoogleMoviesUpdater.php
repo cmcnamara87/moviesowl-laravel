@@ -85,6 +85,19 @@ class GoogleMoviesUpdater {
                 'country' => $country
             ]);
 
+            // do we already have sessions added for this cinema
+            $startingAfter = Carbon::tomorrow();
+            $endOfDay = $startingAfter->copy()->endOfDay();
+            $alreadyProcessed = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+                ->where('start_time', '<=', $endOfDay->toDateTimeString())
+                ->where('cinema_id', '=', $cinema->id)
+                ->first();
+
+            if($alreadyProcessed) {
+                // We have already processed this cinema, from another region
+                continue;
+            }
+
             foreach ($cinemaElement->find('.movie') as $movieElement) {
                 $title = html_entity_decode($movieElement->find('.name a', 0)->plaintext);
                 $title = str_replace('&#39;', "'", $title);
