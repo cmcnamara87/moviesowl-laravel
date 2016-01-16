@@ -30,6 +30,8 @@ class GoogleMoviesUpdater {
         Log::info('Updating from Google Movies for Brisbane');
         $this->updateForCity('Brisbane', 'Australia', 'Australia/Brisbane');
         $this->updateForCity('Sydney', 'Australia', 'Australia/Sydney');
+        $this->updateForCity('Gosford', 'Australia', 'Australia/Sydney');
+        $this->updateForCity('Newcastle', 'Australia', 'Australia/Sydney');
         $this->updateForCity('Melbourne', 'Australia', 'Australia/Melbourne');
         $this->updateForCity('Adelaide', 'Australia', 'Australia/Adelaide');
         $this->updateForCity('Perth', 'Australia', 'Australia/Perth');
@@ -94,6 +96,7 @@ class GoogleMoviesUpdater {
                 ->first();
 
             if($alreadyProcessed) {
+                Log::info('Cinema has already been processed');
                 // We have already processed this cinema, from another region
                 continue;
             }
