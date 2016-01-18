@@ -113,7 +113,7 @@ class GoogleMoviesUpdater {
                 // get the ticket-ish url
                 // goes a google search, and takes the first url
                 $ticketUrl = '';
-//                $searchUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
+                $ticketUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
 //                $searchHtml = @file_get_contents($searchUrl);
 //                $searchDom = new Htmldom($searchHtml);
 //                $searchLink = $searchDom->find('#search a', 0);
