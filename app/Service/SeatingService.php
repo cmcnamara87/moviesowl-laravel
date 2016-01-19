@@ -30,9 +30,9 @@ class SeatingService {
         if(!$showing->{"event_session_id"}) {
             return;
         }
-        if(!$this->isSeatingDataOld($showing))  {
-            return;
-        }
+//        if(!$this->isSeatingDataOld($showing))  {
+//            return;
+//        }
         $showing->seats = $this->eventCinemasApi->getSeats($showing->{"event_session_id"});
         $this->repo->store($showing);
     }
