@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Book Tickets ' . $movie->title . ' at ' .$cinema->location)
+@section('title', $movie->title . ' at ' .$cinema->location)
 @section('content')
 
     @include('includes.cinema-jumbotron')

@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Book Tickets ' . $movie->title . ' at ' .
+@section('title', $movie->title . ' at ' .
  $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location)
 @section('content')
 
