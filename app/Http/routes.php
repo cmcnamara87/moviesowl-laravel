@@ -36,7 +36,7 @@ Route::get('/app', function() {
 
 
 Route::get('/', 'CinemasController@index');
-//Route::resource('movies', 'MoviesController');
+Route::resource('movies', 'MoviesController', ["only" => ["index", "show"]]);
 Route::resource('cinemas', 'CinemasController');
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');

@@ -1,60 +1,57 @@
 @extends('layouts.default')
-@section('title', 'What\'s Good at the Movies - MoviesOwl')
+{{--@section('title', $cinema->location . ' - What\'s Good at the Movies - MoviesOwl')--}}
 @section('content')
 
-    {{--<h1>What's Good at the Movies</h1>--}}
+    {{--@include('includes.cinema-jumbotron')--}}
 
-    @if(isset($topMovie))
     <div class="jumbotron">
-        <div class="media">
-            <div class="media-left">
-                <a href="{{ URL::route('movies.show', array($topMovie->id)) }}">
-                    <img class="media-object" src="{{ $topMovie->poster }}" alt="...">
-                </a>
-            </div>
-            <div class="media-body">
-                <h2 class="media-heading">{{ $topMovie->title }}</h2>
-                <p>
-                    {{ $topMovie->synopsis }}
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-lg" href="{{ URL::route('movies.show', array($topMovie->id)) }}">
-                        Find Sessions
-                    </a>
-                </p>
-            </div>
+        <div class="container">
+            <h1>All Movies Now Showing</h1>
+            {{--<p>{{ $startingAfter->format('l jS \\of F Y') }} - {{ $cinema->city }}, {{ $cinema->country }} Cinema</p>--}}
         </div>
     </div>
-    @endif
 
-    <div>
-        @foreach($cinemas as $cinema)
-            <a href="{{ route('cinemas.show', $cinema->slug) }}" class="btn btn-default" style="border-radius:100px">
-                {{ $cinema->location }}
-            </a>
+    <div class="container">
+
+        {{--@if(!count($movies))--}}
+            {{--<div style="text-align: center">--}}
+                {{--<p class="text-muted">--}}
+                    {{--No more movies showing today.--}}
+                {{--</p>--}}
+                {{--<p>--}}
+                    {{--<a  class="btn btn-primary btn-lg"  href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . \Carbon\Carbon::tomorrow()->timestamp) }}">--}}
+                        {{--View Tomorrow--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+
+                {{--<div>--}}
+                    {{--<img style="width:100%; max-width:250px;" src="{{ URL::asset('images/no-movies-owl.png') }}" alt=""/>--}}
+                {{--</div>--}}
+
+            {{--</div>--}}
+
+        {{--@endif--}}
+
+        {{--<img class="owl" src="{{ URL::asset('images/owl.png') }}" alt=""/>--}}
+        @foreach ($moviesByRating as $rating => $movies)
+            <div class="group">
+                <span class="owl-circle {{ $rating }}">
+                    <img class="owl" src="{{ URL::asset('images/owl.png') }}" alt=""/>
+                </span>
+                <h2><span class="{{ $rating }}"></span> {{ $rating }} Movies </h2>
+                <p class="text-muted">Movies with {{ $rating }} Rotten Tomatoes reviews and IMDB Ratings</p>
+            </div>
+
+            @foreach (array_chunk($movies, 4) as $movieRow)
+                <div class="row">
+                    @foreach ($movieRow as $movie)
+                        <div class="col-xs-6 col-sm-3">
+                            @include('includes.movie-card', ["url" => 'movies/' . $movie->slug])
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         @endforeach
     </div>
-    @if($movies->count())
-    <h2>Top {{ $movies->count() }} Movies You Can See Right Now</h2>
-    <p>
-        All Cinemas <a href="{{ route('cinemas.index') }}">Select a cinema</a>
-    </p>
-    @include('includes.movies-grid', ['movies' => $movies->take(6)])
-    @endif
-
-    <h2>Top {{ $moviesNewThisWeek->count() }} Movies New This Week</h2>
-    <p>
-        All Cinemas <a href="{{ route('cinemas.index') }}">Select a cinema</a>
-    </p>
-    @include('includes.movies-grid', ['movies' => $moviesNewThisWeek->take(6)])
-
-    <h2>Top {{ $moviesCriticalAcclaim->count() }} Critically Acclaimed This Week</h2>
-    <p>
-        All Cinemas <a href="{{ route('cinemas.index') }}">Select a cinema</a>
-    </p>
-    @include('includes.movies-grid', ['movies' => $moviesCriticalAcclaim->take(6)])
-
-    {{--<h2>Last Chance</h2>--}}
-    {{--@include('includes.movies-grid')--}}
 
 @stop

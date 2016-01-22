@@ -1,9 +1,12 @@
 <?php
 
+namespace MoviesOwl\Http\Controllers;
+
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
 use Carbon\Carbon;
 use MoviesOwl\Repos\Movie\MovieRepository;
+use MoviesOwl\Showings\Showing;
 
 class MoviesController extends Controller {
 
@@ -15,55 +18,37 @@ class MoviesController extends Controller {
     }
 
 
-    /**
-	 * Display a listing of the resource.
-	 * GET /movies
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-        $cinemas = Cinema::all();
-        // watchable right now
-        $movies = $this->movieRepo->getWatchable();
+    public function index() {
+        $startingAfter = Carbon::today();
+        $endOfDay = $startingAfter->copy()->endOfDay();
 
-        // new this week
-        $moviesNewThisWeek = Movie::where('created_at', '>', Carbon::now()->subWeeks(1))->orderBy('tomato_meter', 'desc')->get();
-        if($movies->count()) {
-            $topMovie = $moviesNewThisWeek->first();
-        }
+        $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->distinct()->lists('movie_id');
 
-        $moviesCriticalAcclaim = Movie::whereHas('showings', function ($q) {
-            $startingAfter = Carbon::now()->startOfDay();
-            $endOfDay = $startingAfter->copy()->endOfDay();
-            $q->where('start_time', '>=', $startingAfter->toDateTimeString());
-            $q->where('start_time', '<=', $endOfDay->toDateTimeString());
-        })->where('tomato_meter', '>', 75)->orderBy('tomato_meter', 'desc')->get();
+        $movies = Movie::whereIn('id', $movieIds)->with(array('details'))->orderBy('tomato_meter', 'desc')->get();
 
-        return View::make('movies.index', compact('movies', 'topMovie', 'moviesNewThisWeek', 'moviesCriticalAcclaim', 'cinemas'));
-	}
+        // group the movies
+        $moviesByRating = array_reduce($movies->all(), function($carry, $movie) {
+            $rating = '';
+            if($movie->tomato_meter > 75) {
+                $rating = 'Great';
+            } else if ($movie->tomato_meter > 50) {
+                $rating = 'Good';
+            } else if ($movie->tomato_meter >= 0) {
+                $rating = 'Bad';
+            } else {
+                $rating = 'Unknown';
+            }
+            if(!isset($carry[$rating])) {
+                $carry[$rating] = [];
+            }
+            $carry[$rating][] = $movie;
+            return $carry;
+        }, []);
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /movies/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /movies
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+        return view('movies.index', compact('moviesByRating', 'movies'));
+    }
 
     /**
      * Display the specified resource.
@@ -75,54 +60,26 @@ class MoviesController extends Controller {
      */
 	public function show(Movie $movie)
 	{
-//        $movie = Movie::findOrFail($id);
+        // get all the cinemas that are showing this movie today
+        $startingAfter = Carbon::today();
+        $endOfDay = $startingAfter->copy()->endOfDay();
+        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->where('movie_id', $movie->id)
+            ->lists('cinema_id');
 
-        $cinemas = Cinema::whereHas('showings', function($q) use ($movie)
-        {
-            $q->where('movie_id', $movie->id);
-            $q->where('start_time', '>=', Carbon::now()->toDateTimeString());
-            $q->where('start_time', '<=', Carbon::now()->endOfDay()->toDateTimeString());
-        })->get();
+        $cinemas = Cinema::whereIn('id', $cinemaIds)->get();
+
+        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
+            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
+            if(!isset($carry[$cinemaLocation])) {
+                $carry[$cinemaLocation] = [];
+            }
+            $carry[$cinemaLocation][] = $cinema;
+            return $carry;
+        }, []);
 
 
-
-        return View::make('movies.show', compact('movie', 'cinemas'));
+        return view('movies.show', compact('movie', 'cinemasByCity'));
 	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /movies/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /movies/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /movies/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
 }

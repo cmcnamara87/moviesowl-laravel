@@ -38,32 +38,7 @@
                 <div class="row">
                     @foreach ($movieRow as $movie)
                         <div class="col-xs-6 col-sm-3">
-                            <div class="thumbnail">
-                                <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">
-                                    <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
-                                </a>
-                                <div class="caption {{ $rating }}">
-                                    <h4>
-                                        <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">
-                                        {{ $movie->title }}
-                                        </a>
-                                    </h4>
-                                    <p>
-                                        @if ($movie->tomato_meter > 75)
-                                            <img src="/images/CF_240x240.png" alt="" class="tomato-rating"/>
-                                        @elseif ($movie->tomato_meter > 59)
-                                            <img src="/images/fresh.png" alt="" class="tomato-rating"/>
-                                        @else
-                                            <img src="/images/rotten.png" alt="" class="tomato-rating" />
-                                        @endif
-                                        {{ $movie->tomato_meter }}%
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-muted" style="margin-bottom: 30px;">
-                                {{ str_limit($movie->details->synopsis , $limit = 150, $end = '...') }}
-                                <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">read more</a>
-                            </p>
+                            @include('includes.movie-card', ["url" => 'cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp])
                         </div>
                     @endforeach
                 </div>

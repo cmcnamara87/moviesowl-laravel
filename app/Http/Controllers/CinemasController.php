@@ -113,8 +113,10 @@ class CinemasController extends Controller {
                 $rating = 'Great';
             } else if ($movie->tomato_meter > 50) {
                 $rating = 'Good';
-            } else {
+            } else if ($movie->tomato_meter >= 0) {
                 $rating = 'Bad';
+            } else {
+                $rating = 'Unknown';
             }
             if(!isset($carry[$rating])) {
                 $carry[$rating] = [];
