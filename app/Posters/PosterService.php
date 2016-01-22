@@ -11,33 +11,54 @@ namespace MoviesOwl\Posters;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 use MoviesOwl\OMDB\OMDBApi;
+use MoviesOwl\TMDB\TMDBApi;
 
 class PosterService
 {
 
-
-
     protected $omdbApi;
+    protected $tmdbApi;
 
 
-    function __construct(OMDBApi $omdbApi)
+    function __construct(OMDBApi $omdbApi, TMDBApi $tmdbApi)
     {
         $this->omdbApi = $omdbApi;
+        $this->tmdbApi = $tmdbApi;
+    }
+
+
+    public function getWidePosterUrl($imdbId) {
+        $tmdbMovie = $this->tmdbApi->getMovieByImdbId($imdbId);
+
+        if (!isset($tmdbMovie->backdrop_path)) {
+            Log::info('No wide poster found');
+            return null;
+        }
+        $widePosterUrl = "http://image.tmdb.org/t/p/w780".$tmdbMovie->backdrop_path;
+
+        if ($widePosterUrl == "N/A") {
+            Log::info('No wide poster available');
+            return null;
+        }
+        return $widePosterUrl;
     }
 
     // get the imdb poster url
     // download a poster from any url save to disk
     // save poster interal url for movie
 
-
     public function getImdbPosterUrl($imdbId) {
-        $omdbMovie = $this->omdbApi->getMovieByImdbId($imdbId);
+        //$omdbMovie = $this->omdbApi->getMovieByImdbId($imdbId);
 
-        if (!isset($omdbMovie->Poster)) {
+        $tmdbMovie = $this->tmdbApi->getMovieByImdbId($imdbId);
+        if (!isset($tmdbMovie->poster_path)) {
             Log::info('No poster found');
             return null;
         }
-        $posterUrl = str_replace("SX300", "SX700", $omdbMovie->Poster);
+        //$posterUrl = str_replace("SX300", "SX700", $omdbMovie->Poster);
+
+        $posterUrl = "http://image.tmdb.org/t/p/w780".$tmdbMovie->poster_path;
+
         if ($posterUrl == "N/A") {
             Log::info('No poster available');
             return null;

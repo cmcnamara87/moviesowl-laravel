@@ -53,6 +53,7 @@ class MovieTransformer extends TransformerAbstract {
             'title' => $movie->title,
             'new' => $new,
             'poster' => $movie->details->poster,
+            'wide_poster' => $movie->details->wide_poster,
             'tomato_meter' => $movie->details->{"tomato_meter"},
             "synopsis" => $movie->details->synopsis,
             "run_time" => $movie->details->{"run_time"},
@@ -60,6 +61,7 @@ class MovieTransformer extends TransformerAbstract {
             "director" => $movie->details->director,
             'created_at' => $movie->created_at->timestamp,
             'genre' => $movie->details->genre,
+            'trailer' => $movie->details->trailer,
             'critics' => ""
         ];
     }

@@ -11,7 +11,8 @@ class MovieDetails extends \Eloquent {
 	];
 
 // Don't forget to fill this array
-    protected $fillable = ["title", "synopsis", "run_time", "director", "cast", "poster", "tomato_meter", "genre", "movie_id"];
+    protected $fillable = ["title", "synopsis", "run_time", "director", "cast", "poster", "tomato_meter", "genre", "movie_id",
+        "wide_poster", "trailer"];
 
     public function movie()
     {

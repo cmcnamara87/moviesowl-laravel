@@ -21,21 +21,27 @@ use MoviesOwl\OMDB\OMDBApi;
 use MoviesOwl\Posters\PosterService;
 use MoviesOwl\RottenTomatoes\RottenTomatoesApi;
 use MoviesOwl\Showings\Showing;
+use MoviesOwl\TMDB\TMDBApi;
+use MoviesOwl\Trailer\TrailerService;
 use Yangqi\Htmldom\Htmldom;
 
 class MovieDetailsUpdater {
 
     private $rottenTomatoesApi;
     private $omdbApi;
+    private $tmdbApi;
     private $posterService;
+    private $trailerService;
 
     function __construct(RottenTomatoesApi $rottenTomatoesApi,
-                         OMDBApi $omdbApi,
-                         PosterService $posterService)
+                         OMDBApi $omdbApi, TMDBApi $tmdbApi,
+                         PosterService $posterService, TrailerService $trailerService)
     {
         $this->rottenTomatoesApi = $rottenTomatoesApi;
         $this->omdbApi = $omdbApi;
+        $this->tmdbApi = $tmdbApi;
         $this->posterService = $posterService;
+        $this->trailerService = $trailerService;
     }
 
     public function updateAll() {
@@ -116,7 +122,9 @@ class MovieDetailsUpdater {
                 }
                 return $carry . $castMember->name;
             }, ""),
+            "trailer" => $this->trailerService->getTrailerUrl($movie->imdb_id),
             "poster" => $this->getHiResPosterUrl($movie->imdb_id, $movie->title),
+            "wide_poster" => $this->getWidePosterUrl($movie->imdb_id, $movie->title),
             "tomato_meter" => $rtMovie->ratings->critics_score,
             "genre" => array_reduce($rtMovie->genres, function($carry, $genres) {
                 if(strlen($carry)) {
@@ -133,6 +141,54 @@ class MovieDetailsUpdater {
         return $movie;
     }
 
+//    private function getTrailerUrl ($imdbId)
+//    {
+//        Log::info('--- Loading Trailer Url');
+//        if (!$imdbId) {
+//            Log::info('---- No IMDB Id for trailer');
+//            return "";
+//        }
+//
+//        $trailerResults = $this->tmdbApi->getMovieTrailerByImdbId($imdbId);
+//
+//        if(!isset($trailerResults->results)){
+//            Log::info('---- No trailer found');
+//            return "";
+//        }
+//        //some has results: [] --> set but empty
+//        if(!$trailerResults->results){
+//            Log::info('---- No trailer found');
+//            return "";
+//        }
+//
+//        $trailerObj = $trailerResults->results;
+//        return $trailerObj[0]->key;
+//
+//    }
+
+    private function getWidePosterUrl ($imdbId, $movieTitle) {
+        Log::info('--- Loading wide poster');
+        if (!$imdbId) {
+            Log::info('---- No IMDB Id');
+            return "images/no_poster.jpg";
+        }
+        $url = $this->posterService->getWidePosterUrl($imdbId);
+
+        if (!$url) {
+            Log::info('---- No OMDB Poster');
+            return "images/no_poster.jpg";
+        }
+        $asset = $this->posterService->savePosterFromUrl($url, $movieTitle."-wide");
+
+
+        if(!$asset) {
+            Log::info('---- Saving failed');
+            return "images/no_poster.jpg";
+        }
+        Log::info('---- wide poster Saved');
+        return $asset;
+    }
+
     private function getHiResPosterUrl ($imdbId, $movieTitle) {
         Log::info('--- Loading poster');
         if (!$imdbId) {
@@ -140,11 +196,13 @@ class MovieDetailsUpdater {
             return "images/no_poster.jpg";
         }
         $url = $this->posterService->getImdbPosterUrl($imdbId);
+
         if (!$url) {
             Log::info('---- No OMDB Poster');
             return "images/no_poster.jpg";
         }
         $asset = $this->posterService->savePosterFromUrl($url, $movieTitle);
+
 
         if(!$asset) {
             Log::info('---- Saving failed');
