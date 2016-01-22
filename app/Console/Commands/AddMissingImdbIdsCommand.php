@@ -84,12 +84,13 @@ class AddMissingImdbIdsCommand extends Command
 
         $movies = array_reduce($movieIds, function ($carry, $movieId) {
             $movie = Movie::find($movieId);
-            $this->info($movie->title . ' ' .
+            $this->info($movie->title);
+            $this->info($movie->title . ' '  .
                 $movie->rotten_tomatoes_id . ' ' .
                 $movie->imdb_id . ' ' .
-                $movie->poster);
+                $movie->details->poster);
             if ($movie->rotten_tomatoes_id == '' || $movie->rotten_tomatoes_id == 0 || $movie->imdb_id == ''
-                || (isset($movie->details) && $movie->details && strpos($movie->poster, 'no_poster') !== false)) {
+                || (isset($movie->details) && $movie->details && strpos($movie->details->poster, 'no_poster') !== false)) {
                 $this->info('- Missing ' . $movie->title);
                 $carry[] = $movie;
             }
@@ -157,6 +158,8 @@ class AddMissingImdbIdsCommand extends Command
         if ($this->posterService->exists($movie->title)) {
             $this->info('Already has poster');
             $asset = $this->posterService->getAssetPath($movie->title);
+            $widePosterAsset = $this->posterService->getAssetPath($movie->title."-wide");
+            $trailerUrl = $movie->trailer;
         } else {
             if ($movie->imdb_id) {
                 $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
