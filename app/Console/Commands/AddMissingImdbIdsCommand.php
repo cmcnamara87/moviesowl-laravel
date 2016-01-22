@@ -12,7 +12,9 @@ use MoviesOwl\Movies\MovieDetailsUpdater;
 use MoviesOwl\OMDB\OMDBApi;
 use MoviesOwl\Posters\PosterService;
 use MoviesOwl\RottenTomatoes\RottenTomatoesApi;
+use MoviesOwl\RottenTomatoes\RottenTomatoesService;
 use MoviesOwl\Showings\Showing;
+use MoviesOwl\Trailer\TrailerService;
 
 class AddMissingImdbIdsCommand extends Command
 {
@@ -35,6 +37,8 @@ class AddMissingImdbIdsCommand extends Command
     protected $rottenTomatoesApi;
     protected $movieDetailsUpdater;
     protected $OMDBApi;
+    protected $trailerService;
+    protected $rottenTomatoesService;
 
     /**
      * Create a new command instance.
@@ -43,14 +47,16 @@ class AddMissingImdbIdsCommand extends Command
      */
     public function __construct(PosterService $posterService,
                                 RottenTomatoesApi $rottenTomatoesApi,
-                                MovieDetailsUpdater $movieDetailsUpdater,
-                                OMDBApi $OMDBApi)
+                                MovieDetailsUpdater $movieDetailsUpdater, TrailerService $trailerService,
+                                RottenTomatoesService $rottenTomatoesService, OMDBApi $OMDBApi)
     {
         parent::__construct();
         $this->posterService = $posterService;
         $this->rottenTomatoesApi = $rottenTomatoesApi;
         $this->movieDetailsUpdater = $movieDetailsUpdater;
         $this->OMDBApi = $OMDBApi;
+        $this->trailerService = $trailerService;
+        $this->rottenTomatoesService = $rottenTomatoesService;
     }
 
     /**
@@ -80,9 +86,10 @@ class AddMissingImdbIdsCommand extends Command
             $movie = Movie::find($movieId);
             $this->info($movie->title . ' ' .
                 $movie->rotten_tomatoes_id . ' ' .
-                $movie->imdb_id . ' ' . $movie->details->poster);
+                $movie->imdb_id . ' ' .
+                $movie->poster);
             if ($movie->rotten_tomatoes_id == '' || $movie->rotten_tomatoes_id == 0 || $movie->imdb_id == ''
-                || (isset($movie->details) && $movie->details && strpos($movie->details->poster, 'no_poster') !== false)) {
+                || (isset($movie->details) && $movie->details && strpos($movie->poster, 'no_poster') !== false)) {
                 $this->info('- Missing ' . $movie->title);
                 $carry[] = $movie;
             }
@@ -113,7 +120,7 @@ class AddMissingImdbIdsCommand extends Command
         if ($rottenTomatoesId) {
             $movie->rotten_tomatoes_id = $rottenTomatoesId;
             $movie->save();
-            $this->movieDetailsUpdater->updateMovie($movie);
+            $this->rottenTomatoesService->updateMovie($movie);
             $movie = Movie::find($movie->id);
         }
 
@@ -153,6 +160,9 @@ class AddMissingImdbIdsCommand extends Command
         } else {
             if ($movie->imdb_id) {
                 $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
+                $widePosterUrl = $this->posterService->getWidePosterUrl($movie->imdb_id);
+                $trailerUrl = $this->trailerService->getTrailerUrl($movie->imdb_id);
+
             }
             // No url yet
             if (!$url) {
@@ -161,7 +171,10 @@ class AddMissingImdbIdsCommand extends Command
             if (!$url) {
                 return;
             }
+
             $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
+            $widePosterAsset = $this->posterService->savePosterFromUrl($widePosterUrl, $movie->title."-wide");
+
             Log::info('Saved poster to disk');
             if (!$asset) {
                 return;
@@ -176,6 +189,8 @@ class AddMissingImdbIdsCommand extends Command
         }
         $movieDetails = $movie->details;
         $movieDetails->poster = $asset;
+        $movieDetails->wide_poster = $widePosterAsset;
+        $movieDetails->trailer = $trailerUrl;
         $movieDetails->save();
         $movie->save();
 
