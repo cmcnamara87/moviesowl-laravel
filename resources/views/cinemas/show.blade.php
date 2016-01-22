@@ -30,8 +30,8 @@
                 <span class="owl-circle {{ $rating }}">
                     <img class="owl" src="{{ URL::asset('images/owl.png') }}" alt=""/>
                 </span>
-                <h2><span class="{{ $rating }}"></span> {{ $rating }} Movies</h2>
-                <p class="text-muted">Movies with {{ $rating }} Rotten Tomatoes and IMDB Ratings</p>
+                <h2><span class="{{ $rating }}"></span> {{ $rating }} Movies </h2>
+                <p class="text-muted">Movies at {{ $cinema->location }} with {{ $rating }} Rotten Tomatoes reviews and IMDB Ratings</p>
             </div>
 
             @foreach (array_chunk($movies, 4) as $movieRow)
@@ -60,6 +60,10 @@
                                     </p>
                                 </div>
                             </div>
+                            <p class="text-muted" style="margin-bottom: 30px;">
+                                {{ str_limit($movie->details->synopsis , $limit = 150, $end = '...') }}
+                                <a href="{{ URL::to('cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp) }}">read more</a>
+                            </p>
                         </div>
                     @endforeach
                 </div>
