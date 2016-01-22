@@ -58,7 +58,7 @@ class RottenTomatoesService
         }
 
         if(!$rtMovie) {
-
+            Log::info('No RT movie found, adding default');
             $movieDetails = MovieDetails::firstOrCreate(array('movie_id' => $movie->id));
             $movieDetails->fill([
                 "title" => $movie->title,
@@ -66,9 +66,10 @@ class RottenTomatoesService
                 "run_time" => "0",
                 "director" => "",
                 "cast" => "",
-                "poster" => $this->getHiResPosterUrl($movie->imdb_id, $movie->title),
+                "poster" => "",
                 "tomato_meter" => -1,
                 "genre" => "",
+                "movie_id" => $movie->id
             ]);
 
             $movieDetails->save();
