@@ -45,13 +45,10 @@ class MovieTransformer extends TransformerAbstract {
             ];
         }
 
-        $new = $movie->showings()->where('start_time', '>', Carbon::today()->subDays(7))
-            ->where('start_time', '<', Carbon::today()->subDays(6))->count() == 0;
-
         return [
             'id' => (int) $movie->id,
             'title' => $movie->title,
-            'new' => $new,
+            'new' => isset($movie->new) ? $movie->new : false,
             'poster' => $movie->details->poster,
             'wide_poster' => $movie->details->wide_poster,
             'tomato_meter' => $movie->details->{"tomato_meter"},

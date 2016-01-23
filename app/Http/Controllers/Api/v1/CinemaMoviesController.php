@@ -46,6 +46,15 @@ class CinemaMoviesController extends Controller
             $q->where('cinema_id', $cinema->id);
 
         }))->orderBy('tomato_meter', 'desc')->get();
+
+        foreach($movies as $movie) {
+            // set if they are new
+            // did they have a session 1 week ago?
+            $movie->new = Showing::where('movie_id', $movie->id)
+                    ->where('cinema_id', $cinema->id)
+                    ->where('start_time', '>', Carbon::today()->subDays(7))
+                    ->where('start_time', '<', Carbon::today()->subDays(6))->count() == 0;
+        }
         return Fractal::collection($movies, new MovieTransformer)->responseJson(200);
     }
 
