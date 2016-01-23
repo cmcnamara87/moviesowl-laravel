@@ -1,63 +1,9 @@
 @extends('layouts.default')
 @section('title', $movie->title . ' at ' .
- $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location)
+ $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
 @section('content')
 
-
-
-    {{--<div class="container">--}}
-    {{--<div class="row">--}}
-    {{--<div class="col-sm-4">--}}
-    {{--<img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">--}}
-    {{--</div>--}}
-
-    {{--<div class="col-sm-8">--}}
-    {{--<h3 style="margin-top:0;margin-bottom: 30px;">Book Tickets for {{ $movie->title }}</h3>--}}
-
-    {{--{{ $movie->synopsis }}--}}
-
-    {{--<ul class="list-unstyled">--}}
-    {{--@foreach ($showings as $showing)--}}
-    {{--@include('includes.showing')--}}
-    {{--<br/>--}}
-    {{--@endforeach--}}
-    {{--</ul>--}}
-
-    {{--<a class="btn btn-default" href="{{ URL::to('movies/' . $movie->id) }}">Find other cinemas</a>--}}
-
-
-    {{--</div>--}}
-    {{--<div class="col-sm-4">--}}
-    {{--<dl>--}}
-    {{--<dt>--}}
-    {{--Rotten Tomatoes--}}
-    {{--</dt>--}}
-    {{--<dd>--}}
-    {{--{{ $movie->tomato_meter }}%--}}
-    {{--</dd>--}}
-
-    {{--<dt>--}}
-    {{--Run Time--}}
-    {{--</dt>--}}
-    {{--<dd>--}}
-    {{--{{ $movie->run_time }} minutes--}}
-    {{--</dd>--}}
-
-    {{--<dt>--}}
-    {{--Cast--}}
-    {{--</dt>--}}
-    {{--<dd>--}}
-    {{--{{ $movie->cast }}--}}
-    {{--</dd>--}}
-    {{--</dl>--}}
-    {{--</div>--}}
-
-    {{--</div>--}}
-
-    {{--</div>--}}
-    {{----}}
-
-    @include('includes.cinema-jumbotron')
+    @include('includes.movie-jumbotron')
 
     <div class="container">
         <ol class="breadcrumb">

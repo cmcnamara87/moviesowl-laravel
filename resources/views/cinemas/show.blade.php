@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', $cinema->location . ' - What\'s Good at the Movies - MoviesOwl')
+@section('title', $cinema->location . ' Movie Times, Reviews and Tickets - MoviesOwl')
 @section('content')
 
     @include('includes.cinema-jumbotron')

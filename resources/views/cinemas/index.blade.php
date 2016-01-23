@@ -1,11 +1,11 @@
 @extends('layouts.default')
-@section('title', 'What\'s Good at the Movies - MoviesOwl')
+@section('title', 'Movie Times, Reviews and Tickets at your Local Cinema - MoviesOwl')
 @section('content')
 
     <div class="jumbotron">
         <div class="container">
-            <h1>Find out what's Good at the Movies</h1>
-{{--            <p>{{ $cinema->city }}, {{ $cinema->country }} Cinema</p>--}}
+            <h1>Movie Times, Reviews and Tickets at your Local Cinema</h1>
+            <p>Find out what's Good at the Movies</p>
         </div>
     </div>
 

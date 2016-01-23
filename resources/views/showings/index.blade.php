@@ -1,8 +1,8 @@
 @extends('layouts.default')
-@section('title', $movie->title . ' at ' .$cinema->location)
+@section('title', $movie->title . ' at ' .$cinema->location . ' - Movie Times, Movie Reviews and Tickets - MoviesOwl')
 @section('content')
 
-    @include('includes.cinema-jumbotron')
+    @include('includes.movie-jumbotron')
 
     <div class="container">
         <ol class="breadcrumb">
