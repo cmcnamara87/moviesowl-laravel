@@ -8401,12 +8401,18 @@ h3 {
   opacity: 1;
 }
 
+@media (min-width: 768px) {
+  .thumbnail .caption {
+    padding: 0px 48px;
+  }
+}
+
 .thumbnail .caption {
   transition: all 0.5s;
   position: absolute;
   bottom: 0;
+  padding: 0px 12px;
   text-align: center;
-  padding: 0px 48px;
   width: 100%;
   opacity: 0.95;
   background-color: #313748;
@@ -8491,4 +8497,29 @@ h3 {
 
 .time .progress .progress-bar {
   background-color: #64AD13;
+}
+
+.app-banner {
+  text-align: center;
+  background-color: #F76394;
+  color: white;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.app-banner h3 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.app-banner p {
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.app-banner img {
+  width: 120px;
 }
