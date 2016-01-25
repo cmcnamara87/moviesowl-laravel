@@ -67,11 +67,6 @@ class LoadMoviesCommand extends Command
         Log::useFiles('php://stdout');
         $this->info('Running Cinema Update');
 
-        $shouldRun = $this->ask('Are you sure you want to run movies load?', false);
-        if(!$shouldRun) {
-            return;
-        }
-
         $this->info('Clearing all sessions for tomorrow');
         $startingAfter = Carbon::tomorrow();
         $endOfDay = $startingAfter->copy()->endOfDay();
