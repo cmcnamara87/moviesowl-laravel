@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('title', $cinema->location . ' Movie Times, Reviews and Tickets - MoviesOwl')
+@section('canonical_url', URL::to('/cinemas/' . $cinema->slug))
 @section('content')
 
     @include('includes.cinema-jumbotron')

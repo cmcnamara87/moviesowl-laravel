@@ -1,6 +1,7 @@
 @extends('layouts.default')
 @section('title', $movie->title . ' at ' .
  $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
+@section('canonical_url', URL::to('/showings/' . $showing->id))
 @section('content')
 
     @include('includes.movie-jumbotron')

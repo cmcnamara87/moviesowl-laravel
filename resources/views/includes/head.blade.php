@@ -17,6 +17,9 @@
 
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}" />
 
+@if (trim($__env->yieldContent('canonical_url')))
+    <link rel="canonical" href="@yield('canonical_url')" />
+@endif
 
 <style>
     /*body {*/
