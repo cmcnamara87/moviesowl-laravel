@@ -83,7 +83,8 @@ class Showing extends \Eloquent {
     {
         return array('created_at', 'updated_at', 'seats_updated_at');
     }
-    public function getStartingTime($value)
+
+    public function getStartTimeAttribute($value)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $value, $this->cinema->timezone);
     }
