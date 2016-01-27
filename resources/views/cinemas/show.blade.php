@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('title', $cinema->location . ' Movie Times, Reviews and Tickets - MoviesOwl')
-@section('canonical_url', URL::to('/cinemas/' . $cinema->slug))
+@section('canonical_url', URL::to("{$cinema->slug}/{$day}"))
 @section('content')
 
     @include('includes.cinema-jumbotron')
@@ -13,7 +13,7 @@
                     No more movies showing today.
                 </p>
                 <p>
-                    <a  class="btn btn-primary btn-lg"  href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . \Carbon\Carbon::tomorrow()->timestamp) }}">
+                    <a  class="btn btn-primary btn-lg"  href="{{ URL::to("{$cinema->slug}/tomorrow") }}">
                         View Tomorrow
                     </a>
                 </p>
@@ -39,7 +39,7 @@
                 <div class="row">
                     @foreach ($movieRow as $movie)
                         <div class="col-xs-6 col-sm-3">
-                            @include('includes.movie-card', ["url" => 'cinemas/' . $cinema->slug . '/movies/' . $movie->slug . '/showings?starting_after=' . $startingAfter->timestamp])
+                            @include('includes.movie-card', ["url" => "{$cinema->slug}/{$movie->slug}/{$day}"])
                         </div>
                     @endforeach
                 </div>

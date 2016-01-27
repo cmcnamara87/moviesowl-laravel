@@ -1,4 +1,4 @@
-<a data-showing-id="{{ $showing->id }}" class="time" href="{{ URL::to('showings/'. $showing->id . '?starting_after=' . $startingAfter->timestamp) }}">
+<a data-showing-id="{{ $showing->id }}" class="time" href="{{ URL::to("showings/{$showing->id}") }}">
                             <span class="time__time">
                                 {{ $showing->start_time->format('h:i A') }}
                             </span>

@@ -35,11 +35,13 @@ Route::get('/app', function() {
 });
 
 
-Route::get('/', 'CinemasController@index');
 Route::resource('movies', 'MoviesController', ["only" => ["index", "show"]]);
 Route::resource('cinemas', 'CinemasController');
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
-
 Route::resource('push', 'PushController');
+
+Route::get('/', 'CinemasController@index');
+Route::get('/{cinemas}/{day?}', 'CinemasController@show');
+Route::get('/{cinemas}/{movies}/{day?}', 'CinemaMovieShowingsController@index');

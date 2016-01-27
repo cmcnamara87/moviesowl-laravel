@@ -22,7 +22,8 @@
                     <ul>
                     @foreach ($cinemas as $cinema)
                         <li>
-                            <a href="{{ URL::to('cinemas/' . $cinema->slug) }}">{{ $cinema->location }}</a>
+
+                            <a href="{{ url("{$cinema->slug}/today") }}">{{ $cinema->location }}</a>
                         </li>
                     @endforeach
                 </ul>

@@ -83,9 +83,10 @@ class CinemasController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Cinema $cinema)
+	public function show(Cinema $cinema, $day = 'today')
 	{
-        $startingAfter = $this->getStartingAfter();
+//        $startingAfter = $this->getStartingAfter();
+        $startingAfter = Carbon::$day();
         $endOfDay = $startingAfter->copy()->endOfDay();
 
 
@@ -128,7 +129,7 @@ class CinemasController extends Controller {
 //        $movies = $this->movieRepo->getWatchableAtCinema($cinema->id);
 //        $movies = Movie::watchable($now)->orderBy('tomato_meter', 'desc')->get();
 
-        return view('cinemas.show', compact('moviesByRating', 'cinema', 'movies', 'startingAfter'));
+        return view('cinemas.show', compact('moviesByRating', 'cinema', 'movies', 'day'));
 	}
 
 	/**

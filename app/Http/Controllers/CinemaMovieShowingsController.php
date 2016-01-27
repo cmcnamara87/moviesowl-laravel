@@ -36,15 +36,16 @@ class CinemaMovieShowingsController extends Controller {
      * @param Movie $movie
      * @return Response
      */
-	public function index(Cinema $cinema, Movie $movie)
+	public function index(Cinema $cinema, Movie $movie, $day = 'today')
 	{
-        $startingAfter = Input::get('starting_after');
-        if ($startingAfter) {
-            $startingAfter = Carbon::createFromTimestamp($startingAfter);
-        } else {
-            // by default show movies that have just started up to 20 minutes ago.
-            $startingAfter = Carbon::now()->subMinutes(20);
-        }
+        $startingAfter = Carbon::$day();
+//        if ($startingAfter) {
+//            $startingAfter = Carbon::createFromTimestamp($startingAfter);
+//        } else {
+//             by default show movies that have just started up to 20 minutes ago.
+//            $startingAfter = Carbon::now()->subMinutes(20);
+//        }
+
         $showings = $this->showingRepo->getWatchableAtCinema($movie->id, $cinema->id, $startingAfter);
 
         $showingsByTime = array_reduce($showings->all(), function($carry, $showing) {
@@ -65,7 +66,7 @@ class CinemaMovieShowingsController extends Controller {
 //            // FIXME: might spam event...need to investigate this
 //            $this->seatingService->updateSeating($showing);
 //        }
-        return view('showings.index', compact('cinema', 'movie', 'showingsByTime', 'startingAfter'));
+        return view('showings.index', compact('cinema', 'movie', 'showingsByTime', 'day'));
 	}
 
 	/**

@@ -60,18 +60,25 @@ class ShowingsController extends Controller {
      */
 	public function show(Showing $showing)
 	{
-        $startingAfter = Input::get('starting_after');
-        if ($startingAfter) {
-            $startingAfter = Carbon::createFromTimestamp($startingAfter);
-        } else {
-            // by default show movies that have just started up to 20 minutes ago.
-            $startingAfter = Carbon::now()->subMinutes(20);
-        }
+//        $startingAfter = Input::get('starting_after');
+//        if ($startingAfter) {
+//            $startingAfter = Carbon::createFromTimestamp($startingAfter);
+//        } else {
+//             by default show movies that have just started up to 20 minutes ago.
+//            $startingAfter = Carbon::now()->subMinutes(20);
+//        }
 
+        // get the starting time
+
+        if($showing->start_time->gte(Carbon::today()->endOfDay())) {
+            $day = 'tomorrow';
+        } else {
+            $day = 'today';
+        }
         $movie = $showing->movie;
         $cinema = $showing->cinema;
         $this->seatingService->updateSeating($showing);
-        return view('showings.show', compact('showing', 'movie', 'cinema', 'startingAfter'));
+        return view('showings.show', compact('showing', 'movie', 'cinema', 'day'));
 	}
 
 	/**

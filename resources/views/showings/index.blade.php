@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('title', $movie->title . ' at ' .$cinema->location . ' - Movie Times, Movie Reviews and Tickets - MoviesOwl')
-    @section('canonical_url', URL::to('cinemas/'.$cinema->slug .'/movies/' . $movie->slug .'/showings'))
+    @section('canonical_url', URL::to("{$cinema->slug}/{$movie->slug}/{$day}"))
 @section('content')
 
     @include('includes.movie-jumbotron')
@@ -8,7 +8,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ URL::to('cinemas/') }}">{{ $cinema->city }}</a></li>
-            <li><a href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . $startingAfter->timestamp) }}">{{ $cinema->location }}</a></li>
+            <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
             <li class="active">{{ $movie->title }}</li>
         </ol>
     </div>

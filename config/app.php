@@ -146,7 +146,8 @@ return [
         MoviesOwl\Providers\RouteServiceProvider::class,
         Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
-        'Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider'
+        'Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider',
+        Spatie\LinkChecker\LinkCheckerServiceProvider::class,
     ],
 
     /*

@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="@if(isset($cinema)) {{ '/cinemas/' . $cinema->slug }} @else '/' @endif">MoviesOwl</a>
+            <a class="navbar-brand" href="<?php if(isset($cinema)) echo URL::to("{$cinema->slug}/today"); else echo '/'; ?>">MoviesOwl</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
