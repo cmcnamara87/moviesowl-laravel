@@ -11,7 +11,7 @@
     <div id="main">
         @yield('content')
     </div>
-    <div class="app-banner">
+    <div class="app-banner" style="margin-top:50px;">
         <h3>Get the MoviesOwl App</h3>
         <p>Movies Times, Reviews and Tickets in your Pocket</p>
         <p style="margin-bottom: 0;">
