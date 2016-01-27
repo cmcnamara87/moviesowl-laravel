@@ -1,6 +1,6 @@
 <a data-showing-id="{{ $showing->id }}" class="time" href="{{ URL::to("showings/{$showing->id}") }}">
                             <span class="time__time">
-                                {{ $showing->start_time->format('h:i A', $showing->cinema->timezone) }}
+                                {{ $showing->start_time->format('h:i A') }}
                             </span>
 
     @if($showing->screen_type != "standard")
