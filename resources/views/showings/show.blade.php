@@ -15,7 +15,7 @@
                     {{ $movie->title }}
                 </a>
             </li>
-            <li class="active">{{ $showing->start_time->format('h:i A') }}</li>
+            <li class="active">{{ $showing->start_time->format('h:i A', $showing->cinema->timezone)  }}</li>
         </ol>
     </div>
 
@@ -34,7 +34,7 @@
                         <p class="text-muted"
                            style="text-transform: uppercase;font-size:12px;margin-bottom:20px;">
 
-                            {{ $showing->start_time->format('h:i A') }}
+                            {{ $showing->start_time->format('h:i A', $showing->cinema->timezone) }}
 
                             @if($showing->screen_type != "standard")
                                 {{ $showing->screen_type }}
