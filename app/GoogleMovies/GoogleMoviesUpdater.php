@@ -147,7 +147,7 @@ class GoogleMoviesUpdater {
                         $hours += 12;
                     }
                     $minutes = intval($parts[1]);
-                    $timestamp = Carbon::tomorrow()->timestamp + ($hours * 60 * 60) + ($minutes * 60);
+                    $timestamp = Carbon::tomorrow($cinema->timezone)->timestamp + ($hours * 60 * 60) + ($minutes * 60);
                     $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
                     Log::info('Session: ' . $startTime->toDateTimeString());
