@@ -8521,3 +8521,13 @@ h3 {
 .app-banner img {
   width: 120px;
 }
+
+.time-button {
+  background-color: transparent;
+  color: white;
+}
+
+.time-button.active {
+  background-color: white;
+  color: #313748;
+}

@@ -280,3 +280,13 @@ h3 {
     width: 120px;
   }
 }
+
+
+.time-button {
+  background-color: transparent;
+  color: white;
+  &.active {
+    background-color: white;
+    color: $licorice;
+  }
+}
