@@ -70,7 +70,7 @@ class ShowingsController extends Controller {
 
         // get the starting time
 
-        if($showing->start_time->gte(Carbon::today()->endOfDay())) {
+        if($showing->start_time->gte(Carbon::today($showing->cinema->timezone)->endOfDay())) {
             $day = 'tomorrow';
         } else {
             $day = 'today';

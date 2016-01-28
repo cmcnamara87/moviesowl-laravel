@@ -38,7 +38,7 @@ class CinemaMovieShowingsController extends Controller {
      */
 	public function index(Cinema $cinema, Movie $movie, $day = 'today')
 	{
-        $startingAfter = Carbon::$day();
+        $startingAfter = Carbon::$day($cinema->timezone);
 //        if ($startingAfter) {
 //            $startingAfter = Carbon::createFromTimestamp($startingAfter);
 //        } else {

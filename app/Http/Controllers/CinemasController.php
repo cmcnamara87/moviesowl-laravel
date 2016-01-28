@@ -86,7 +86,7 @@ class CinemasController extends Controller {
 	public function show(Cinema $cinema, $day = 'today')
 	{
 //        $startingAfter = $this->getStartingAfter();
-        $startingAfter = Carbon::$day();
+        $startingAfter = Carbon::$day($cinema->timezone);
         $endOfDay = $startingAfter->copy()->endOfDay();
 
 
