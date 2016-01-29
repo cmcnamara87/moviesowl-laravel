@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         \MoviesOwl\Console\Commands\ClearMovieDetailsCommand::class,
         \MoviesOwl\Console\Commands\AddMissingImdbIdsCommand::class,
         \MoviesOwl\Console\Commands\UpdateDetailsCommand::class,
+        \MoviesOwl\Console\Commands\UpdateCinemasHomepageUrl::class,
         'MoviesOwl\Console\Commands\LoadMoviesCommand',
         \Spatie\LinkChecker\CheckLinksCommand::class
     ];
