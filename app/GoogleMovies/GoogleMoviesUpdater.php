@@ -112,8 +112,8 @@ class GoogleMoviesUpdater {
 
                 // get the ticket-ish url
                 // goes a google search, and takes the first url
-                $ticketUrl = '';
-                $ticketUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
+//                $ticketUrl = '';
+//                $ticketUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
 //                $searchHtml = @file_get_contents($searchUrl);
 //                $searchDom = new Htmldom($searchHtml);
 //                $searchLink = $searchDom->find('#search a', 0);
@@ -157,7 +157,7 @@ class GoogleMoviesUpdater {
                         "start_time" => $startTime->toDateTimeString(),
                         'created_at' => $now,
                         'updated_at' => $now,
-                        "tickets_url" => $ticketUrl,
+                        "tickets_url" => '',
                     ];
                 }
 
