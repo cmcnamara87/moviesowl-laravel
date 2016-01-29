@@ -49,7 +49,6 @@ class EventCinemasUpdater {
                 continue;
             }
             $this->updateMoviesAndShowings($cinema);
-            sleep(1);
         }
     }
 
