@@ -23,6 +23,14 @@
 
                 <div class="row">
                     <div class="col-sm-8">
+                        @if($movie->details->trailer)
+                        <div class="videoWrapper" style="margin-bottom: 20px;">
+                            <!-- Copy & Pasted from YouTube -->
+                            <iframe id="ytplayer" type="text/html" width="640" height="390"
+                                    src="http://www.youtube.com/embed/{{ $movie->details->trailer }}?autoplay=0&origin=http://moviesowl.com"
+                                    frameborder="0"></iframe>
+                        </div>
+                        @endif
                         <p style="margin-bottom: 40px;">
                             {{ $movie->details->synopsis }}
                         </p>
