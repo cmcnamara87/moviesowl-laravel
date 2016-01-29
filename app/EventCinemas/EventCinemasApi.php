@@ -45,6 +45,9 @@ class EventCinemasApi {
         // https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=48&date=2015-12-31
         $moviesData = json_decode(@file_get_contents("https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=" . $eventCinemaId . "&date=$dateString"));
 
+        if(!$moviesData || !isset($moviesData->Data) || !isset($moviesData->Data->Movies)) {
+            return [];
+        }
         $movies = array_map(function($movieData) use ($cinema) {
             $sessions = array_map(function($sessionData) use ($cinema) {
 
