@@ -66,6 +66,11 @@ class PosterService
         return $posterUrl;
     }
 
+    /**
+     * Checks if a movie poster is already saved
+     * @param $name
+     * @return bool
+     */
     public function exists($name) {
         $asset = "images/posters/" . snake_case($name) . ".jpg";
         $posterPath = public_path() . "/" . $asset;

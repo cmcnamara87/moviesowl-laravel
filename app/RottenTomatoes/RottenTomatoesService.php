@@ -66,7 +66,7 @@ class RottenTomatoesService
                 "run_time" => "0",
                 "director" => "",
                 "cast" => "",
-                "poster" => "",
+                "poster" => "images/no_poster.jpg",
                 "tomato_meter" => -1,
                 "genre" => "",
                 "movie_id" => $movie->id
@@ -154,7 +154,7 @@ class RottenTomatoesService
 
     private function getHiResPosterUrl ($imdbId, $movieTitle) {
         Log::info('--- Loading poster');
-        if (!$imdbId) {
+        if (!$imdbId && !$this->posterService->exists($movieTitle)) {
             Log::info('---- No IMDB Id');
             return "images/no_poster.jpg";
         }
