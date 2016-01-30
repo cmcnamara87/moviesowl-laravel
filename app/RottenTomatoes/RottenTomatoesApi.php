@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 class RottenTomatoesApi {
 
-    protected $apiKey = "akr6ay2seh8r2uhdjfdrrwm4";
 
+    protected $apiKey = "akr6ay2seh8r2uhdjfdrrwm4";
     public function getMovies($title) {
         $title = urlencode($this->removePunctuation($title));
         $url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey={$this->apiKey}&q=$title";
