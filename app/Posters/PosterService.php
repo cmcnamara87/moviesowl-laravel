@@ -72,7 +72,7 @@ class PosterService
      * @return bool
      */
     public function exists($name) {
-        $asset = "images/posters/" . snake_case($name) . ".jpg";
+        $asset = $this->getAssetPath($name);
         $posterPath = public_path() . "/" . $asset;
         return file_exists($posterPath);
     }

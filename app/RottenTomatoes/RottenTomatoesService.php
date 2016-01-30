@@ -154,7 +154,11 @@ class RottenTomatoesService
 
     private function getHiResPosterUrl ($imdbId, $movieTitle) {
         Log::info('--- Loading poster');
-        if (!$imdbId && !$this->posterService->exists($movieTitle)) {
+        if($this->posterService->exists($movieTitle)) {
+            // return it already
+            $this->posterService->getAssetPath($movieTitle);
+        }
+        if (!$imdbId) {
             Log::info('---- No IMDB Id');
             return "images/no_poster.jpg";
         }
