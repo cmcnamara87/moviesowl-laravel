@@ -38,6 +38,18 @@ class GoogleMoviesUpdater {
         $this->updateForCity('Darwin', 'Australia', 'Australia/Darwin');
         $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane');
         $this->updateForCity('Canberra', 'Australia', 'Australia/Canberra');
+        // New Cinemas
+//        $this->updateForCity('Gold Coast', 'Australia', 'Australia/Brisbane');
+//        $this->updateForCity('Wollongong', 'Australia', 'Australia/Sydney');
+//        $this->updateForCity('Central Coast', 'Australia', 'Australia/Sydney');
+//        $this->updateForCity('Hobart', 'Australia', 'Australia/Hobart');
+//        $this->updateForCity('Geelong', 'Australia', 'Australia/Victoria');
+//        $this->updateForCity('Townsville', 'Australia', 'Australia/Brisbane');
+//        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane');
+//        $this->updateForCity('Toowoomba', 'Australia', 'Australia/Brisbane');
+//        $this->updateForCity('Ballarat', 'Australia', 'Australia/Melbourne');
+//        $this->updateForCity('Bendigo', 'Australia', 'Australia/Melbourne');
+//        $this->updateForCity('Albury', 'Australia', 'Australia/Sydney');
     }
 
     public function updateForCity($city, $country, $timezone)
