@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\EventCinemas\EventCinemasUpdater;
+use MoviesOwl\Fandango\FandangoUpdater;
 use MoviesOwl\GoogleMovies\GoogleMoviesUpdater;
 use MoviesOwl\Movies\Movie;
 use MoviesOwl\Movies\MovieDetails;
@@ -27,6 +28,7 @@ class LoadMoviesCommand extends Command
     private $eventCinemasUpdater;
     private $googleMoviesUpdater;
     private $movieDetailsUpdater;
+    private $fandangoUpdater;
 
     /**
      * The name and signature of the console command.
@@ -49,12 +51,15 @@ class LoadMoviesCommand extends Command
      */
     public function __construct(EventCinemasUpdater $eventCinemasUpdater,
                                 GoogleMoviesUpdater $googleMoviesUpdater,
-                                MovieDetailsUpdater $movieDetailsUpdater)
+                                MovieDetailsUpdater $movieDetailsUpdater,
+                                FandangoUpdater $fandangoUpdater)
     {
         parent::__construct();
         $this->eventCinemasUpdater = $eventCinemasUpdater;
         $this->googleMoviesUpdater = $googleMoviesUpdater;
         $this->movieDetailsUpdater = $movieDetailsUpdater;
+        $this->fandangoUpdater = $fandangoUpdater;
+
     }
 
     /**
@@ -78,6 +83,8 @@ class LoadMoviesCommand extends Command
             $showing->delete();
         }
 
+        $this->fandangoUpdater->update();
+        die();
         $this->eventCinemasUpdater->update();
         $this->googleMoviesUpdater->update();
         $this->movieDetailsUpdater->updateAll();
