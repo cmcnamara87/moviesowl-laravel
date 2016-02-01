@@ -50,7 +50,7 @@
                         <div style="margin-bottom: 30px;">
                             <a class="btn btn-lg btn-primary" target="_blank"
                                href="@if(strlen($showing->tickets_url)) {{ $showing->tickets_url }} @else {{ $showing->cinema->homepage_url }} @endif"
-                               onclick="ga('send', 'event', 'button', 'buy-tickets', '{{ $cinema->location }}', '{{ $movie->title }}');">
+                               onclick="ga('send', 'event', 'button', 'buy_tickets');">
                                 Buy Tickets <i class="fa fa-external-link"></i>
                             </a>
                         </div>
