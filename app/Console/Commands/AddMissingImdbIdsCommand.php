@@ -109,23 +109,7 @@ class AddMissingImdbIdsCommand extends Command
         $this->info($movie->title);
 
         // running rotten tomatoes search
-        $this->info('Checking rotten tomatoes');
-
-        // Update rotten tomatoes
-        $rottenTomatoesId = $this->getRottenTomatoesId($movie->title);
-        if (!$rottenTomatoesId) {
-            $movieTitle = $this->ask('No matches, enter movie title', false);
-            if ($movieTitle) {
-                $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);
-            }
-        }
-        if ($rottenTomatoesId) {
-            $movie->rotten_tomatoes_id = $rottenTomatoesId;
-            $movie->save();
-            $this->rottenTomatoesService->updateMovie($movie);
-            $movie = Movie::find($movie->id);
-        }
-
+        $movie = $this->updateRottenTomatoes($movie);
 
         $url = null;
 
@@ -194,7 +178,9 @@ class AddMissingImdbIdsCommand extends Command
         }
         $movieDetails = $movie->details;
         $movieDetails->poster = $asset;
-        $movieDetails->wide_poster = $widePosterAsset;
+        if ($widePosterAsset) {
+            $movieDetails->wide_poster = $widePosterAsset;
+        }
         if ($trailerUrl) {
             $movieDetails->trailer = $trailerUrl;
         }
@@ -249,5 +235,32 @@ class AddMissingImdbIdsCommand extends Command
             }
         }
         return false;
+    }
+
+    /**
+     * @param $movie
+     * @return array
+     */
+    private function updateRottenTomatoes($movie)
+    {
+        $this->info('Updating Rotten Tomatoes');
+        if ($movie->rotten_tomatoes_id) {
+            return $this->rottenTomatoesService->updateMovie($movie);
+        }
+
+
+        $rottenTomatoesId = $this->getRottenTomatoesId($movie->title);
+        if (!$rottenTomatoesId) {
+            $movieTitle = $this->ask('No matches, enter movie title', false);
+            if ($movieTitle) {
+                $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);
+            }
+        }
+        if (!$rottenTomatoesId) {
+            return $movie;
+        }
+        $movie->rotten_tomatoes_id = $rottenTomatoesId;
+        $movie->save();
+        return $this->rottenTomatoesService->updateMovie($movie);
     }
 }
