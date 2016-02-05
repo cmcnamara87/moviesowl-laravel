@@ -146,11 +146,11 @@ class AddMissingImdbIdsCommand extends Command
             $widePosterAsset = $this->posterService->getAssetPath($movie->title . "-wide");
             $trailerUrl = $movie->trailer;
         } else {
+            $widePosterUrl = false;
             if ($movie->imdb_id) {
                 $url = $this->posterService->getImdbPosterUrl($movie->imdb_id);
                 $widePosterUrl = $this->posterService->getWidePosterUrl($movie->imdb_id);
                 $trailerUrl = $this->trailerService->getTrailerUrl($movie->imdb_id);
-
             }
             // No url yet
             if (!$url) {
