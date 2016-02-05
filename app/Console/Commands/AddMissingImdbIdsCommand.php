@@ -160,6 +160,7 @@ class AddMissingImdbIdsCommand extends Command
                 return;
             }
             $asset = $this->posterService->savePosterFromUrl($url, $movie->title);
+            $widePosterAsset = false;
             if ($widePosterUrl) {
                 $widePosterAsset = $this->posterService->savePosterFromUrl($widePosterUrl, $movie->title . "-wide");
             }
