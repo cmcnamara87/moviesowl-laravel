@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('title', $movie->title . ' at ' .
- $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
-@section('canonical_url', URL::to('showings/' . $showing->id))
+ $showing->start_time->format('l jS \\of F Y h:i: A') . ' - ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
+@section('description', 'Book tickets for ' . $showing->start_time->format('l jS \\of F Y h:i: A') . ' ' . $movie->title . ' at ' .$cinema->location)
 @section('content')
 
     @include('includes.movie-jumbotron')
