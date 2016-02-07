@@ -17,12 +17,10 @@
     "ratingValue": "@if ($movie->tomato_meter > 75) 3 @elseif ($movie->tomato_meter > 59) 2 @else 1 @endif",
     "bestRating": "3"
   },
-  "name": "@if ($movie->tomato_meter > 75) A Great Movie @elseif ($movie->tomato_meter > 59) A Good Movie @else A Bad Movie @endif",
   "author": {
     "@type": "Organisation",
     "name": "MoviesOwl"
   },
-  "reviewBody": "@if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif",
   "publisher": {
     "@type": "Organization",
     "name": "MoviesOwl"
