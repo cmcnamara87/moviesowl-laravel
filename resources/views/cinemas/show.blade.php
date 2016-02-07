@@ -2,6 +2,7 @@
 @section('title', $cinema->location . ' - Movie Times, Reviews and Tickets - MoviesOwl')
 @section('content')
 
+
     @include('includes.cinema-jumbotron')
 
     <div class="container">
