@@ -1,5 +1,6 @@
 @extends('layouts.default')
-@section('title', $cinema->location . ' - Movie Times, Reviews and Tickets - MoviesOwl')
+@section('title', $cinema->location . ' - ' . ucfirst($day) . "'s Movie Times, Reviews and Tickets - MoviesOwl")
+@section('description', 'Find ' . ucfirst($day) . "'sMovie Times, Reviews and Tickets for " . $cinema->location)
 @section('content')
 
 
