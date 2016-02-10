@@ -32,7 +32,7 @@
 
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ URL::to('cinemas/') }}">{{ $cinema->city }}</a></li>
+            <li><a href="{{ url("cities/{$cinema->city}") }}">{{ $cinema->city }}</a></li>
             <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
             <li class="active">{{ $movie->title }}</li>
         </ol>
@@ -45,7 +45,7 @@
     "@type": "ListItem",
     "position": 1,
     "item": {
-      "@id": "{{ url('cinemas/') }}",
+      "@id": "{{ url("cities/{$cinema->city}") }}",
       "name": "{{ $cinema->city }}"
     }
   },{
