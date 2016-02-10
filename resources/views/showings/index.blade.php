@@ -1,7 +1,6 @@
 @extends('layouts.default')
-@section('title', $movie->title . ' - ' .$cinema->location . ' - Movie Times, Reviews and Tickets - MoviesOwl")
-@section('description', 'Find ' . ucfirst($day) . "'sMovie Times, Reviews and Tickets for " . $movie->title . ' at ' . $cinema->location)
-
+@section('title', "{$movie->title } - {$cinema->location} - Movie Times, Reviews and Tickets")
+@section('description', "{$movie->title} {$cinema->location} {$movie->details->synopsis}")
 @section('content')
 
 <script type="application/ld+json">
