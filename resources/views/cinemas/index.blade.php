@@ -18,7 +18,7 @@
                     @if ($count % (count($cinemasByCity) / 3) == 0)
                         </div><div class="col-sm-4">
                     @endif
-                    <h3>{{ $city }}</h3>
+                    <h3><a style="color: inherit" href="{{ url("cities/{$city}/today") }}">{{ $city }}</a></h3>
                     <ul>
                     @foreach ($cinemas as $cinema)
                         <li>
