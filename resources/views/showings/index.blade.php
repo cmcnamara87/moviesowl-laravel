@@ -27,6 +27,7 @@
 }
 </script>
 
+
     @include('includes.movie-jumbotron')
 
     <div class="container">
@@ -36,6 +37,35 @@
             <li class="active">{{ $movie->title }}</li>
         </ol>
     </div>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "{{ url('cinemas/') }}",
+      "name": "{{ $cinema->city }}"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "{{ url("{$cinema->slug}/{$day}") }}",
+      "name": "{{ $cinema->location }}"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "item": {
+      "@id": "{{ url()->current() }}",
+      "name": "{{ $movie->title }}"
+    }
+  }]
+}
+</script>
+
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
