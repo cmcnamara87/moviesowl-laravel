@@ -59,7 +59,7 @@
     "@type": "ListItem",
     "position": 3,
     "item": {
-      "@id": "{{ url()->current() }}",
+      "@id": "{{ URL::current() }}",
       "name": "{{ $movie->title }}"
     }
   }]
