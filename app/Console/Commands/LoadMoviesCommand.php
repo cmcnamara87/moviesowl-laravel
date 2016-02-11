@@ -87,9 +87,9 @@ class LoadMoviesCommand extends Command
             }
         }
 
-        $this->eventCinemasUpdater->update();
-        $this->googleMoviesUpdater->update();
+//        $this->eventCinemasUpdater->update();
+//        $this->googleMoviesUpdater->update();
         $this->fandangoUpdater->update();
-        $this->movieDetailsUpdater->updateAll();
+//        $this->movieDetailsUpdater->updateAll();
     }
 }

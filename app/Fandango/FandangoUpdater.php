@@ -28,9 +28,12 @@ class FandangoUpdater {
 
     public function getMovies() {
         Log::info('Get sessions');
-        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-01-31&numDays=1&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
+
+        // Hard coded for boston
+        $tomorrow = Carbon::tomorrow('America/New_York');
+
+        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" . $tomorrow->toDateString() . "&numDays=1&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
         $result = json_decode(@file_get_contents($url));
-        Log::info($result);
         foreach ($result as $movieElement) {
             Log::info('Get sessions for '.$movieElement->title);
             $this->getSessions($movieElement);
