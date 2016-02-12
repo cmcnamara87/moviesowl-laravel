@@ -3,13 +3,21 @@
 @section('description', "{$cinema->location} Find " . ucfirst($day) . "'sMovie Times, Reviews and Tickets.")
 @section('content')
 
-
     @include('includes.cinema-jumbotron')
 
-    <div class="container">
+    <div class="breadcrumb-wrapper" >
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ url("cities/{$cinema->city}/{$day}") }}">{{ ucfirst($cinema->city) }}</a></li>
+                <li class="active">{{ $cinema->location }}</li>
+                <li class="active">{{ ucfirst($day) }}</li>
+            </ol>
+        </div>
+    </div>
 
+    <div class="container">
         @if(!count($movies))
-            <div style="text-align: center">
+            <div style="text-align: center;margin-top:30px;">
                 <p class="text-muted">
                     No more movies showing today.
                 </p>
@@ -24,7 +32,6 @@
                 </div>
 
             </div>
-
         @endif
         {{--<img class="owl" src="{{ URL::asset('images/owl.png') }}" alt=""/>--}}
         @foreach ($moviesByRating as $rating => $movies)

@@ -6,19 +6,25 @@
 
     @include('includes.movie-jumbotron')
 
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ url("cities/{$cinema->city}/{$day}") }}">{{ $cinema->city }}</a></li>
+                <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
+                <li>
+                    <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
+                        {{ $movie->title }}
+                    </a>
+                </li>
+                <li>{{ ucfirst($day) }}</li>
+                <li class="active">{{ $showing->start_time->format('h:i A')  }}</li>
+            </ol>
+        </div>
+    </div>
+
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ url("cities/{$cinema->city}") }}">{{ $cinema->city }}</a></li>
-            <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
-            <li>
-                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
-                    {{ $movie->title }}
-                </a>
-            </li>
-            <li>
-                {{ ucfirst($day) }}
-            </li>
-            <li class="active">{{ $showing->start_time->format('h:i A')  }}</li>
+
         </ol>
     </div>
 

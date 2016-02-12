@@ -18,6 +18,33 @@
         </div>
     </div>
 
+    <div class="container" style="margin-top:30px;">
+        {{--<div class="well">--}}
+            <h3 class="text-center">Cinemas</h3>
+            <?php $count = 0; ?>
+            <div class="row">
+                <div class="col-sm-4">
+                    @foreach ($cinemasByLetter as $letter => $cinemas)
+                        <?php $count += 1; ?>
+                        @if ($count % (count($cinemasByLetter) / 3) == 0)
+                </div><div class="col-sm-4">
+                    @endif
+                    <h3>{{ $letter }}</h3>
+                    <ul>
+                        @foreach ($cinemas as $cinema)
+                            <li>
+
+                                <a href="{{ url("{$cinema->slug}/today") }}">{{ $cinema->location }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                    @endforeach
+                </div>
+            {{--</div>--}}
+        </div>
+
+    </div>
+
     <div class="container">
         @foreach ($moviesByRating as $rating => $movies)
             <div class="group">
@@ -38,30 +65,6 @@
                 </div>
             @endforeach
         @endforeach
-    </div>
-
-    <div class="container" style="margin-top:30px;">
-        <h3 class="text-center">Cinemas</h3>
-        <?php $count = 0; ?>
-        <div class="row">
-            <div class="col-sm-4">
-                @foreach ($cinemasByLetter as $letter => $cinemas)
-                    <?php $count += 1; ?>
-                    @if ($count % (count($cinemasByLetter) / 3) == 0)
-            </div><div class="col-sm-4">
-                @endif
-                <h3>{{ $letter }}</h3>
-                <ul>
-                    @foreach ($cinemas as $cinema)
-                        <li>
-
-                            <a href="{{ url("{$cinema->slug}/today") }}">{{ $cinema->location }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-                @endforeach
-            </div>
-        </div>
     </div>
 
 @stop

@@ -2,16 +2,16 @@
 @section('title', $movie->title)
 @section('content')
 
-    {{--@include('includes.cinema-jumbotron')--}}
+    <div class="breadcrumb-wrapper" >
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ url("cities/{$cityName}/{$day}") }}">{{ ucfirst($cityName) }}</a></li>
+                <li>{{ ucfirst($day) }}</li>
+                <li class="active">{{ $movie->title }}</li>
+            </ol>
+        </div>
+    </div>
 
-    <div class="container" style="margin-top:20px;">
-        <ol class="breadcrumb">
-            <li><a href="{{ url("cities/{$cityName}/{$day}") }}">{{ ucfirst($cityName) }}</a></li>
-            <li>{{ ucfirst($day) }}</li>
-            <li class="active">{{ $movie->title }}</li>
-        </ol>
-    </div>
-    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">

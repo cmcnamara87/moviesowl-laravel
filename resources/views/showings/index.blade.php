@@ -30,14 +30,17 @@
 
     @include('includes.movie-jumbotron')
 
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ url("cities/{$cinema->city}/{$day}") }}">{{ $cinema->city }}</a></li>
-            <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
-            <li>{{ ucfirst($day) }}</li>
-            <li class="active">{{ $movie->title }}</li>
-        </ol>
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ url("cities/{$cinema->city}/{$day}") }}">{{ $cinema->city }}</a></li>
+                <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
+                <li class="active">{{ $movie->title }}</li>
+                <li>{{ ucfirst($day) }}</li>
+            </ol>
+        </div>
     </div>
+
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -67,7 +70,7 @@
 }
 </script>
 
-    <div class="container">
+    <div class="container" style="margin-top:30px;">
         <div class="row">
             <div class="col-sm-4">
                 <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">

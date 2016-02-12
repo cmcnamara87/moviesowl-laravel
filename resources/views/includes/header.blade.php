@@ -15,8 +15,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ URL::to('/cinemas') }}">Change Cinemas</a></li>
-                <li><a href="{{ URL::to('/movies') }}">Browse All Movies</a></li>
+                <li><a href="{{ URL::to('/cinemas') }}">Change City</a></li>
             </ul>
             {{--<form class="navbar-form navbar-right" role="search">--}}
                 {{--<div class="form-group">--}}
