@@ -6,10 +6,11 @@
 
     <div class="container" style="margin-top:20px;">
         <ol class="breadcrumb">
-            <li><a href="{{ URL::to('movies/') }}">All Movies</a></li>
-            {{--            <li><a href="{{ URL::to('cinemas/' . $cinema->slug . '?starting_after=' . $startingAfter->timestamp) }}">{{ $cinema->location }}</a></li>--}}
+            <li><a href="{{ url("cities/{$cityName}/{$day}") }}">{{ ucfirst($cityName) }}</a></li>
+            <li>{{ ucfirst($day) }}</li>
             <li class="active">{{ $movie->title }}</li>
         </ol>
+    </div>
     </div>
     <div class="container">
         <div class="row">
@@ -66,7 +67,7 @@
                     <ul>
                         @foreach ($cinemas as $cinema)
                             <li>
-                                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/today") }}">
+                                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
                                     {{ $movie->title}} at {{ $cinema->location }}</a>
                             </li>
                         @endforeach

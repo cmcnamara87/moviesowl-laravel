@@ -32,8 +32,9 @@
 
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ url("cities/{$cinema->city}") }}">{{ $cinema->city }}</a></li>
+            <li><a href="{{ url("cities/{$cinema->city}/{$day}") }}">{{ $cinema->city }}</a></li>
             <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
+            <li>{{ ucfirst($day) }}</li>
             <li class="active">{{ $movie->title }}</li>
         </ol>
     </div>

@@ -34,8 +34,6 @@ Route::get('/app', function() {
 //    Redirect::to('http://google.com');
 });
 
-
-Route::resource('movies', 'MoviesController', ["only" => ["index", "show"]]);
 Route::resource('cinemas', 'CinemasController');
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
@@ -45,5 +43,6 @@ Route::resource('cities', 'CitiesController');
 
 Route::get('/', 'CinemasController@index');
 Route::get('/cities/{cityName}/{day?}', 'CitiesController@show');
+Route::get('/movies/{movies}/{cityName}/{day?}', 'MoviesController@show');
 Route::get('/{cinemas}/{day?}', 'CinemasController@show');
 Route::get('/{cinemas}/{movies}/{day?}', 'CinemaMovieShowingsController@index');

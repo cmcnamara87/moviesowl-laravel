@@ -15,6 +15,9 @@
                     {{ $movie->title }}
                 </a>
             </li>
+            <li>
+                {{ ucfirst($day) }}
+            </li>
             <li class="active">{{ $showing->start_time->format('h:i A')  }}</li>
         </ol>
     </div>

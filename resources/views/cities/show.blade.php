@@ -32,7 +32,7 @@
                 <div class="row">
                     @foreach ($movieRow as $movie)
                         <div class="col-xs-6 col-sm-3">
-                            @include('includes.movie-card', ["url" => 'movies/' . $movie->slug])
+                            @include('includes.movie-card', ["url" => 'movies/' . $movie->slug . '/' . $cityName . '/' . $day])
                         </div>
                     @endforeach
                 </div>
