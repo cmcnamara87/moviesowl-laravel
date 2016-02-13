@@ -87,6 +87,7 @@ class LoadMoviesCommand extends Command
             }
         }
 
+        // Load sessions
         $this->eventCinemasUpdater->update();
         $this->googleMoviesUpdater->update();
         $this->fandangoUpdater->update();
