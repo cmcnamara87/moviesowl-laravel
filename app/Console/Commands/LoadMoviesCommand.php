@@ -35,7 +35,7 @@ class LoadMoviesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'movies:load';
+    protected $signature = 'movies:load {day=tomorrow}';
 
     /**
      * The console command description.
@@ -72,25 +72,24 @@ class LoadMoviesCommand extends Command
         Log::useFiles('php://stdout');
         $this->info('Running Cinema Update');
 
-        $this->info('Clearing all sessions for tomorrow');
+        $day = $this->argument('day');
+
+        $this->info('Clearing all sessions for ' . $day);
         $cinemas = Cinema::all();
         foreach($cinemas as $cinema) {
-            $this->info('Clearing ' . $cinema->location);
-            $startingAfter = Carbon::tomorrow($cinema->timezone);
+            $startingAfter = Carbon::$day($cinema->timezone);
+            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
             $endOfDay = $startingAfter->copy()->endOfDay();
-            $showings = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())
                 ->where('cinema_id', '<=', $cinema->id)
-                ->get();
-            foreach($showings as $showing) {
-                $showing->delete();
-            }
+                ->delete();
         }
 
         // Load sessions
-        $this->eventCinemasUpdater->update();
-        $this->googleMoviesUpdater->update();
-        $this->fandangoUpdater->update();
-        $this->movieDetailsUpdater->updateAll();
+        $this->eventCinemasUpdater->update($day);
+        $this->googleMoviesUpdater->update($day);
+        $this->fandangoUpdater->update($day);
+        $this->movieDetailsUpdater->updateAll($day);
     }
 }

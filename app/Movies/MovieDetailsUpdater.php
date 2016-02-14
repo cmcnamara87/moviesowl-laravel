@@ -49,9 +49,9 @@ class MovieDetailsUpdater {
         $this->rottenTomatoesService = $rottenTomatoesService;
     }
 
-    public function updateAll() {
+    public function updateAll($day) {
         Log::info('Updating Movie Details For Today');
-        $startOfDay = Carbon::tomorrow();
+        $startOfDay = Carbon::$day();
         $endOfDay = $startOfDay->copy()->endOfDay();
 
         $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())

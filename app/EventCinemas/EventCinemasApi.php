@@ -8,6 +8,7 @@
 
 namespace MoviesOwl\EventCinemas;
 
+use Illuminate\Support\Facades\Log;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\EventCinemas\EventCinemasMoviesParser;
 use MoviesOwl\EventCinemas\EventCinemasCinema;
@@ -38,13 +39,14 @@ class EventCinemasApi {
         return 'standard';
     }
 
-    public function getMovies(Cinema $cinema) {
+    public function getMovies(Cinema $cinema, $day) {
         $eventCinemaId = $cinema->eventcinema_id;
 
-        $dateString = Carbon::tomorrow()->toDateString();
+        $dateString = Carbon::$day()->toDateString();
         // https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=48&date=2015-12-31
+        Log::info('Requesting data');
         $moviesData = json_decode(@file_get_contents("https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=" . $eventCinemaId . "&date=$dateString"));
-
+        Log::info('Got data');
         if(!$moviesData || !isset($moviesData->Data) || !isset($moviesData->Data->Movies)) {
             return [];
         }

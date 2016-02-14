@@ -34,7 +34,7 @@ class EventCinemasUpdater {
         $this->output = $output;
     }
 
-    public function update() {
+    public function update($day = 'tomorrow') {
 
         Log::info("Updating cinemas:");
         // Update cinemas list
@@ -48,7 +48,8 @@ class EventCinemasUpdater {
             if(!$cinema) {
                 continue;
             }
-            $this->updateMoviesAndShowings($cinema);
+            $this->updateMoviesAndShowings($cinema, $day);
+            sleep(1);
         }
     }
 
@@ -108,14 +109,12 @@ class EventCinemasUpdater {
 //        return $showing;
 //    }
 
-    /**
-     * @param $cinema
-     */
-    public function updateMoviesAndShowings($cinema)
+
+    public function updateMoviesAndShowings($cinema, $day = 'tomorrow')
     {
         Log::info($cinema->location);
         $now = Carbon::now()->toDateTimeString();
-        $eventMovies = $this->eventCinemasApi->getMovies($cinema);
+        $eventMovies = $this->eventCinemasApi->getMovies($cinema, $day);
 
         foreach ($eventMovies as $eventMovie) {
             $movie = $this->getOrCreateMovie($eventMovie);

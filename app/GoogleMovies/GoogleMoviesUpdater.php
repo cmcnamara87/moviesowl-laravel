@@ -25,54 +25,55 @@ use Yangqi\Htmldom\Htmldom;
 
 class GoogleMoviesUpdater {
 
-    public function update()
+    public function update($day = 'tomorrow')
     {
         Log::info('Updating from Google Movies for Brisbane');
-        $this->updateForCity('Brisbane', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Sydney', 'Australia', 'Australia/Sydney');
-        $this->updateForCity('Gosford', 'Australia', 'Australia/Sydney');
-        $this->updateForCity('Newcastle', 'Australia', 'Australia/Sydney');
-        $this->updateForCity('Melbourne', 'Australia', 'Australia/Melbourne');
-        $this->updateForCity('Adelaide', 'Australia', 'Australia/Adelaide');
-        $this->updateForCity('Perth', 'Australia', 'Australia/Perth');
-        $this->updateForCity('Darwin', 'Australia', 'Australia/Darwin');
-        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Canberra', 'Australia', 'Australia/Canberra');
+        $this->updateForCity('Brisbane', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Sydney', 'Australia', 'Australia/Sydney', $day);
+        $this->updateForCity('Gosford', 'Australia', 'Australia/Sydney', $day);
+        $this->updateForCity('Newcastle', 'Australia', 'Australia/Sydney', $day);
+        $this->updateForCity('Melbourne', 'Australia', 'Australia/Melbourne', $day);
+        $this->updateForCity('Adelaide', 'Australia', 'Australia/Adelaide', $day);
+        $this->updateForCity('Perth', 'Australia', 'Australia/Perth', $day);
+        $this->updateForCity('Darwin', 'Australia', 'Australia/Darwin', $day);
+        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Canberra', 'Australia', 'Australia/Canberra', $day);
 
         // New Cinemas 10/2/16
-        $this->updateForCity('Gold Coast', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Wollongong', 'Australia', 'Australia/Sydney');
-        $this->updateForCity('Central Coast', 'Australia', 'Australia/Sydney');
-        $this->updateForCity('Hobart', 'Australia', 'Australia/Hobart');
-        $this->updateForCity('Geelong', 'Australia', 'Australia/Victoria');
-        $this->updateForCity('Townsville', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Toowoomba', 'Australia', 'Australia/Brisbane');
-        $this->updateForCity('Ballarat', 'Australia', 'Australia/Melbourne');
-        $this->updateForCity('Bendigo', 'Australia', 'Australia/Melbourne');
-        $this->updateForCity('Albury', 'Australia', 'Australia/Sydney');
+        $this->updateForCity('Gold Coast', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Wollongong', 'Australia', 'Australia/Sydney', $day);
+        $this->updateForCity('Central Coast', 'Australia', 'Australia/Sydney', $day);
+        $this->updateForCity('Hobart', 'Australia', 'Australia/Hobart', $day);
+        $this->updateForCity('Geelong', 'Australia', 'Australia/Victoria', $day);
+        $this->updateForCity('Townsville', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Cairns', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Toowoomba', 'Australia', 'Australia/Brisbane', $day);
+        $this->updateForCity('Ballarat', 'Australia', 'Australia/Melbourne', $day);
+        $this->updateForCity('Bendigo', 'Australia', 'Australia/Melbourne', $day);
+        $this->updateForCity('Albury', 'Australia', 'Australia/Sydney', $day);
     }
 
-    public function updateForCity($city, $country, $timezone)
+    public function updateForCity($city, $country, $timezone, $day)
     {
         $page = 0;
         // 0 = today, 1 = tomorrow
-        $date = 1;
+        if($day == 'today') {
+            $date = 0;
+        } else {
+            $date = 1;
+        }
         do {
             $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . "&date=$date";
             $googleMovies = @file_get_contents($url);
             $html = new Htmldom($googleMovies);
             // how many pages
             $pageCount = count($html->find('#navbar td')) - 2;
-            $this->processPage($html, $city, $country, $timezone);
+            $this->processPage($html, $city, $country, $timezone, $day);
             $page++;
         } while($page < $pageCount);
     }
 
-    /**
-     * @param $html
-     */
-    public function processPage($html, $city, $country, $timezone)
+    public function processPage($html, $city, $country, $timezone, $day)
     {
         $now = Carbon::now()->toDateTimeString();
 
@@ -101,7 +102,7 @@ class GoogleMoviesUpdater {
             ]);
 
             // do we already have sessions added for this cinema
-            $startingAfter = Carbon::tomorrow();
+            $startingAfter = Carbon::$day($cinema->timezone);
             $endOfDay = $startingAfter->copy()->endOfDay();
             $alreadyProcessed = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())
@@ -160,7 +161,7 @@ class GoogleMoviesUpdater {
                         $hours += 12;
                     }
                     $minutes = intval($parts[1]);
-                    $timestamp = Carbon::tomorrow($cinema->timezone)->timestamp + ($hours * 60 * 60) + ($minutes * 60);
+                    $timestamp = Carbon::$day($cinema->timezone)->timestamp + ($hours * 60 * 60) + ($minutes * 60);
                     $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
                     Log::info('Session: ' . $startTime->toDateTimeString());
