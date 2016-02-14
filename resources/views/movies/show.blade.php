@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="margin-top:30px;">
         <div class="row">
             <div class="col-sm-4">
                 <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
