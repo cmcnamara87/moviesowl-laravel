@@ -102,7 +102,7 @@ class GoogleMoviesUpdater {
             ]);
 
             $startingAfter = Carbon::$day($cinema->timezone);
-            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
+            Log::info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
             $endOfDay = $startingAfter->copy()->endOfDay();
             Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())

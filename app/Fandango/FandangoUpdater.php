@@ -58,7 +58,7 @@ class FandangoUpdater {
         $cinemas = Cinema::where('city', $cityName);
         foreach($cinemas as $cinema) {
             $startingAfter = Carbon::$day($cinema->timezone);
-            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
+            Log::info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
             $endOfDay = $startingAfter->copy()->endOfDay();
             Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())
