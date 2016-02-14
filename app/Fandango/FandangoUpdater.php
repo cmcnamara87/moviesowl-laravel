@@ -62,7 +62,7 @@ class FandangoUpdater {
             $endOfDay = $startingAfter->copy()->endOfDay();
             Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())
-                ->where('cinema_id', '<=', $cinema->id)
+                ->where('cinema_id', $cinema->id)
                 ->delete();
         }
 
