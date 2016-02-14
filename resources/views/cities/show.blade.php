@@ -20,29 +20,24 @@
 
     <div class="container" style="margin-top:30px;">
         {{--<div class="well">--}}
-            <h3 class="text-center">Cinemas</h3>
-            <?php $count = 0; ?>
-            <div class="row">
-                <div class="col-sm-4">
-                    @foreach ($cinemasByLetter as $letter => $cinemas)
-                        <?php $count += 1; ?>
-                        @if ($count % (count($cinemasByLetter) / 3) == 0)
-                </div><div class="col-sm-4">
-                    @endif
-                    <h3>{{ $letter }}</h3>
-                    <ul>
-                        @foreach ($cinemas as $cinema)
-                            <li>
-
-                                <a href="{{ url("{$cinema->slug}/today") }}">{{ $cinema->location }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+        <h3 class="text-center">Cinemas</h3>
+        @foreach (array_chunk($cinemasByLetter, 3) as $cinemaRow)
+        <div class="row">
+            @foreach ($cinemaRow as $cinemas)
+            <div class="col-sm-4">
+                <?php $firstCinema = $cinemas[0]; ?>
+                <h3>{{ substr($firstCinema->location, 0, 1) }}</h3>
+                <ul>
+                    @foreach($cinemas as $cinema)
+                    <li>
+                        <a href="{{ url("{$cinema->slug}/today") }}">{{ $cinema->location }}</a>
+                    </li>
                     @endforeach
-                </div>
-            {{--</div>--}}
+                </ul>
+            </div>
+            @endforeach
         </div>
-
+        @endforeach
     </div>
 
     <div class="container">
