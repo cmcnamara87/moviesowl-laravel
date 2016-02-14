@@ -54,6 +54,18 @@ class FandangoUpdater {
         // Hard coded for boston
         $tomorrow = Carbon::$day($timezone);
 
+        // Clear all sessions for that city
+        $cinemas = Cinema::where('city', $cityName);
+        foreach($cinemas as $cinema) {
+            $startingAfter = Carbon::$day($cinema->timezone);
+            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
+            $endOfDay = $startingAfter->copy()->endOfDay();
+            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+                ->where('start_time', '<=', $endOfDay->toDateTimeString())
+                ->where('cinema_id', '<=', $cinema->id)
+                ->delete();
+        }
+
         $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" . $tomorrow->toDateString() . "&numDays=1&lat=$lat&lng=$lon&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
         $result = json_decode(@file_get_contents($url));
         foreach ($result as $movieElement) {

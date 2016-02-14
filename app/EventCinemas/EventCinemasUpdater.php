@@ -48,6 +48,15 @@ class EventCinemasUpdater {
             if(!$cinema) {
                 continue;
             }
+            // clear all the session that are already there
+            $startingAfter = Carbon::$day($cinema->timezone);
+            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
+            $endOfDay = $startingAfter->copy()->endOfDay();
+            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+                ->where('start_time', '<=', $endOfDay->toDateTimeString())
+                ->where('cinema_id', '<=', $cinema->id)
+                ->delete();
+
             $this->updateMoviesAndShowings($cinema, $day);
             sleep(1);
         }

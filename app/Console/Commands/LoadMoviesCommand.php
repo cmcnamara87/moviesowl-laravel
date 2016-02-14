@@ -74,18 +74,6 @@ class LoadMoviesCommand extends Command
 
         $day = $this->argument('day');
 
-        $this->info('Clearing all sessions for ' . $day);
-        $cinemas = Cinema::all();
-        foreach($cinemas as $cinema) {
-            $startingAfter = Carbon::$day($cinema->timezone);
-            $this->info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
-            $endOfDay = $startingAfter->copy()->endOfDay();
-            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-                ->where('start_time', '<=', $endOfDay->toDateTimeString())
-                ->where('cinema_id', '<=', $cinema->id)
-                ->delete();
-        }
-
         // Load sessions
         $this->eventCinemasUpdater->update($day);
         $this->googleMoviesUpdater->update($day);
