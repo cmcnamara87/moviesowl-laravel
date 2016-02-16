@@ -29,5 +29,7 @@
 </div>
 <p class="text-muted" style="margin-bottom: 30px;">
     {{ str_limit($movie->details->synopsis , $limit = 150, $end = '...') }}
+    @if(isset($url))
     <a href="{{ URL::to($url) }}">read more</a>
+    @endif
 </p>
