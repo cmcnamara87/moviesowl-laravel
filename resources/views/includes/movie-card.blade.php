@@ -1,6 +1,10 @@
 <div class="thumbnail">
     <a href="{{ URL::to($url) }}">
-        <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
+        @if(!isset($movie->details) || !isset($movie->details->poster))
+            <img src="/{{ asset('images/no_poster.jpg') }}" alt="{{ $movie->title  }}">
+        @else
+            <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
+        @endif
     </a>
     <div class="caption {{ $rating }}">
         <h4>
