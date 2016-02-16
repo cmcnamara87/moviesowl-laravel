@@ -30,6 +30,8 @@
 <p class="text-muted" style="margin-bottom: 30px;">
     @if(isset($movie->details))
     {{ str_limit($movie->details->synopsis , $limit = 150, $end = '...') }}
+    @else
+        No details available for this movie.
     @endif
 
     <a href="{{ URL::to($url) }}">read more</a>
