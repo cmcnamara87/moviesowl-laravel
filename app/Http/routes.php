@@ -34,14 +34,16 @@ Route::get('/app', function() {
 //    Redirect::to('http://google.com');
 });
 
-Route::resource('cinemas', 'CinemasController');
+Route::get('/united-states', 'CountriesController@showUnitedStates');
+Route::get('/australia', 'CountriesController@showAustralia');
+Route::resource('cinemas', 'CinemasController', ["only" => "show"]);
 Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
 Route::resource('push', 'PushController');
 Route::resource('cities', 'CitiesController');
 
-Route::get('/', 'CinemasController@index');
+Route::get('/', 'CountriesController@index');
 Route::get('/cities/{cityName}/{day?}', 'CitiesController@show');
 Route::get('/movies/{movies}/{cityName}/{day?}', 'MoviesController@show');
 Route::get('/{cinemas}/{day?}', 'CinemasController@show');

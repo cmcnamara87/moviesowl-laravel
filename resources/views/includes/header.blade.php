@@ -9,13 +9,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php if(isset($cinema)) echo URL::to("{$cinema->slug}/today"); else echo '/'; ?>">MoviesOwl</a>
+            <a class="navbar-brand" href="/">MoviesOwl</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ URL::to('/cinemas') }}">Change City</a></li>
+                <li><a href="{{ URL::to('/') }}">Change City</a></li>
             </ul>
             {{--<form class="navbar-form navbar-right" role="search">--}}
                 {{--<div class="form-group">--}}
