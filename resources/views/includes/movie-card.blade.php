@@ -1,7 +1,7 @@
 <div class="thumbnail">
     <a href="{{ URL::to($url) }}">
         @if(!isset($movie->details) || !isset($movie->details->poster))
-            <img src="/{{ asset('images/no_poster.jpg') }}" alt="{{ $movie->title  }}">
+            <img src="{{ asset('images/no_poster.jpg') }}" alt="{{ $movie->title  }}">
         @else
             <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}">
         @endif
