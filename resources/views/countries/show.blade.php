@@ -16,7 +16,7 @@
                 @foreach ($cinemaRow as $cinemas)
                     <div class="col-sm-4">
                         <?php $firstCinema = $cinemas[0]; ?>
-                        <h3>{{ $firstCinema->city }}</h3>
+                        <h3><a href="{{ url("cities/{$firstCinema->city}/today") }}">{{ $firstCinema->city }}</a></h3>
                         <ul>
                             @foreach($cinemas as $cinema)
                                 <li>
