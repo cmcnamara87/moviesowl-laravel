@@ -72,17 +72,20 @@
 
     <div class="container" style="margin-top:30px;">
         <div class="row">
-            <div class="col-sm-4">
+            <!-- poster - hidden mobile -->
+            <div class="col-sm-4 hidden-xs">
                 <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
             </div>
+            <!-- /poster -->
 
             <div class="col-sm-8">
-                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $movie->title }}
+                <h3 style="margin-top:0;margin-bottom: 30px;" class="hidden-xs">{{ $movie->title }}
                     <small>{{ $cinema->location }}</small>
                 </h3>
 
-                <div class="row">
+                <div class="row hidden-xs">
                     <div class="col-sm-8">
+
                         @if($movie->details->trailer)
                             <div class="videoWrapper" style="margin-bottom: 20px;">
                                 <!-- Copy & Pasted from YouTube -->
@@ -147,7 +150,7 @@
                 </div>
 
 
-                <h4 style="margin-bottom: 30px;font-weight:200">Pick a Time</h4>
+                <h4 style="margin-bottom: 30px;font-weight:200" class="hidden-xs">Pick a Time</h4>
                 @foreach ($showingsByTime as $timeOfDay => $showings)
                     @if (count($showings))
                         <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
@@ -170,18 +173,7 @@
                             </div>
                         @endforeach
                     @endif
-
-                    {{--<ul class="list-unstyled">--}}
-                    {{----}}
-                    {{--@foreach ($showings as $showing)--}}
-                    {{----}}
-                    {{--@endforeach--}}
-                    {{--</ul>--}}
                 @endforeach
-
-                {{--<a class="btn btn-default" href="{{ URL::to('movies/' . $movie->id) }}">Find other cinemas</a>--}}
-
-
             </div>
 
         </div>

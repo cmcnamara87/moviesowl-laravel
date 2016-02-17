@@ -4,7 +4,10 @@
 @section('description', 'Book tickets for ' . $showing->start_time->format('l jS \\of F Y h:i: A') . ' ' . $movie->title . ' at ' .$cinema->location)
 @section('content')
 
-    @include('includes.movie-jumbotron')
+    <div class="hidden-xs">
+        @include('includes.movie-jumbotron')
+    </div>
+
 
     <div class="breadcrumb-wrapper">
         <div class="container">
@@ -30,43 +33,47 @@
 
 
     <div class="container">
-            <div style="padding: 48px;border:1px solid #ddd;text-align: center;">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
-                    </div>
-                    <div class="col-sm-8">
-                        <h3 style="margin-top:0;margin-bottom: 10px;">
-                            {{ $movie->title }}
-                        </h3>
-
-                        <p class="text-muted"
-                           style="text-transform: uppercase;font-size:12px;margin-bottom:20px;">
-
-                            {{ $showing->start_time->format('h:i A') }}
-
-                            @if($showing->screen_type != "standard")
-                                {{ $showing->screen_type }}
-                            @endif
-                            @if($showing->showing_type != "standard")
-
-                                {{ $showing->showing_type }}
-                            @endif
-                            {{ $showing->cinema_size }} Cinema
-                            {{ $showing->percent_full }}% Full
+        <div class="panel panel-default">
+            <ul class="list-group">
+                <li class="list-group-item text-center" style="padding:20px 0">
+                    <h3 style="margin-top:0;">
+                        {{ $movie->title }}
+                    </h3>
+                    <p>
+                        <strong>{{ $showing->cinema->location }}</strong>
+                    </p>
+                    <p>
+                        <strong class="text-muted">{{ $showing->start_time->format('h:i A') }}</strong>
+                    </p>
+                    @if($showing->screen_type != "standard")
+                        <p>
+                            {{ $showing->screen_type }}
                         </p>
+                    @endif
+                    @if($showing->showing_type != "standard")
+                        <p>
+                            {{ $showing->showing_type }}
+                        </p>
+                    @endif
+                    <div>
+                        <a class="btn btn-lg btn-primary" target="_blank"
+                           href="@if(strlen($showing->tickets_url)) {{ $showing->tickets_url }} @else {{ $showing->cinema->homepage_url }} @endif"
+                           onclick="ga('send', 'event', 'button', 'buy_tickets');">
+                            Buy Tickets <i class="fa fa-external-link"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <img class="img-responsive visible-xs" src="{{ asset($movie->details->wide_poster) }}" alt=""/>
+            @if($showing->seats)
+            <div class="panel-body text-center">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <h5>Cinema Information</h5>
+                        <p>{{ ucfirst($showing->cinema_size) }} size Cinema</p>
 
-                        <div style="margin-bottom: 30px;">
-                            <a class="btn btn-lg btn-primary" target="_blank"
-                               href="@if(strlen($showing->tickets_url)) {{ $showing->tickets_url }} @else {{ $showing->cinema->homepage_url }} @endif"
-                               onclick="ga('send', 'event', 'button', 'buy_tickets');">
-                                Buy Tickets <i class="fa fa-external-link"></i>
-                            </a>
-                        </div>
-
-                        @if($showing->seats)
-                        <div style="text-align:center;margin-bottom:24px;">
-                            Front of Cinema
+                        <div class="text-center text-muted text-uppercase" style="text-align:center;margin-bottom:24px;">
+                            <small>Front of Cinema</small>
                         </div>
                         @foreach ($showing->seats as $seatRow)
                             <div>
@@ -77,14 +84,14 @@
                                     </div>@endforeach
                             </div>
                         @endforeach
-                        <div style="text-align:center;">
-                            Rear of Cinema
+                        <div class="text-center text-muted text-uppercase">
+                            <small>Rear of Cinema</small>
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
-
+            @endif
+        </div>
     </div>
 
 
