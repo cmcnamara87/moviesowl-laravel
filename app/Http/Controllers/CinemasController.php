@@ -101,12 +101,7 @@ class CinemasController extends Controller {
             $q->where('cinema_id', $cinema->id);
 
         }))->orderBy('tomato_meter', 'desc')->get();
-
-
-        foreach($movies as $movie) {
-            $movie->details->poster = str_replace('http://moviesowl.com/', '', $movie->details->poster);
-        }
-
+        
         // group the movies
         $moviesByRating = array_reduce($movies->all(), function($carry, $movie) {
             $rating = '';
