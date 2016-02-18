@@ -96,15 +96,14 @@ class FandangoUpdater {
 
             if(isset($session->ticketURI)){
                 $ticketUrl = $session->ticketURI;
-                if(strpos($ticketUrl, 'fandango') >= 0) {
+                if(strpos($ticketUrl, 'fandango') !== false) {
                     $pid = '7990990';
                     $linkId = "10576771";
                     $stuff = "&wssaffid=11836&wssac=123";
                     $encodedUrl = urlencode($ticketUrl . $stuff);
                     $ticketUrl = "http://www.qksrv.net/click-$pid-$linkId?url=$encodedUrl";
                 }
-            }
-            else{
+            } else {
                 $ticketUrl = "";
             }
             $showings[] = [
