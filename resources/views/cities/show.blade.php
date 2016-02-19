@@ -1,6 +1,6 @@
 @extends('layouts.default')
-@section('title', 'Movie Times, Reviews and Tickets at your Local Cinema - MoviesOwl')
-@section('description', "All the movies on in " . ucfirst($cityName) . " cinemas {$day}")
+@section('title', "{$cityName} - " . ucfirst($day) ."'s Movie Times, Reviews and Tickets at your Local Cinema")
+@section('description', "Find Show times and Buy Tickets for movies in " . ucfirst($cityName) . " cinemas {$day}")
 @section('content')
 
     <div class="jumbotron">

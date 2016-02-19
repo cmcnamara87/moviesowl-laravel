@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>@yield('title', 'MoviesOwl')</title>
+<title>@yield('title', 'MoviesOwl') | MoviesOwl</title>
 @if (trim($__env->yieldContent('description')))
 <meta name="description" content="@yield('description')">
 @endif

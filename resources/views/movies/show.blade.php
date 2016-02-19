@@ -1,5 +1,6 @@
 @extends('layouts.default')
-@section('title', $movie->title)
+@section('title', "{$movie->title} - {$cityName} - " . ucfirst($day)  . "'s Movie Times, Reviews and Tickets")
+@section('description', "Find Show times and Buy Tickets for {$movie->title} in {$cityName}.")
 @section('content')
 
     <div class="breadcrumb-wrapper" >

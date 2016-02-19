@@ -1,6 +1,6 @@
 @extends('layouts.default')
-@section('title', "{$movie->title } - {$cinema->location} - Movie Times, Reviews and Tickets")
-@section('description', "{$movie->title} {$cinema->location} {$movie->details->synopsis}")
+@section('title', "{$movie->title} - {$cinema->location} - Movie Times, Reviews and Tickets")
+@section('description', "Find Show times and Buy Tickets for {$movie->title} at {$cinema->location}.")
 @section('content')
 
 <script type="application/ld+json">
@@ -13,8 +13,8 @@
   },
   "reviewRating": {
     "@type": "Rating",
-    "ratingValue": "@if ($movie->tomato_meter > 75) 3 @elseif ($movie->tomato_meter > 59) 2 @else 1 @endif",
-    "bestRating": "3"
+    "ratingValue": "{{ $movie->tomato_meter }}",
+    "bestRating": "100"
   },
   "author": {
     "@type": "Organisation",
