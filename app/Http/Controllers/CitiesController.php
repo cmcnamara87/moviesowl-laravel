@@ -22,9 +22,6 @@ class CitiesController extends Controller
     public function show($cityName, $day = 'today')
     {
 
-        $startingAfter = Carbon::$day();
-        $endOfDay = $startingAfter->copy()->endOfDay();
-
         $cinemas = Cinema::where('city', $cityName)->get();
         $cinemasByLetter = array_reduce($cinemas->all(), function($carry, $cinema) {
             $letter = substr($cinema->location, 0, 1);
@@ -34,6 +31,10 @@ class CitiesController extends Controller
             $carry[$letter][] = $cinema;
             return $carry;
         }, []);
+
+        $firstCinema = $cinemas[0];
+        $startingAfter = Carbon::$day($firstCinema->timezone);
+        $endOfDay = $startingAfter->copy()->endOfDay();
 
         $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
