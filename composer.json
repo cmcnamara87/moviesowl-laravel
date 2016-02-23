@@ -15,7 +15,8 @@
     "cyvelnet/laravel5-fractal": "^1.2",
     "cviebrock/eloquent-sluggable": "^3.0",
     "davibennun/laravel-push-notification": "dev-laravel5",
-    "spatie/laravel-link-checker": "^1.0"
+    "spatie/laravel-link-checker": "^1.0",
+    "roumen/sitemap": "2.6.*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

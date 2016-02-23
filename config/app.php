@@ -148,6 +148,7 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         'Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider',
         Spatie\LinkChecker\LinkCheckerServiceProvider::class,
+        'Roumen\Sitemap\SitemapServiceProvider',
     ],
 
     /*
