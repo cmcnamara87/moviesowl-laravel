@@ -72,18 +72,18 @@
 
     <div class="container" style="margin-top:30px;">
         <div class="row">
-            <!-- poster - hidden mobile -->
+            <!-- poster -->
             <div class="col-sm-4 hidden-xs">
-                <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
+                <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }} at {{ $cinema->location }}" style="width:100%">
             </div>
             <!-- /poster -->
 
             <div class="col-sm-8">
-                <h3 style="margin-top:0;margin-bottom: 30px;" class="hidden-xs">{{ $movie->title }}
+                <h2 class="text-left" style="font-size:28px;margin-top:0;margin-bottom: 30px;">{{ $movie->title }}
                     <small>{{ $cinema->location }}</small>
-                </h3>
+                </h2>
 
-                <div class="row hidden-xs">
+                <div class="row">
                     <div class="col-sm-8">
 
                         @if($movie->details->trailer)
@@ -150,7 +150,7 @@
                 </div>
 
 
-                <h4 style="margin-bottom: 30px;font-weight:200" class="hidden-xs">Pick a Time</h4>
+                <h4 style="margin-bottom: 30px;font-weight:200" >Pick a Time</h4>
                 @foreach ($showingsByTime as $timeOfDay => $showings)
                     @if (count($showings))
                         <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
