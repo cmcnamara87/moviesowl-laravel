@@ -51,16 +51,16 @@ class FandangoUpdater
 
 
         // top 100 cities
-//        $this->getMovies("Austin", "Texas", 30.3072, -97.756, $day);
-//        $this->getMovies("Jacksonville", "Florida", 30.337, -81.6613, $day);
-//        $this->getMovies("San Francisco", "California", 37.7751, -122.4193, $day);
-//        $this->getMovies("Indianapolis", "Indiana", 39.7767, -86.1459, $day);
-//        $this->getMovies("Columbus", "Ohio", 39.9848, -82.985, $day);
-//        $this->getMovies("Fort Worth", "Texas", 32.7795, -97.3463, $day);
-//        $this->getMovies("Charlotte", "North Carolina", 35.2087, -80.8307, $day);
-//        $this->getMovies("Detroit", "Michigan", 42.383, -83.1022, $day);
-//        $this->getMovies("El Paso", "Texas", 31.8484, -106.427, $day);
-//        $this->getMovies("Seattle", "Washington", 47.6205, -122.3509, $day);
+        $this->getMovies("Austin", "America/Chicago", 30.3072, -97.756, $day);
+        $this->getMovies("Jacksonville", "America/New_York", 30.337, -81.6613, $day);
+        $this->getMovies("San Francisco", "America/Los_Angeles", 37.7751, -122.4193, $day);
+        $this->getMovies("Indianapolis", "America/New_York", 39.7767, -86.1459, $day);
+        $this->getMovies("Columbus", "America/New_York", 39.9848, -82.985, $day);
+        $this->getMovies("Fort Worth", "America/Chicago", 32.7795, -97.3463, $day);
+        $this->getMovies("Charlotte", "America/New_York", 35.2087, -80.8307, $day);
+        $this->getMovies("Detroit", "America/New_York", 42.383, -83.1022, $day);
+        $this->getMovies("El Paso", "America/Denver", 31.8484, -106.427, $day);
+        $this->getMovies("Seattle", "America/Los_Angeles", 47.6205, -122.3509, $day);
 //        $this->getMovies("Denver", "Colorado", 39.7618, -104.8806, $day);
 //        $this->getMovies("Washington", "District of Columbia", 38.9041, -77.0171, $day);
 //        $this->getMovies("Memphis", "Tennessee", 35.1035, -89.9785, $day);
