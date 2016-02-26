@@ -38,6 +38,20 @@ class CinemaMovieShowingsController extends Controller {
      */
 	public function index(Cinema $cinema, Movie $movie, $day = 'today')
 	{
+        if(!$movie->details) {
+            $movie->details()->create([
+                "title" => $movie->title,
+                "synopsis" => "No Synopsis",
+                "run_time" => "0",
+                "director" => "",
+                "cast" => "",
+                "poster" => "images/no_poster.jpg",
+                "tomato_meter" => -1,
+                "genre" => "",
+                "movie_id" => $movie->id
+            ]);
+            $movie = Movie::find($movie->id);
+        }
         $startingAfter = Carbon::$day($cinema->timezone);
 //        if ($startingAfter) {
 //            $startingAfter = Carbon::createFromTimestamp($startingAfter);

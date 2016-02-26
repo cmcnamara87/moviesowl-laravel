@@ -49,7 +49,7 @@ class RottenTomatoesService
     public function updateMovie($movie) {
         Log::info("- " . $movie->title);
 
-        if(!isset($movie->details) || !$movie->details) {
+        if(!$movie->details) {
             Log::info('No defaults, creating default');
             $movie->details()->create([
                 "title" => $movie->title,
@@ -62,6 +62,7 @@ class RottenTomatoesService
                 "genre" => "",
                 "movie_id" => $movie->id
             ]);
+            $movie = Movie::find($movie->id);
         }
         Log::info("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
 
@@ -92,8 +93,7 @@ class RottenTomatoesService
         }
 
         Log::info("-- Updating details now " . $rtMovie->title);
-        $movieDetails = MovieDetails::firstOrCreate(array('movie_id' => $movie->id));
-        $movieDetails->fill([
+        $movie->details->fill([
             "title" => $rtMovie->title,
             "synopsis" => $rtMovie->synopsis,
             "run_time" => $rtMovie->runtime,
@@ -120,11 +120,7 @@ class RottenTomatoesService
                 return $carry . $genres;
             }, ""),
         ]);
-
-        $movieDetails->save();
-        // Need to touch in case there was no change in data
-        $movieDetails->touch();
-
+        $movie->details->save();
         return $movie;
     }
 
