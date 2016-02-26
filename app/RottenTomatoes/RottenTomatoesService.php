@@ -49,18 +49,9 @@ class RottenTomatoesService
     public function updateMovie($movie) {
         Log::info("- " . $movie->title);
 
-        Log::info("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
-
-        if($movie->rotten_tomatoes_id) {
-            $rtMovie = $this->rottenTomatoesApi->getMovieById($movie->rotten_tomatoes_id);
-        } else {
-            $rtMovie = $this->rottenTomatoesApi->getMovie($movie->title);
-        }
-
-        if(!$rtMovie) {
-            Log::info('No RT movie found, adding default');
-            $movieDetails = MovieDetails::firstOrCreate(array('movie_id' => $movie->id));
-            $movieDetails->fill([
+        if(!isset($movie->details) || !$movie->details) {
+            Log::info('No defaults, creating default');
+            $movie->details()->create([
                 "title" => $movie->title,
                 "synopsis" => "No Synopsis",
                 "run_time" => "0",
@@ -71,8 +62,17 @@ class RottenTomatoesService
                 "genre" => "",
                 "movie_id" => $movie->id
             ]);
+        }
+        Log::info("-- Needs update " . $movie->updated_at->toDateTimeString() . ' ' . Carbon::today()->toDateTimeString());
 
-            $movieDetails->save();
+        if($movie->rotten_tomatoes_id) {
+            $rtMovie = $this->rottenTomatoesApi->getMovieById($movie->rotten_tomatoes_id);
+        } else {
+            $rtMovie = $this->rottenTomatoesApi->getMovie($movie->title);
+        }
+
+        if(!$rtMovie) {
+            Log::info('No RT movie found, adding default');
             return $movie;
         }
         Log::info("-- Rotten Tomatoes Match " . $rtMovie->title);

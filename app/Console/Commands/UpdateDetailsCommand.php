@@ -14,7 +14,7 @@ class UpdateDetailsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'movies:update';
+    protected $signature = 'movies:update {day=tomorrow}';
 
     /**
      * The console command description.
@@ -41,8 +41,10 @@ class UpdateDetailsCommand extends Command
      */
     public function handle()
     {
+        $day = $this->argument('day');
+
         Log::useFiles('php://stdout');
         $this->info('Updating details');
-        $this->movieDetailsUpdater->updateAll();
+        $this->movieDetailsUpdater->updateAll($day);
     }
 }
