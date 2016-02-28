@@ -74,7 +74,7 @@ Route::get('sitemap', function(){
         // only show todays movies, showing more makes it crash
         $movieIds =  Showing::where('start_time', '>=', \Carbon\Carbon::today())
             ->distinct()->lists('movie_id');
-        $movies = Movie::whereIn('id', $movieIds)->get();
+        $movies = Movie::whereIn('id', $movieIds)->with('details')->get();
 
         foreach($movies as $movie) {
 //            // find the cinemas
