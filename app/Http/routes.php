@@ -84,16 +84,9 @@ Route::get('sitemap', function(){
             $cinemas = Cinema::whereIn('id', $cinemaIds)->get();
             foreach($cinemas as $cinema) {
 //                foreach($days as $day) {
-                    $images = [];
-                    if($movie->details) {
-                        $images[] = [
-                            'url' => asset("{$movie->details->poster}"),
-                            'title' => $movie->title
-                        ];
-                    }
                     // hard coded for today, because doing x3 seems to cause the page to crash
                     $day = 'today';
-                    $sitemap->add(url("{$cinema->slug}/{$movie->slug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily', $images);
+                    $sitemap->add(url("{$cinema->slug}/{$movie->slug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
 //                }
             }
         }
