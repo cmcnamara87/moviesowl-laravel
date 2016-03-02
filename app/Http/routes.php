@@ -78,7 +78,9 @@ Route::get('sitemap', function(){
 
         foreach($movies as $movie) {
 //            // find the cinemas
-            $cinemaIds = Showing::where('movie_id', $movie->id)
+            $cinemaIds = DB::table('showings')->select('cinema_id')
+                ->where('movie_id', $movie->id)
+                ->distinct()
                 ->lists('cinema_id');
 //
             $cinemas = Cinema::whereIn('id', $cinemaIds)->get();
