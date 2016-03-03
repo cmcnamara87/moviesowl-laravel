@@ -39,9 +39,11 @@
                     <h3 style="margin-top:0;">
                         {{ $movie->title }}
                     </h3>
+
                     <p>
                         <strong>{{ $showing->cinema->location }}</strong>
                     </p>
+
                     <p>
                         <strong class="text-muted">{{ $showing->start_time->format('h:i A') }}</strong>
                     </p>
@@ -61,35 +63,42 @@
                            onclick="ga('send', 'event', 'button', 'buy_tickets');">
                             Buy Tickets <i class="fa fa-external-link"></i>
                         </a>
+                        @if(strpos($showing->tickets_url, 'fandango'))
+                        <p>
+                            Processed by Fandango. It may take a few seconds to connect.
+                        </p>
+                        @endif
                     </div>
                 </li>
             </ul>
             <img class="img-responsive visible-xs" src="{{ asset($movie->details->wide_poster) }}" alt=""/>
             @if($showing->seats)
-            <div class="panel-body text-center">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <h5>Cinema Information</h5>
-                        <p>{{ ucfirst($showing->cinema_size) }} size Cinema</p>
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <h5>Cinema Information</h5>
 
-                        <div class="text-center text-muted text-uppercase" style="text-align:center;margin-bottom:24px;">
-                            <small>Front of Cinema</small>
-                        </div>
-                        @foreach ($showing->seats as $seatRow)
-                            <div>
-                                @foreach ($seatRow as $seat)
-                                    <div style="position:relative;float:left;width:<?php echo 100 / count($seatRow); ?>%; padding-bottom:<?php echo 100 / count($seatRow); ?>%;">
-                                        <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if ($seat == 'taken') echo '#F76394'; elseif ($seat == 'available') echo 'grey';
-                                        else echo 'transparent';?>"></div>
-                                    </div>@endforeach
+                            <p>{{ ucfirst($showing->cinema_size) }} size Cinema</p>
+
+                            <div class="text-center text-muted text-uppercase"
+                                 style="text-align:center;margin-bottom:24px;">
+                                <small>Front of Cinema</small>
                             </div>
-                        @endforeach
-                        <div class="text-center text-muted text-uppercase">
-                            <small>Rear of Cinema</small>
+                            @foreach ($showing->seats as $seatRow)
+                                <div>
+                                    @foreach ($seatRow as $seat)
+                                        <div style="position:relative;float:left;width:<?php echo 100 / count($seatRow); ?>%; padding-bottom:<?php echo 100 / count($seatRow); ?>%;">
+                                            <div style="position:absolute;top:0;left:0;right:2px;bottom:2px;background-color:<?php if ($seat == 'taken') echo '#F76394'; elseif ($seat == 'available') echo 'grey';
+                                            else echo 'transparent';?>"></div>
+                                        </div>@endforeach
+                                </div>
+                            @endforeach
+                            <div class="text-center text-muted text-uppercase">
+                                <small>Rear of Cinema</small>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>
