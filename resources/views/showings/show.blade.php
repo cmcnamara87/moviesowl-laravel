@@ -59,12 +59,13 @@
                     @endif
                     <div>
                         <a class="btn btn-lg btn-primary" target="_blank"
+                           style="margin-bottom: 15px;"
                            href="@if(strlen($showing->tickets_url)) {{ $showing->tickets_url }} @else {{ $showing->cinema->homepage_url }} @endif"
                            onclick="ga('send', 'event', 'button', 'buy_tickets');">
                             Buy Tickets <i class="fa fa-external-link"></i>
                         </a>
                         @if(strpos($showing->tickets_url, 'fandango'))
-                        <p>
+                        <p class="text-muted">
                             Processed by Fandango. It may take a few seconds to connect.
                         </p>
                         @endif
