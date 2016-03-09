@@ -22,7 +22,7 @@ class EventCinemasApi {
      */
     public function getCinemas()
     {
-        $url = "http://www.eventcinemas.com.au";
+        $url = "https://www.eventcinemas.com.au";
         $eventCinemas = @file_get_contents($url);
         $html = new Htmldom($eventCinemas);
 //        $cinemasElements = $html->find('[data-value="QLD"] a');
