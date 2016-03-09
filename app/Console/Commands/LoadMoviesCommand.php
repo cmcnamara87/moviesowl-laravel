@@ -59,7 +59,6 @@ class LoadMoviesCommand extends Command
         $this->googleMoviesUpdater = $googleMoviesUpdater;
         $this->movieDetailsUpdater = $movieDetailsUpdater;
         $this->fandangoUpdater = $fandangoUpdater;
-
     }
 
     /**
@@ -76,7 +75,7 @@ class LoadMoviesCommand extends Command
 
         // Load sessions
 //        $this->eventCinemasUpdater->update($day);
-//        $this->googleMoviesUpdater->update($day);
+        $this->googleMoviesUpdater->update($day);
         $this->fandangoUpdater->update($day);
         $this->movieDetailsUpdater->updateAll($day);
     }

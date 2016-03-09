@@ -85,14 +85,14 @@ class GoogleMoviesUpdater {
             }
             $cinemaName = $cinemaNameElement->plaintext;
             Log::info('Cinema: ' . $cinemaName);
-            if (strpos($cinemaName, 'Event') !== false) {
-                Log::info('- Skipping Event');
-                continue;
-            }
-            if (strpos($cinemaName, 'Moonlight Cinema') !== false) {
-                Log::info('- Skipping Event Moonlight Cinema');
-                continue;
-            }
+//            if (strpos($cinemaName, 'Event') !== false) {
+//                Log::info('- Skipping Event');
+//                continue;
+//            }
+//            if (strpos($cinemaName, 'Moonlight Cinema') !== false) {
+//                Log::info('- Skipping Event Moonlight Cinema');
+//                continue;
+//            }
 
             $cinema = Cinema::firstOrCreate([
                 'location' => $cinemaName,
