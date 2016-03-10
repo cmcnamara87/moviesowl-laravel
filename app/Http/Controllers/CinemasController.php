@@ -89,10 +89,9 @@ class CinemasController extends Controller {
         $startingAfter = Carbon::$day($cinema->timezone);
         $endOfDay = $startingAfter->copy()->endOfDay();
 
-
         $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+            ->where('cinema_id', $cinema->id)->lists('movie_id')->unique();
 
         $movies = Movie::whereIn('id', $movieIds)->with(array('details', 'showings' => function($q) use ($startingAfter, $endOfDay, $cinema)
         {
