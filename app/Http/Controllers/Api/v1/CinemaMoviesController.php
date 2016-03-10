@@ -27,7 +27,7 @@ class CinemaMoviesController extends Controller
 
         $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+            ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id')->unique();
 
         // There are no movies left for today, try tomorrow (this should be moved to the app in the future)
         if(!count($movieIds)) {
@@ -36,7 +36,7 @@ class CinemaMoviesController extends Controller
 
             $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
                 ->where('start_time', '<=', $endOfDay->toDateTimeString())
-                ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id');
+                ->where('cinema_id', $cinema->id)->distinct()->lists('movie_id')->unique();
         }
 
         $movies = Movie::whereIn('id', $movieIds)->with(array('details', 'showings' => function($q) use ($startingAfter, $endOfDay, $cinema)
@@ -52,8 +52,8 @@ class CinemaMoviesController extends Controller
             // did they have a session 1 week ago?
             $movie->new = Showing::where('movie_id', $movie->id)
                     ->where('cinema_id', $cinema->id)
-                    ->where('start_time', '>', Carbon::today()->subDays(7))
-                    ->where('start_time', '<', Carbon::today()->subDays(6))->count() == 0;
+                    ->where('start_time', '>', Carbon::today($cinema->timezone)->subDays(7))
+                    ->where('start_time', '<', Carbon::today($cinema->timezone)->subDays(6))->count() == 0;
         }
         return Fractal::collection($movies, new MovieTransformer)->responseJson(200);
     }
