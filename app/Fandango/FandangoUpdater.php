@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
+use MoviesOwl\Showings\Showing;
 
 class FandangoUpdater
 {
@@ -145,6 +146,7 @@ class FandangoUpdater
 
     public function getMovies($cityName, $timezone, $lat, $lon, $day)
     {
+        sleep(2);
         Log::info("Loading sessions $cityName $day");
 
         // Hard coded for boston

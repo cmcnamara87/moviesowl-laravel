@@ -81,7 +81,7 @@ class GoogleMoviesUpdater {
         for($page = 1; $page < $pageCount; $page++) {
             $html = $this->getPage($city, $country, $page, $date);
             $this->processPage($html, $city, $country, $timezone, $day);
-            sleep(1);
+            sleep(2);
         }
     }
 
