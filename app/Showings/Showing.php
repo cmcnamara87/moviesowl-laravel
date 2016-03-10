@@ -81,7 +81,7 @@ class Showing extends \Eloquent {
 
     public function getDates()
     {
-        return array('created_at', 'updated_at', 'seats_updated_at');
+        return array('created_at', 'updated_at', 'seats_updated_at', 'start_time');
     }
 
     public function getStartTimeAttribute($value)
