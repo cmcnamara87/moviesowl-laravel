@@ -55,28 +55,30 @@ class GoogleMoviesUpdater {
 
     public function updateForCity($city, $country, $timezone, $day)
     {
-        $page = 0;
         // 0 = today, 1 = tomorrow
         if($day == 'today') {
             $date = 0;
         } else {
             $date = 1;
         }
-        do {
-            $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . "&date=$date";
-            $googleMovies = @file_get_contents($url);
-            $html = new Htmldom($googleMovies);
-            // how many pages
-            $pageCount = count($html->find('#navbar td')) - 2;
+        $html = $this->getPage($city, $country, 0, $date);
+        $this->processPage($html, $city, $country, $timezone, $day);
+
+        // how many pages
+        $pageCount = count($html->find('#navbar td')) - 2;
+
+        // process the rest of the pages
+        for($page = 1; $page < $pageCount; $page++) {
+            $html = $this->getPage($city, $country, $page, $date);
             $this->processPage($html, $city, $country, $timezone, $day);
-            $page++;
-        } while($page < $pageCount);
+        }
     }
 
     public function processPage($html, $city, $country, $timezone, $day)
     {
         $now = Carbon::now()->toDateTimeString();
 
+        $showings = collect([]);
         foreach ($html->find('.theater') as $cinemaElement) {
             $cinemaNameElement = $cinemaElement->find('h2.name a', 0);
             if(!$cinemaNameElement) {
@@ -85,14 +87,7 @@ class GoogleMoviesUpdater {
             }
             $cinemaName = $cinemaNameElement->plaintext;
             Log::info('Cinema: ' . $cinemaName);
-//            if (strpos($cinemaName, 'Event') !== false) {
-//                Log::info('- Skipping Event');
-//                continue;
-//            }
-//            if (strpos($cinemaName, 'Moonlight Cinema') !== false) {
-//                Log::info('- Skipping Event Moonlight Cinema');
-//                continue;
-//            }
+
 
             $cinema = Cinema::firstOrCreate([
                 'location' => $cinemaName,
@@ -101,14 +96,6 @@ class GoogleMoviesUpdater {
                 'country' => $country
             ]);
 
-            $startingAfter = Carbon::$day($cinema->timezone);
-            Log::info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
-            $endOfDay = $startingAfter->copy()->endOfDay();
-            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-                ->where('start_time', '<=', $endOfDay->toDateTimeString())
-                ->where('cinema_id', $cinema->id)
-                ->delete();
-
             foreach ($cinemaElement->find('.movie') as $movieElement) {
                 $title = html_entity_decode($movieElement->find('.name a', 0)->plaintext);
                 $title = str_replace('&#39;', "'", $title);
@@ -116,30 +103,13 @@ class GoogleMoviesUpdater {
                     'title' => $title
                 ]);
                 
-                Log::info('Movie: ' . $movie->title);
-
-                // get the ticket-ish url
-                // goes a google search, and takes the first url
-//                $ticketUrl = '';
-//                $ticketUrl = 'https://www.google.com.au/search?q=' . urlencode($cinemaName . ' ' . $movie->title);
-//                $searchHtml = @file_get_contents($searchUrl);
-//                $searchDom = new Htmldom($searchHtml);
-//                $searchLink = $searchDom->find('#search a', 0);
-//                if($searchLink) {
-//                    $searchHref = $searchLink->href;
-//                    parse_str($searchHref, $params);
-//                    if(isset($params['/url?q'])) {
-//                        $ticketUrl = $params['/url?q'];
-//                        Log::info('Ticket url: ' . $ticketUrl);
-//                    }
-//                }
-
+//                Log::info('Movie: ' . $movie->title);
 
                 $isPm = false;
 
                 $showTimeElements = array_reverse($movieElement->find('.times span[style^="color:"]'));
                 // Get all the showings all together
-                $showings = [];
+
                 foreach($showTimeElements as $showingElement) {
                     $timeString = $showingElement->plaintext;
                     $parts = explode(':', $timeString);
@@ -158,23 +128,48 @@ class GoogleMoviesUpdater {
                     $timestamp = Carbon::$day($cinema->timezone)->timestamp + ($hours * 60 * 60) + ($minutes * 60);
                     $startTime = Carbon::createFromTimestamp($timestamp, $cinema->timezone);
 
-                    Log::info('Session: ' . $startTime->toDateTimeString());
-                    $showings[] = [
+//                    Log::info('Session: ' . $startTime->toDateTimeString());
+                    $showings->push([
                         "movie_id" => $movie->id,
                         "cinema_id" => $cinema->id,
                         "start_time" => $startTime->toDateTimeString(),
                         'created_at' => $now,
                         'updated_at' => $now,
                         "tickets_url" => '',
-                    ];
-                }
-
-                // Chunk it for mass insert
-                $showingsChunks = array_chunk($showings, 100);
-                foreach($showingsChunks as $chunk) {
-                    DB::table('showings')->insert($chunk);
+                    ]);
                 }
             }
         }
+
+        $cinemaIds = $showings->pluck('cinema_id')->unique()->values()->all();
+
+        $startingAfter = Carbon::$day($timezone);
+        Log::info('Clearing ' . $city);
+        $endOfDay = $startingAfter->copy()->endOfDay();
+        DB::table('showings')->where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->whereIn('cinema_id', $cinemaIds)
+            ->delete();
+
+        // Chunk it for mass insert
+        $showingsChunks = $showings->chunk(100)->toArray();
+        foreach($showingsChunks as $chunk) {
+            DB::table('showings')->insert($chunk);
+        }
+    }
+
+    /**
+     * Gets the HTML for the page
+     * @param $city
+     * @param $country
+     * @param $page
+     * @param $date
+     * @return array
+     */
+    private function getPage($city, $country, $page, $date)
+    {
+        $url = "http://www.google.com/movies?near=" . urlencode($city . ' ' . $country) . "&start=" . ($page * 10) . "&date=$date";
+        $googleMovies = @file_get_contents($url);
+        return new Htmldom($googleMovies);
     }
 }
