@@ -158,7 +158,7 @@ class FandangoUpdater
         Showing::where('start_time', ' >= ', $startingAfter->toDateTimeString())
             ->where('start_time', ' <= ', $endOfDay->toDateTimeString())
             ->whereHas('cinema', function($query) use ($cityName) {
-                $query->whereIn('city', $cityName);
+                $query->where('city', $cityName);
             })
             ->delete();
 
