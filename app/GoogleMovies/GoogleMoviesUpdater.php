@@ -55,6 +55,16 @@ class GoogleMoviesUpdater {
 
     public function updateForCity($city, $country, $timezone, $day)
     {
+        $startingAfter = Carbon::$day($timezone);
+        Log::info('Clearing ' . $city);
+        $endOfDay = $startingAfter->copy()->endOfDay();
+        DB::table('showings')->where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->whereHas('cinema', function($query) use($city) {
+                $query->where('city', $city);
+            })
+            ->delete();
+
         // 0 = today, 1 = tomorrow
         if($day == 'today') {
             $date = 0;
@@ -71,6 +81,7 @@ class GoogleMoviesUpdater {
         for($page = 1; $page < $pageCount; $page++) {
             $html = $this->getPage($city, $country, $page, $date);
             $this->processPage($html, $city, $country, $timezone, $day);
+            sleep(1);
         }
     }
 
@@ -140,16 +151,6 @@ class GoogleMoviesUpdater {
                 }
             }
         }
-
-        $cinemaIds = $showings->pluck('cinema_id')->unique()->values()->all();
-
-        $startingAfter = Carbon::$day($timezone);
-        Log::info('Clearing ' . $city);
-        $endOfDay = $startingAfter->copy()->endOfDay();
-        DB::table('showings')->where('start_time', '>=', $startingAfter->toDateTimeString())
-            ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->whereIn('cinema_id', $cinemaIds)
-            ->delete();
 
         // Chunk it for mass insert
         $showingsChunks = $showings->chunk(100)->toArray();

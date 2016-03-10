@@ -153,7 +153,7 @@ class FandangoUpdater
         // Clear all sessions for that city
         $cinemas = Cinema::where('city', $cityName);
         $startingAfter = Carbon::$day($timezone);
-        Log::info('Clearing ' . $timezone);
+        Log::info('Clearing ' . $cityName);
         $endOfDay = $startingAfter->copy()->endOfDay();
         Showing::where('start_time', ' >= ', $startingAfter->toDateTimeString())
             ->where('start_time', ' <= ', $endOfDay->toDateTimeString())
