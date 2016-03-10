@@ -152,67 +152,59 @@ class FandangoUpdater
 
         // Clear all sessions for that city
         $cinemas = Cinema::where('city', $cityName);
-        foreach ($cinemas as $cinema) {
-            $startingAfter = Carbon::$day($cinema->timezone);
-            Log::info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
-            $endOfDay = $startingAfter->copy()->endOfDay();
-            Showing::where('start_time', ' >= ', $startingAfter->toDateTimeString())
-                ->where('start_time', ' <= ', $endOfDay->toDateTimeString())
-                ->where('cinema_id', $cinema->id)
-                ->delete();
-        }
+        $startingAfter = Carbon::$day($timezone);
+        Log::info('Clearing ' . $timezone);
+        $endOfDay = $startingAfter->copy()->endOfDay();
+        Showing::where('start_time', ' >= ', $startingAfter->toDateTimeString())
+            ->where('start_time', ' <= ', $endOfDay->toDateTimeString())
+            ->whereHas('cinema', function($query) use ($cityName) {
+                $query->whereIn('city', $cityName);
+            })
+            ->delete();
 
         $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" . $tomorrow->toDateString() . "&numDays=1&lat=$lat&lng=$lon&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
         $result = json_decode(@file_get_contents($url));
+        $showings = [];
         foreach ($result as $movieElement) {
             Log::info('Get sessions for ' . $movieElement->title);
-            $this->getSessions($cityName, $timezone, $movieElement);
-        }
-
-    }
-
-    public function getSessions($cityName, $timezone, $movieElement)
-    {
-        $now = Carbon::now()->toDateTimeString();
-        $movie = Movie::firstOrCreate([
-            'title' => $movieElement->title
-        ]);
-
-        $showings = [];
-        foreach ($movieElement->showtimes as $session) {
-            Log::info('Found Cinema ' . $session->theatre->name);
-            $cinema = Cinema::firstOrCreate([
-                'location' => $session->theatre->name,
-                'timezone' => $timezone,
-                'city' => $cityName,
-                'country' => 'United States'
+            $now = Carbon::now()->toDateTimeString();
+            $movie = Movie::firstOrCreate([
+                'title' => $movieElement->title
             ]);
+            foreach ($movieElement->showtimes as $session) {
+                Log::info('Found Cinema ' . $session->theatre->name);
+                $cinema = Cinema::firstOrCreate([
+                    'location' => $session->theatre->name,
+                    'timezone' => $timezone,
+                    'city' => $cityName,
+                    'country' => 'United States'
+                ]);
 
-            $startTime = Carbon::parse($session->dateTime, $cinema->timezone);
-            Log::info('Session time ' . $startTime->toDateTimeString());
+                $startTime = Carbon::parse($session->dateTime, $cinema->timezone);
+                Log::info('Session time ' . $startTime->toDateTimeString());
 
-            if (isset($session->ticketURI)) {
-                $ticketUrl = $session->ticketURI;
-                if (strpos($ticketUrl, 'fandango') !== false) {
-                    $pid = '7990990';
-                    $linkId = "10576771";
-                    $stuff = "&wssaffid=11836&wssac=123";
-                    $encodedUrl = urlencode($ticketUrl . $stuff);
-                    $ticketUrl = "http://www.qksrv.net/click-$pid-$linkId?url=$encodedUrl";
+                if (isset($session->ticketURI)) {
+                    $ticketUrl = $session->ticketURI;
+                    if (strpos($ticketUrl, 'fandango') !== false) {
+                        $pid = '7990990';
+                        $linkId = "10576771";
+                        $stuff = "&wssaffid=11836&wssac=123";
+                        $encodedUrl = urlencode($ticketUrl . $stuff);
+                        $ticketUrl = "http://www.qksrv.net/click-$pid-$linkId?url=$encodedUrl";
+                    }
+                } else {
+                    $ticketUrl = "";
                 }
-            } else {
-                $ticketUrl = "";
+                $showings[] = [
+                    "movie_id" => $movie->id,
+                    "cinema_id" => $cinema->id,
+                    "start_time" => $startTime->toDateTimeString(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                    "tickets_url" => $ticketUrl,
+                ];
             }
-            $showings[] = [
-                "movie_id" => $movie->id,
-                "cinema_id" => $cinema->id,
-                "start_time" => $startTime->toDateTimeString(),
-                'created_at' => $now,
-                'updated_at' => $now,
-                "tickets_url" => $ticketUrl,
-            ];
         }
-
         // Chunk it for mass insert
         $showingsChunks = array_chunk($showings, 100);
         foreach ($showingsChunks as $chunk) {
