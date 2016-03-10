@@ -168,13 +168,13 @@ class FandangoUpdater
         $result = json_decode(@file_get_contents($url));
         $showings = [];
         foreach ($result as $movieElement) {
-            Log::info('Get sessions for ' . $movieElement->title);
+//            Log::info('Get sessions for ' . $movieElement->title);
             $now = Carbon::now()->toDateTimeString();
             $movie = Movie::firstOrCreate([
                 'title' => $movieElement->title
             ]);
             foreach ($movieElement->showtimes as $session) {
-                Log::info('Found Cinema ' . $session->theatre->name);
+//                Log::info('Found Cinema ' . $session->theatre->name);
                 $cinema = Cinema::firstOrCreate([
                     'location' => $session->theatre->name,
                     'timezone' => $timezone,
@@ -183,7 +183,7 @@ class FandangoUpdater
                 ]);
 
                 $startTime = Carbon::parse($session->dateTime, $cinema->timezone);
-                Log::info('Session time ' . $startTime->toDateTimeString());
+//                Log::info('Session time ' . $startTime->toDateTimeString());
 
                 if (isset($session->ticketURI)) {
                     $ticketUrl = $session->ticketURI;
