@@ -58,7 +58,7 @@ class GoogleMoviesUpdater {
         $startingAfter = Carbon::$day($timezone);
         Log::info('Clearing ' . $city);
         $endOfDay = $startingAfter->copy()->endOfDay();
-        DB::table('showings')->where('start_time', '>=', $startingAfter->toDateTimeString())
+        Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
             ->whereHas('cinema', function($query) use($city) {
                 $query->where('city', $city);
