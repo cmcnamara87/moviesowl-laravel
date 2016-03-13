@@ -22,7 +22,7 @@ use MoviesOwl\Showings\Showing;
 Route::get('video', function()
 {
     $cityName = 'Brisbane';
-    $day = 'tomorrow';
+    $day = 'today';
     $cinemas = Cinema::where('city', $cityName)->get();
     $firstCinema = $cinemas[0];
     $startingAfter = \Carbon\Carbon::$day($firstCinema->timezone);
@@ -30,11 +30,11 @@ Route::get('video', function()
 
     $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
         ->where('start_time', '<=', $endOfDay->toDateTimeString())
-        ->whereIn('cinema_id', $cinemas->lists('id'))
+//        ->whereIn('cinema_id', $cinemas->lists('id'))
         ->distinct()->lists('movie_id');
 
     $movies = Movie::whereIn('id', $movieIds)->whereHas('details', function($query) {
-        $query->where('tomato_meter', '>=', 80);
+//        $query->where('tomato_meter', '>=', 80);
     })->with(array('details'))->orderBy('tomato_meter', 'desc')->get();
 
 
@@ -48,45 +48,56 @@ Route::get('video', function()
 
     $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
     $path = storage_path("app/movie/img$imageid.jpg");
-    $img = Image::canvas($width, $height, '#FB1B75');
-    $img->text("WHAT'S ON AT THE MOVIES", $width / 2, $height / 2 - 25,
+    $img = Image::canvas($width, $height, '#FFD500');
+    $img->text("NEW AT THE MOVIES", $width / 2, $height / 2 - 25,
         function($font) use ($img, $width, $titleFontSize, $height, $titleX, $titleY){
             $font->file('/Users/craig/Desktop/TEST.otf');
             $font->size($titleFontSize);
-            $font->color('#fff');
+            $font->color('#0F1219');
             $font->align('center');
             $font->valign('top');
         });
     $img->save($path);
 
-    foreach($movies as $movie) {
-        if(strpos($movie->title, "Star") !== false) {
-            continue;
-        }
-        if(strpos($movie->title, "Mermaid") !== false) {
-            continue;
-        }
+    $slides = [[
+        "title" => "10 CLOVERFIELD LANE",
+        "subtitle" => "91%",
+        "image_url" => "https://image.tmdb.org/t/p/original/u7GyYxTNx8LDYpma605YZvjdOVp.jpg",
+        "subtitle_image_url" => "/Users/craig/Desktop/movie/tomato.png",
+        "background_color" => "#0F1219",
+        "text_color" => "#fff"
+    ], [
+        "title" => "GRIMSBY",
+        "subtitle" => "51%",
+        "image_url" => "https://image.tmdb.org/t/p/original/q6vNLs1pejZENEHu8jL75Lmub8L.jpg",
+        "subtitle_image_url" => "/Users/craig/Desktop/movie/tomato.png",
+        "background_color" => "#0F1219",
+        "text_color" => "#fff"
+    ], [
+        "title" => "VICTOR FRANKENSTEIN",
+        "subtitle" => "26%",
+        "image_url" => "https://image.tmdb.org/t/p/original/AsNosq3JX6YfWy7HXmHnJjV7Fsw.jpg",
+        "subtitle_image_url" => "/Users/craig/Desktop/movie/splat.png",
+        "background_color" => "#0F1219",
+        "text_color" => "#fff"
+    ]];
 
-        if(!$movie->details->wide_poster) {
-            continue;
-        }
-
-
+    foreach($slides as $slide) {
 
         $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
         $path = storage_path("app/movie/img$imageid.jpg");
-        $img = Image::canvas($width, $height, '#1B1D27');
+        $img = Image::canvas($width, $height, $slide['background_color']);
 
 // use callback to define details
         $subtitleSpace = 25;
         $subtitleFontSize = 30;
         $tomatoWidth = 30;
 
-        $img->text(strtoupper($movie->title), $titleX, $titleY,
-            function($font) use ($img, $width, $titleFontSize, $height, $titleX, $titleY, $subtitleSpace, $tomatoWidth, $movie, $path){
+        $img->text(strtoupper($slide['title']), $titleX, $titleY,
+            function($font) use ($img, $width, $titleFontSize, $height, $titleX, $titleY, $subtitleSpace, $tomatoWidth, $slide, $path){
                 $font->file('/Users/craig/Desktop/TEST.otf');
                 $font->size($titleFontSize);
-                $font->color('#fff');
+                $font->color($slide['text_color']);
                 $font->align('center');
                 $font->valign('top');
 //        $font->angle(45);
@@ -98,10 +109,10 @@ Route::get('video', function()
 
                 $subtitleX = $titleX + $tomatoWidth / 2;
                 $subtitleY = $titleY + $box['height'] + $subtitleSpace;
-                $img->text($movie->details->tomato_meter . '%', $subtitleX, $subtitleY , function($font2) use ($img, $titleX, $subtitleX, $subtitleY, $tomatoWidth, $path) {
+                $img->text($slide['subtitle'], $subtitleX, $subtitleY , function($font2) use ($img, $titleX, $subtitleX, $subtitleY, $tomatoWidth, $path, $slide) {
                     $font2->file('/Library/Fonts/Futura.ttc');
                     $font2->size(30);
-                    $font2->color('#fdf6e3');
+                    $font2->color($slide['text_color']);
                     $font2->align('center');
                     $font2->valign('top');
 
@@ -109,47 +120,62 @@ Route::get('video', function()
 
                     $tomatoX = (int)($subtitleX - ($box2['width'] / 2) - $tomatoWidth - 10);
                     $tomatoY = (int)$subtitleY - 3;
-                    $img->insert('/Users/craig/Desktop/movie/tomato.png', 'top-left', $tomatoX, $tomatoY);
+                    $img->insert($slide['subtitle_image_url'], 'top-left', $tomatoX, $tomatoY);
                 });
             });
         $img->save($path);
 
-        $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
-        $path = storage_path("app/movie/img$imageid.jpg");
-        Image::make(public_path($movie->details->wide_poster))
-            ->resize($width, $height)
-            ->save($path);
-
+        if(isset($slide['image_url'])) {
+            $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
+            $path = storage_path("app/movie/img$imageid.jpg");
+            Image::make($slide['image_url'])
+                ->resize($width, $height)
+                ->save($path);
+        }
     }
 
     $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
     $path = storage_path("app/movie/img$imageid.jpg");
-    $img = Image::canvas($width, $height, '#FB1B75');
+    $img = Image::canvas($width, $height, '#FFD500');
+    $img->insert("/Users/craig/Sites/moviesowl-laravel/public/images/owl.png", 'center');
+    $img->save($path);
+
+//    $hootFontSize = 30;
+//    $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
+//    $path = storage_path("app/movie/img$imageid.jpg");
+//    $img = Image::canvas($width, $height, '#FB1B75');
+//    $img->text("10 Cloverfield Lane looks like a hoot.", $width / 2, $height / 2 - 25,
+//        function($font) use ($img, $width, $hootFontSize, $height, $titleX, $titleY){
+//            $font->file('/Users/craig/Desktop/TEST.otf');
+//            $font->size($hootFontSize);
+//            $font->color('#fff');
+//            $font->align('center');
+//            $font->valign('top');
+//        });
+//    $img->save($path);
+
+//    $hootFontSize = 30;
+//    $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
+//    $path = storage_path("app/movie/img$imageid.jpg");
+//    $img = Image::canvas($width, $height, '#FB1B75');
+//    $img->text("10 Cloverfield Lane looks like a hoot.", $width / 2, $height / 2 - 25,
+//        function($font) use ($img, $width, $hootFontSize, $height, $titleX, $titleY){
+//            $font->file('/Users/craig/Desktop/TEST.otf');
+//            $font->size($hootFontSize);
+//            $font->color('#fff');
+//            $font->align('center');
+//            $font->valign('top');
+//        });
+//    $img->save($path);
+
+    $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
+    $path = storage_path("app/movie/img$imageid.jpg");
+    $img = Image::canvas($width, $height, '#FFD500');
     $img->text("MOVIESOWL.COM", $width / 2, $height / 2 - 25,
         function($font) use ($img, $width, $titleFontSize, $height, $titleX, $titleY){
             $font->file('/Users/craig/Desktop/TEST.otf');
             $font->size($titleFontSize);
-            $font->color('#fff');
-            $font->align('center');
-            $font->valign('top');
-        });
-    $img->save($path);
-
-    $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
-    $path = storage_path("app/movie/img$imageid.jpg");
-    $img = Image::canvas($width, $height, '#FB1B75');
-    $img->insert("/Users/craig/Sites/moviesowl-laravel/public/images/owl.png", 'center');
-    $img->save($path);
-
-    $hootFontSize = 30;
-    $imageid = $invID = str_pad($counter++, 3, '0', STR_PAD_LEFT);
-    $path = storage_path("app/movie/img$imageid.jpg");
-    $img = Image::canvas($width, $height, '#FB1B75');
-    $img->text("hoot. hoot. hoot.", $width / 2, $height / 2 - 25,
-        function($font) use ($img, $width, $hootFontSize, $height, $titleX, $titleY){
-            $font->file('/Users/craig/Desktop/TEST.otf');
-            $font->size($hootFontSize);
-            $font->color('#fff');
+            $font->color('#0F1219');
             $font->align('center');
             $font->valign('top');
         });
