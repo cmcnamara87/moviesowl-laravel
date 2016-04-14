@@ -87,8 +87,7 @@ class AddMissingImdbIdsCommand extends Command
             $this->info($movie->title);
             $this->info($movie->title . ' ' .
                 $movie->rotten_tomatoes_id . ' ' .
-                $movie->imdb_id . ' ' .
-                $movie->details->poster);
+                $movie->imdb_id . ' ');
             if ($movie->rotten_tomatoes_id == '' || $movie->rotten_tomatoes_id == 0 || $movie->imdb_id == ''
                 || (isset($movie->details) && $movie->details && strpos($movie->details->poster, 'no_poster') !== false)
             ) {
