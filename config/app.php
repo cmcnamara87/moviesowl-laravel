@@ -149,6 +149,8 @@ return [
         'Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider',
         Spatie\LinkChecker\LinkCheckerServiceProvider::class,
         'Roumen\Sitemap\SitemapServiceProvider',
+        'Maknz\Slack\SlackServiceProvider',
+
     ],
 
     /*
@@ -198,8 +200,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Fractal' => Cyvelnet\Laravel5Fractal\Facades\Fractal::class,
-        'PushNotification' => 'Davibennun\LaravelPushNotification\Facades\PushNotification'
-
+        'PushNotification' => 'Davibennun\LaravelPushNotification\Facades\PushNotification',
+        'Slack' => 'Maknz\Slack\Facades\Slack'
     ],
 
 ];

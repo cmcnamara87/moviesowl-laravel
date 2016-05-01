@@ -10,6 +10,7 @@ namespace MoviesOwl\RottenTomatoes;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Maknz\Slack\Facades\Slack;
 use MoviesOwl\OMDB\OMDBApi;
 use MoviesOwl\Posters\PosterService;
 use MoviesOwl\TMDB\TMDBApi;
@@ -74,6 +75,7 @@ class RottenTomatoesService
 
         if(!$rtMovie) {
             Log::info('No RT movie found, adding default');
+            Slack::send('Failed to find Rotten Tomatoes ' . $movie->title);
             return $movie;
         }
         Log::info("-- Rotten Tomatoes Match " . $rtMovie->title);
@@ -193,9 +195,11 @@ class RottenTomatoesService
             $results = $searchResults->results;
         }
         else{
+            Slack::send('Failed to find IMDB ' . $rtMovie->title);
             return null;
         }
         if(count($results) == 0){
+            Slack::send('Failed to find IMDB ' . $rtMovie->title);
             return null;
         }
 
