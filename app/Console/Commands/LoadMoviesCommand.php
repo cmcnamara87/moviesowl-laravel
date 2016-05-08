@@ -73,7 +73,7 @@ class LoadMoviesCommand extends Command
 
         $day = $this->argument('day');
 
-        $this->info('Deleting sessions that are 2 weeks only');
+        $this->info('Deleting sessions that are 2 weeks old');
         $before = Carbon::today()->subDays(9);
         Showing::where('start_time', ' <= ', $before->toDateTimeString())
             ->delete();
