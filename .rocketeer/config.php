@@ -38,7 +38,7 @@ return [
     // and store them locally
     'connections'      => [
         'production' => [
-            'host'      => '128.199.104.251',
+            'host'      => '128.199.129.215',
             'username'  => 'craig',
             'password'  => '',
 //            'key'       => '/Users/craig/.ssh/id_rsa',

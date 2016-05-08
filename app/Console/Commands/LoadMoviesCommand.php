@@ -80,7 +80,7 @@ class LoadMoviesCommand extends Command
 
         $this->info('Syncing sessions');
         // Load sessions
-//        $this->eventCinemasUpdater->update($day);
+        $this->eventCinemasUpdater->update($day);
         $this->googleMoviesUpdater->update($day);
         $this->fandangoUpdater->update($day);
         $this->movieDetailsUpdater->updateAll($day);
