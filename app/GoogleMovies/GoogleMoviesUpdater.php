@@ -56,14 +56,7 @@ class GoogleMoviesUpdater {
     public function updateForCity($city, $country, $timezone, $day)
     {
         $startingAfter = Carbon::$day($timezone);
-        Log::info('Clearing ' . $city);
         $endOfDay = $startingAfter->copy()->endOfDay();
-        Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-            ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->whereHas('cinema', function($query) use($city) {
-                $query->where('city', $city);
-            })
-            ->delete();
 
         // 0 = today, 1 = tomorrow
         if($day == 'today') {
@@ -106,6 +99,13 @@ class GoogleMoviesUpdater {
                 'city' => $city,
                 'country' => $country
             ]);
+            $startingAfter = Carbon::$day($cinema->timezone);
+            Log::info('Clearing ' . $cinema->location . ' ' . $startingAfter->toDateTimeString());
+            $endOfDay = $startingAfter->copy()->endOfDay();
+            Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+                ->where('start_time', '<=', $endOfDay->toDateTimeString())
+                ->where('cinema_id', $cinema->id)
+                ->delete();
 
             foreach ($cinemaElement->find('.movie') as $movieElement) {
                 $title = html_entity_decode($movieElement->find('.name a', 0)->plaintext);

@@ -61,6 +61,8 @@ class LoadMoviesCommand extends Command
         $this->fandangoUpdater = $fandangoUpdater;
     }
 
+    // https://tickets.fandango.com/transaction/ticketing/seatpicker/Default.aspx?tid=AACWX&t=18:30&best_availability=1&mid=185792&quantity=1&action=availability&sdate=05/10/2016&_=1462927932673
+
     /**
      * Execute the console command.
      *
