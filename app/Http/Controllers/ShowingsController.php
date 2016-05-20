@@ -77,8 +77,10 @@ class ShowingsController extends Controller {
         }
         $movie = $showing->movie;
         $cinema = $showing->cinema;
-        $this->seatingService->updateSeating($showing);
-        return view('showings.show', compact('showing', 'movie', 'cinema', 'day'));
+//		if($showing->seats_updated_at->lte(Carbon::now()->subMinutes(15))) {
+			$this->seatingService->updateSeating($showing);
+//		}
+		return view('showings.show', compact('showing', 'movie', 'cinema', 'day'));
 	}
 
 	/**

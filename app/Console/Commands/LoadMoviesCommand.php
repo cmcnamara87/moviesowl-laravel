@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
+use MoviesOwl\Cinema21\Cinema21Updater;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\EventCinemas\EventCinemasUpdater;
 use MoviesOwl\Fandango\FandangoUpdater;
@@ -29,6 +30,7 @@ class LoadMoviesCommand extends Command
     private $googleMoviesUpdater;
     private $movieDetailsUpdater;
     private $fandangoUpdater;
+    private $cinema21Updater;
 
     /**
      * The name and signature of the console command.
@@ -52,13 +54,15 @@ class LoadMoviesCommand extends Command
     public function __construct(EventCinemasUpdater $eventCinemasUpdater,
                                 GoogleMoviesUpdater $googleMoviesUpdater,
                                 MovieDetailsUpdater $movieDetailsUpdater,
-                                FandangoUpdater $fandangoUpdater)
+                                FandangoUpdater $fandangoUpdater,
+                                Cinema21Updater $cinema21Updater)
     {
         parent::__construct();
         $this->eventCinemasUpdater = $eventCinemasUpdater;
         $this->googleMoviesUpdater = $googleMoviesUpdater;
         $this->movieDetailsUpdater = $movieDetailsUpdater;
         $this->fandangoUpdater = $fandangoUpdater;
+        $this->cinema21Updater = $cinema21Updater;
     }
 
     // https://tickets.fandango.com/transaction/ticketing/seatpicker/Default.aspx?tid=AACWX&t=18:30&best_availability=1&mid=185792&quantity=1&action=availability&sdate=05/10/2016&_=1462927932673
@@ -85,6 +89,7 @@ class LoadMoviesCommand extends Command
         $this->eventCinemasUpdater->update($day);
         $this->googleMoviesUpdater->update($day);
         $this->fandangoUpdater->update($day);
+        $this->cinema21Updater->update($day);
         $this->movieDetailsUpdater->updateAll($day);
     }
 }

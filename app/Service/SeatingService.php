@@ -8,6 +8,7 @@
 
 namespace MoviesOwl\Service;
 use Carbon\Carbon;
+use MoviesOwl\Cinema21\Cinema21Api;
 use MoviesOwl\EventCinemas\EventCinemasApi;
 use MoviesOwl\Repos\Showing\ShowingRepository;
 use MoviesOwl\Showings\Showing;
@@ -16,10 +17,12 @@ class SeatingService {
 
     protected $eventCinemasApi;
     protected $repo;
+    protected  $cinema21Api;
 
-    function __construct(EventCinemasApi $eventCinemasApi, ShowingRepository $repo)
+    function __construct(EventCinemasApi $eventCinemasApi, ShowingRepository $repo, Cinema21Api $cinema21Api)
     {
         $this->eventCinemasApi = $eventCinemasApi;
+        $this->cinema21Api = $cinema21Api;
         $this->repo = $repo;
     }
 
@@ -27,14 +30,25 @@ class SeatingService {
      * @param Showing $showing
      */
     public function updateSeating(Showing $showing) {
-        if(!$showing->{"event_session_id"}) {
+        if(!$showing->{"event_session_id"} && !$showing->data) {
             return;
         }
-//        if(!$this->isSeatingDataOld($showing))  {
-//            return;
-//        }
-        $showing->seats = $this->eventCinemasApi->getSeats($showing->{"event_session_id"});
-        $this->repo->store($showing);
+        if($showing->{"event_session_id"}){
+            if ($showing->start_time->lte(Carbon::now($showing->cinema->timezone)->subMinutes(15))) {
+                return;
+            }
+            $showing->seats = $this->eventCinemasApi->getSeats($showing->{"event_session_id"});
+            $this->repo->store($showing);
+        }
+
+        if($showing->data) {
+            if ($showing->start_time->lte(Carbon::now($showing->cinema->timezone)->addMinutes(15))) {
+                return;
+            }
+            $showing->seats =  $this->cinema21Api->getSeats($showing);
+            $this->repo->store($showing);
+        }
+
     }
 
 

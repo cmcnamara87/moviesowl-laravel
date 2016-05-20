@@ -17,7 +17,8 @@
     "davibennun/laravel-push-notification": "dev-laravel5",
     "spatie/laravel-link-checker": "^1.0",
     "roumen/sitemap": "2.6.*",
-    "maknz/slack": "^1.7"
+    "maknz/slack": "^1.7",
+    "guzzlehttp/guzzle": "^6.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

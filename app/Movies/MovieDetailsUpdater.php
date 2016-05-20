@@ -50,7 +50,7 @@ class MovieDetailsUpdater {
     }
 
     public function updateAll($day) {
-        Log::info('Updating Movie Details For Today');
+        Log::info('Updating Movie Details For ' . $day);
         $startOfDay = Carbon::$day();
         $endOfDay = $startOfDay->copy()->endOfDay();
 

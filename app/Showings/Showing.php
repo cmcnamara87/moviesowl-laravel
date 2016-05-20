@@ -18,7 +18,7 @@ class Showing extends \Eloquent {
 
 	// Don't forget to fill this array
 	protected $fillable = ["movie_id", "cinema_id", "start_time",
-        "type", "screen_type", "showing_type", "tickets_url", "event_session_id"];
+        "type", "screen_type", "showing_type", "tickets_url", "event_session_id", "data"];
 
 
     public function movie()
