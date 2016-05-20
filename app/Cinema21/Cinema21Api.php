@@ -60,7 +60,6 @@ class Cinema21Api
             'form_params' => $formParams
         ]);
         $seatData = json_decode((string)$response->getBody());
-
         $seats = [];
         foreach($seatData as $seatDataRow) {
             $row = [];
@@ -103,8 +102,7 @@ class Cinema21Api
 //                return $result;
 //            }, []);
 //        }, $rows);
-
-        return $seats;
+        return array_reverse($seats);
 
     }
 }
