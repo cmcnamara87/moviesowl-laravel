@@ -22,7 +22,7 @@ class CinemaMoviesController extends Controller
      */
     public function index(Cinema $cinema)
     {
-        $startingAfter = $this->getStartingAfter();
+        $startingAfter = $this->getStartingAfter($cinema);
         $endOfDay = $startingAfter->copy()->endOfDay();
 
         $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
@@ -61,14 +61,19 @@ class CinemaMoviesController extends Controller
         /**
      * @return static
      */
-    public function getStartingAfter()
+    public function getStartingAfter($cinema)
     {
+//        $now = Carbon::now("Asia/Jakarta")->timestamp;
+//        return Carbon::now("Asia/Jakarta");
         // TODO: extract this
         $now = Input::get('starting_after');
         if (!$now) {
             // by default show movies that have just started up to 20 minutes ago.
             return Carbon::now()->subMinutes(20);
         }
-        return Carbon::createFromTimestamp($now);
+        // 1463752375
+        // 1463752408
+//        dd($now);
+        return Carbon::createFromTimestamp($now, $cinema->timezone);
     }
 }

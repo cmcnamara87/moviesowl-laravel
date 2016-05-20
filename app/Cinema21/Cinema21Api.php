@@ -55,7 +55,7 @@ class Cinema21Api
         $formParams['request_type'] = "get_layout";
         $formParams['member_id'] = "WA149047141461358224053571205";
         $formParams['msisdn'] = "62818604913";
-        $formParams['sid'] = "58ffe0e0b602729909acd1a3d0ccece9";
+        $formParams['sid'] = "3e67844be24e8bc38d2c21cce19abdae";
         $response = $this->client->request('POST', 'ios-service/service.php', [
             'form_params' => $formParams
         ]);
@@ -70,13 +70,13 @@ class Cinema21Api
                 array_pop($spaces);
             }
             array_pop($spaces);
-
             foreach($seatDataRow->status as $index => $status) {
                 if(in_array($index + 1, $spaces)) {
                     $row[] = "spacer";
                 };
                 $mapping = [
                     "1" => "available",
+                    "2" => "available",
                     "5" => "taken",
                     "6" => "spacer"
                 ];
