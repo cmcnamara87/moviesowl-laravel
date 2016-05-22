@@ -64,11 +64,16 @@ class Cinema21Api
         foreach($seatData as $seatDataRow) {
             $row = [];
             // get the spaces
-            $spaces = explode(";", $seatDataRow->arr_stairs);
-            if(end($spaces) === '') {
-                array_pop($spaces);
+            $spacesData = explode(";", $seatDataRow->arr_stairs);
+            $spacesFlag = explode(";", $seatDataRow->arr_stairs_type);
+
+            $spaces = [];
+            foreach($spacesFlag as $index => $flag){
+                if($flag == '1'){
+                    $spaces[] = $spacesData[$index];
+                }
             }
-            array_pop($spaces);
+
             foreach($seatDataRow->status as $index => $status) {
                 if(in_array($index + 1, $spaces)) {
                     $row[] = "spacer";
