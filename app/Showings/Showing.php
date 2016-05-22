@@ -44,6 +44,7 @@ class Showing extends \Eloquent {
                 }
             }
         }
+
         $this->_seats = $seats;
         $this->attributes['seats'] = json_encode($this->_seats);
         $this->attributes['seats_count'] = $seatsCount;
@@ -52,16 +53,15 @@ class Showing extends \Eloquent {
         $this->attributes['percent_full'] = 0;
 
         if($seatsCount > 0) {
-            $takenSeatsCount = array_reduce($seats, function($carry, $seat) {
+            $takenSeatsCount = array_reduce($seats, function ($carry, $seat) {
                 $counts = array_count_values($seat);
-                if(isset($counts['taken'])) {
+                if (isset($counts['taken'])) {
                     return $counts['taken'] + $carry;
                 }
                 return $carry;;
             }, 0);
             $this->attributes['percent_full'] = $takenSeatsCount / $seatsCount * 100;
         }
-
     }
 
 

@@ -17,6 +17,12 @@ class ShowingTransformer extends TransformerAbstract {
 
     public function transform(Showing $showing) {
 
+        if($showing->data) {
+            $data = json_decode($showing->data);
+            $studioId = $data->studio_id;
+        } else {
+            $studioId = '';
+        }
         return [
             'id'                => (int)$showing->id,
             'start_time'        => $showing->start_time->timestamp,
@@ -29,7 +35,8 @@ class ShowingTransformer extends TransformerAbstract {
             "seats_count"       => $showing->seats_count,
             "percent_full"      => $showing->percent_full,
             "seats_updated_at"  => $showing->seats_updated_at->timestamp,
-            "event_session_id"  => $showing->event_session_id
+            "event_session_id"  => $showing->event_session_id,
+            "studio_id"         => $studioId
         ];
     }
 }
