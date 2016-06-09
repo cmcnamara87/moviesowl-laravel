@@ -11,6 +11,20 @@
     <div id="main">
         @yield('content')
     </div>
+
+    <!-- Ad -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Moviesowl -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-8017658135166310"
+         data-ad-slot="5578445116"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <!-- /Ad -->
+    
     <div class="app-banner" style="margin-top:50px;">
         <h3>Get the MoviesOwl App</h3>
         <p>Movies Times, Reviews and Tickets in your Pocket</p>
