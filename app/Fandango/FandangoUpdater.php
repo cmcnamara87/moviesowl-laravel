@@ -26,7 +26,7 @@ class FandangoUpdater
         // lon: -71.060093
         // http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-01-30&numDays=2&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=
         Log::info('Updating Fandango');
-        
+
         $this->getMovies('Boston', 'America/New_York', 42.359968, -71.060093, $day);
         $this->getMovies('New York', 'America/New_York', 40.6643, -73.9385, $day);
         $this->getMovies('Los Angeles', 'America/Los_Angeles', 34.0194, -118.4108, $day);
@@ -38,8 +38,6 @@ class FandangoUpdater
         $this->getMovies('San Diego', 'America/Los_Angeles', 32.8153, -117.1350, $day);
         $this->getMovies('Dallas', 'America/Chicago', 32.7757, -96.7967, $day);
         $this->getMovies('San Jose', 'America/Los_Angeles', 37.2969, -121.8193, $day);
-
-        // top 100 cities
         $this->getMovies("Austin", "America/Chicago", 30.3072, -97.756, $day);
         $this->getMovies("Jacksonville", "America/New_York", 30.337, -81.6613, $day);
         $this->getMovies("San Francisco", "America/Los_Angeles", 37.7751, -122.4193, $day);
@@ -152,7 +150,8 @@ class FandangoUpdater
             })
             ->delete();
 
-        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" . $tomorrow->toDateString() . "&numDays=1&lat=$lat&lng=$lon&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
+        $radius = 160;
+        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" . $tomorrow->toDateString() . "&numDays=1&lat=$lat&lng=$lon&radius=$radius&units=km&api_key=" . env('FANDANGO_API_KEY');
         $result = json_decode(@file_get_contents($url));
         $showings = [];
         foreach ($result as $movieElement) {
