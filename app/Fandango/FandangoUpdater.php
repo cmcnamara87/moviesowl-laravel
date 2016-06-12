@@ -26,30 +26,18 @@ class FandangoUpdater
         // lon: -71.060093
         // http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-01-30&numDays=2&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=
         Log::info('Updating Fandango');
-
-        // boston mas
+        
         $this->getMovies('Boston', 'America/New_York', 42.359968, -71.060093, $day);
-        // new york, new york
         $this->getMovies('New York', 'America/New_York', 40.6643, -73.9385, $day);
-        // LA, california
         $this->getMovies('Los Angeles', 'America/Los_Angeles', 34.0194, -118.4108, $day);
-        // chicago
         $this->getMovies('Chicago', 'America/Chicago', 41.8376, -87.6818, $day);
-        // houston texas
         $this->getMovies('Houston', 'America/Chicago', 29.7805, -95.3863, $day);
-        // Philadelphia
         $this->getMovies('Philadelphia', 'America/New_York', 40.0094, -75.1333, $day);
-        // phoenix arizona
         $this->getMovies('Phoenix', 'America/Denver', 33.5722, -112.0880, $day);
-        // san antonio texas
         $this->getMovies('San Antonio', 'America/Chicago', 29.4724, -98.5251, $day);
-        // san diego
         $this->getMovies('San Diego', 'America/Los_Angeles', 32.8153, -117.1350, $day);
-        // dallas texas
         $this->getMovies('Dallas', 'America/Chicago', 32.7757, -96.7967, $day);
-        // san jose california
         $this->getMovies('San Jose', 'America/Los_Angeles', 37.2969, -121.8193, $day);
-
 
         // top 100 cities
         $this->getMovies("Austin", "America/Chicago", 30.3072, -97.756, $day);
@@ -62,20 +50,20 @@ class FandangoUpdater
         $this->getMovies("Detroit", "America/New_York", 42.383, -83.1022, $day);
         $this->getMovies("El Paso", "America/Denver", 31.8484, -106.427, $day);
         $this->getMovies("Seattle", "America/Los_Angeles", 47.6205, -122.3509, $day);
-//        $this->getMovies("Denver", "Colorado", 39.7618, -104.8806, $day);
-//        $this->getMovies("Washington", "District of Columbia", 38.9041, -77.0171, $day);
-//        $this->getMovies("Memphis", "Tennessee", 35.1035, -89.9785, $day);
-//        $this->getMovies("Boston", "Massachusetts", 42.332, -71.0202, $day);
-//        $this->getMovies("Nashville", "Tennessee", 36.1718, -86.785, $day);
-//        $this->getMovies("Baltimore", "Maryland", 39.3002, -76.6105, $day);
-//        $this->getMovies("Oklahoma City", "Oklahoma", 35.4671, -97.5137, $day);
-//        $this->getMovies("Portland", "Oregon", 45.537, -122.65, $day);
-//        $this->getMovies("Las Vegas", "Nevada", 36.2277, -115.264, $day);
-//        $this->getMovies("Louisville", "Kentucky", 38.1781, -85.6667, $day);
-//        $this->getMovies("Milwaukee", "Wisconsin", 43.0633, -87.9667, $day);
-//        $this->getMovies("Albuquerque", "New Mexico", 35.1056, -106.6474, $day);
-//        $this->getMovies("Tucson", "Arizona", 32.1543, -110.8711, $day);
-//        $this->getMovies("Fresno", "California", 36.7827, -119.7945, $day);
+        $this->getMovies("Denver", "America/Denver", 39.7618, -104.8806, $day);
+        $this->getMovies("Washington", "America/New_York", 38.9041, -77.0171, $day);
+        $this->getMovies("Memphis", "America/Chicago", 35.1035, -89.9785, $day);
+        $this->getMovies("Boston", "America/New_York", 42.332, -71.0202, $day);
+        $this->getMovies("Nashville", "America/Chicago", 36.1718, -86.785, $day);
+        $this->getMovies("Baltimore", "America/New_York", 39.3002, -76.6105, $day);
+        $this->getMovies("Oklahoma City", "America/Chicago", 35.4671, -97.5137, $day);
+        $this->getMovies("Portland", "America/Los_Angeles", 45.537, -122.65, $day);
+        $this->getMovies("Las Vegas", "America/Los_Angeles", 36.2277, -115.264, $day);
+        $this->getMovies("Louisville", "America/New_York", 38.1781, -85.6667, $day);
+        $this->getMovies("Milwaukee", "America/Chicago", 43.0633, -87.9667, $day);
+        $this->getMovies("Albuquerque", "America/Denver", 35.1056, -106.6474, $day);
+        $this->getMovies("Tucson", "America/Denver", 32.1543, -110.8711, $day);
+        $this->getMovies("Fresno", "America/Los_Angeles", 36.7827, -119.7945, $day);
 //        $this->getMovies("Sacramento", "California", 38.5666, -121.4686, $day);
 //        $this->getMovies("Long Beach", "California", 33.8091, -118.1553, $day);
 //        $this->getMovies("Kansas City", "Missouri", 39.1252, -94.5511, $day);
