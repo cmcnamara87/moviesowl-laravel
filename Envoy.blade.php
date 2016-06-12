@@ -12,8 +12,12 @@
 
 @task('load')
     cd /var/www/html/moviesowl.com/current
-    php artisan movies:clearall
     php artisan movies:load
+@endtask
+
+@task('homepage')
+    cd /var/www/html/moviesowl.com/current
+    php artisan owl:homepage
 @endtask
 
 @task('tail')
