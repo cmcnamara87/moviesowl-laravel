@@ -113,6 +113,31 @@
                                 </div>
                             </div>
                         </div>
+
+                            <h4 style="margin-bottom: 30px;font-weight:200" >Pick a Time</h4>
+                            @foreach ($showingsByTime as $timeOfDay => $showings)
+                                @if (count($showings))
+                                    <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
+                                        @if($timeOfDay == 'evening')
+                                            <i class="fa fa-moon-o"></i>
+                                        @elseif($timeOfDay == 'morning')
+                                            <i class="fa fa-coffee"></i>
+                                        @else
+                                            <i class="fa fa-sun-o"></i>
+                                        @endif
+                                        {{ $timeOfDay }} Sessions
+                                    </h5>
+{{--                                    @foreach (array_chunk($showings, 2) as $showingsRow)--}}
+                                        {{--<div class="row">--}}
+                                    @foreach ($showings as $showing)
+                                        {{--<div class="col-sm-6">--}}
+                                            @include('includes.showing')
+                                        {{--</div>--}}
+                                    @endforeach
+                                        {{--</div>--}}
+                                    {{--@endforeach--}}
+                                @endif
+                            @endforeach
                     </div>
                     <div class="col-sm-4">
                         <dl>
@@ -164,32 +189,6 @@
 
                     </div>
                 </div>
-
-
-                <h4 style="margin-bottom: 30px;font-weight:200" >Pick a Time</h4>
-                @foreach ($showingsByTime as $timeOfDay => $showings)
-                    @if (count($showings))
-                        <h5 class="text-capitalize text-muted" style="font-weight:200;margin-bottom: 16px;">
-                            @if($timeOfDay == 'evening')
-                                <i class="fa fa-moon-o"></i>
-                            @elseif($timeOfDay == 'morning')
-                                <i class="fa fa-coffee"></i>
-                            @else
-                                <i class="fa fa-sun-o"></i>
-                            @endif
-                            {{ $timeOfDay }} Sessions
-                        </h5>
-                        @foreach (array_chunk($showings, 2) as $showingsRow)
-                            <div class="row">
-                                @foreach ($showingsRow as $showing)
-                                    <div class="col-sm-6">
-                                        @include('includes.showing')
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endforeach
-                    @endif
-                @endforeach
             </div>
 
         </div>
