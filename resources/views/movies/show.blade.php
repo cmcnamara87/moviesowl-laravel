@@ -60,6 +60,21 @@
                                 {{ $movie->details->cast }}
                             </dd>
                         </dl>
+
+                        <!-- ad MoviesOwl Movie Deatils -->
+                        <div style="margin-top:40px;">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- MoviesOwl Movie Deatils -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-8017658135166310"
+                                 data-ad-slot="9723953112"
+                                 data-ad-format="auto"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                        <!-- /ad MoviesOwl Movie Deatils -->
                     </div>
                 </div>
 
