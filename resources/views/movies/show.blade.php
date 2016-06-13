@@ -12,6 +12,34 @@
             </ol>
         </div>
     </div>
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "item": {
+      "@id": "{{ url("cities/{$cityName}/{$day}") }}",
+      "name": "{{ ucfirst($cityName) }}"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "item": {
+      "@id": "{{ url("{$cinema->slug}/{$day}") }}",
+      "name": "{{ ucfirst($day) }}"
+    }
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "item": {
+      "@id": "{{ URL::current() }}",
+      "name": "{{ $movie->title }}"
+    }
+  }]
+}
+</script>
 
     <div class="container" style="margin-top:30px;">
         <div class="row">
