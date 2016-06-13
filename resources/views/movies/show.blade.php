@@ -27,6 +27,18 @@
                         <p style="margin-bottom: 40px;">
                             {{ $movie->details->synopsis }}
                         </p>
+
+                        @foreach ($cinemasByCity as $city => $cinemas)
+                            <h5>{{ $city }}</h5>
+                            <ul>
+                                @foreach ($cinemas as $cinema)
+                                    <li>
+                                        <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
+                                            {{ $movie->title}} at {{ $cinema->location }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endforeach
                     </div>
                     <div class="col-sm-4">
                         <dl>
@@ -77,18 +89,6 @@
                         <!-- /ad MoviesOwl Movie Deatils -->
                     </div>
                 </div>
-
-                @foreach ($cinemasByCity as $city => $cinemas)
-                    <h5>{{ $city }}</h5>
-                    <ul>
-                        @foreach ($cinemas as $cinema)
-                            <li>
-                                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
-                                    {{ $movie->title}} at {{ $cinema->location }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endforeach
 
                 {{--<a class="btn btn-default" href="{{ URL::to('movies/' . $movie->id) }}">Find other cinemas</a>--}}
 
