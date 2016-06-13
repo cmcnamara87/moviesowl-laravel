@@ -95,6 +95,8 @@ class Sitemap extends Command
 //        // the cinema movies
         $showings = DB::table('showings')->select('cinema_id', 'movie_id')
             ->where('start_time', '>=', \Carbon\Carbon::today('America/New_York')->toDateTimeString())
+            ->where('start_time', '<=', \Carbon\Carbon::tomorrow('Australia/Sydney')->endOfDay()->toDateTimeString())
+            ->orderBy('cinema_id', 'asc')
             ->distinct()
             ->get();
 
@@ -115,7 +117,10 @@ class Sitemap extends Command
             $movieSlug = $moviesData[$showing->movie_id];
             Log::info("Sitemap Cinema Movie - {{$cinemaSlug}} {{$movieSlug}}");
             $day = 'today';
-            $sitemap->add(url("{$cinemaSlug}/{$movieSlug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
+//            foreach($days as $day) {
+                $sitemap->add(url("{$cinemaSlug}/{$movieSlug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
+//            }
+
         }
 
         // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
