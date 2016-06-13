@@ -93,26 +93,29 @@ class Sitemap extends Command
         }
 
 //        // the cinema movies
-        // only show todays movies, showing more makes it crash
-        $movieIds =  Showing::where('start_time', '>=', \Carbon\Carbon::today())
-            ->distinct()->lists('movie_id');
-        $movies = Movie::whereIn('id', $movieIds)->with('details')->get();
+        $showings = DB::table('showings')->select('cinema_id', 'movie_id')
+            ->where('start_time', '>=', \Carbon\Carbon::today('America/New_York')->toDateTimeString())
+            ->distinct()
+            ->get();
 
-        foreach($movies as $movie) {
-//            // find the cinemas
-            $cinemaIds = DB::table('showings')->select('cinema_id')
-                ->where('movie_id', $movie->id)
-                ->distinct()
-                ->lists('cinema_id');
-//
-            $cinemas = Cinema::whereIn('id', $cinemaIds)->get();
-            foreach($cinemas as $cinema) {
-                Log::info("Sitemap - Cinema Movie {{$cinema->location}} {{$movie->title}}");
-//                foreach($days as $day) {
-                // hard coded for today, because doing x3 seems to cause the page to crash
-                $day = 'today';
-                $sitemap->add(url("{$cinema->slug}/{$movie->slug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
+        $movieIds = array_reduce($showings, function($result, $showing) {
+            if(in_array($showing->movie_id, $result)) {
+                return $result;
             }
+            $result[] = $showing->movie_id;
+            return $result;
+        }, []);
+
+        $moviesData = Movie::whereIn('id', $movieIds)->orderBy('title', 'asc')->lists('slug', 'id');
+        $cinemasData = $cinemas->pluck('slug', 'id')->all();
+
+        foreach($showings as $showing) {
+            // cinema id, movie id
+            $cinemaSlug = $cinemasData[$showing->cinema_id];
+            $movieSlug = $moviesData[$showing->movie_id];
+            Log::info("Sitemap Cinema Movie - {{$cinemaSlug}} {{$movieSlug}}");
+            $day = 'today';
+            $sitemap->add(url("{$cinemaSlug}/{$movieSlug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
         }
 
         // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
