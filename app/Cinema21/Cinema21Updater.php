@@ -36,7 +36,7 @@ class Cinema21Updater
             Log::info('Cinema: ' . $cinemaData->cinema_name);
 
             $cinema = Cinema::firstOrCreate([
-                'location' => $cinemaData->cinema_name,
+                'location' => ucwords(strtolower($cinemaData->cinema_name)),
                 'timezone' => 'Asia/Jakarta',
                 'city' => 'Jakarta',
                 'country' => 'Indonesia'
@@ -63,7 +63,7 @@ class Cinema21Updater
 
             foreach($moviesData as $movieData){
                 $movie = Movie::firstOrCreate([
-                    'title' => $movieData->title
+                    'title' => ucwords(strtolower($movieData->title))
                 ]);
 
                 foreach ($movieData->date_show as $dateIndex => $date){
