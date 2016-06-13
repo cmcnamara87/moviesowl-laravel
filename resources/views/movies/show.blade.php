@@ -74,6 +74,7 @@
                         </dl>
 
                         <!-- ad MoviesOwl Movie Deatils -->
+                        @if($cinema->country == "United States")
                         <div style="margin-top:40px;">
                             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- MoviesOwl Movie Deatils -->
@@ -86,6 +87,7 @@
                                 (adsbygoogle = window.adsbygoogle || []).push({});
                             </script>
                         </div>
+                        @endif
                         <!-- /ad MoviesOwl Movie Deatils -->
                     </div>
                 </div>
