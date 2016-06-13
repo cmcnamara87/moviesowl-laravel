@@ -32,7 +32,7 @@
     </div>
 
     <!-- MoviesOwl Showing ad -->
-    @if($cinema->country == "United States")
+    @if($cinema->country != "Australia")
     <div style="margin-top:30px;">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- MoviesOwl Showing -->
