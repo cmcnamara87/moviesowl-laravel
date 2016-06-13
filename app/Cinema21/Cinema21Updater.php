@@ -92,28 +92,28 @@ class Cinema21Updater
             sleep(1);
         }
 
-
-        Log::info('Updating Movie Details For Indonesia for today');
-        $startOfDay = Carbon::today();
-        $endOfDay = $startOfDay->copy()->endOfDay();
-
-        $indonesianCinemaIds = Cinema::where('city', 'Jakarta')->lists('id');
-
-        $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
-            ->whereIn('cinema_id', $indonesianCinemaIds)
-            ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
-
-        $movies = Movie::whereIn('id', $movieIds)->get();
-
-        foreach($movies as $movie) {
-            // map movie title, to a real movie
-
-            // get details from rotten tomatoes
-            $this->rottenTomatoesService->updateMovie($movie);
-
-            sleep(1);
-        }
-
+//
+//        Log::info('Updating Movie Details For Indonesia for today');
+//        $startOfDay = Carbon::today();
+//        $endOfDay = $startOfDay->copy()->endOfDay();
+//
+//        $indonesianCinemaIds = Cinema::where('city', 'Jakarta')->lists('id');
+//
+//        $movieIds =  Showing::where('start_time', '>=', $startOfDay->toDateTimeString())
+//            ->whereIn('cinema_id', $indonesianCinemaIds)
+//            ->where('start_time', '<=', $endOfDay->toDateTimeString())->distinct()->lists('movie_id');
+//
+//        $movies = Movie::whereIn('id', $movieIds)->get();
+//
+//        foreach($movies as $movie) {
+//            // map movie title, to a real movie
+//
+//            // get details from rotten tomatoes
+//            $this->rottenTomatoesService->updateMovie($movie);
+//
+//            sleep(1);
+//        }
+//
 
     }
 }

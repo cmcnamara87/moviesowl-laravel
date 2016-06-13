@@ -29,6 +29,12 @@ class CountriesController extends Controller
                 if($cinema->country == 'Indonesia') {
                     $slug = 'indonesia';
                 }
+                if($cinema->country == 'United Kingdom') {
+                    $slug = 'united-kingdom';
+                }
+                if($cinema->country == 'Ireland') {
+                    $slug = 'ireland';
+                }
                 $carry[$cinema->country] = [
                     "name" => $cinema->country,
                     "slug" => $slug,

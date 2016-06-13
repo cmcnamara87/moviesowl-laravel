@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 use MoviesOwl\Cinema21\Cinema21Updater;
 use MoviesOwl\Cinemas\Cinema;
+use MoviesOwl\Cineworld\CineworldUpdater;
 use MoviesOwl\EventCinemas\EventCinemasUpdater;
 use MoviesOwl\Fandango\FandangoUpdater;
 use MoviesOwl\GoogleMovies\GoogleMoviesUpdater;
@@ -31,6 +32,7 @@ class LoadMoviesCommand extends Command
     private $movieDetailsUpdater;
     private $fandangoUpdater;
     private $cinema21Updater;
+    private $cineworldUpdater;
 
     /**
      * The name and signature of the console command.
@@ -49,13 +51,20 @@ class LoadMoviesCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @param EventCinemaUpdater $eventCinemaUpdater
+     * @param EventCinemasUpdater $eventCinemasUpdater
+     * @param GoogleMoviesUpdater $googleMoviesUpdater
+     * @param MovieDetailsUpdater $movieDetailsUpdater
+     * @param FandangoUpdater $fandangoUpdater
+     * @param Cinema21Updater $cinema21Updater
+     * @param CineworldUpdater $cineworldUpdater
+     * @internal param EventCinemaUpdater $eventCinemaUpdater
      */
     public function __construct(EventCinemasUpdater $eventCinemasUpdater,
                                 GoogleMoviesUpdater $googleMoviesUpdater,
                                 MovieDetailsUpdater $movieDetailsUpdater,
                                 FandangoUpdater $fandangoUpdater,
-                                Cinema21Updater $cinema21Updater)
+                                Cinema21Updater $cinema21Updater,
+                                CineworldUpdater $cineworldUpdater)
     {
         parent::__construct();
         $this->eventCinemasUpdater = $eventCinemasUpdater;
@@ -63,6 +72,7 @@ class LoadMoviesCommand extends Command
         $this->movieDetailsUpdater = $movieDetailsUpdater;
         $this->fandangoUpdater = $fandangoUpdater;
         $this->cinema21Updater = $cinema21Updater;
+        $this->cineworldUpdater = $cineworldUpdater;
     }
 
     // https://tickets.fandango.com/transaction/ticketing/seatpicker/Default.aspx?tid=AACWX&t=18:30&best_availability=1&mid=185792&quantity=1&action=availability&sdate=05/10/2016&_=1462927932673
@@ -90,6 +100,7 @@ class LoadMoviesCommand extends Command
         $this->googleMoviesUpdater->update($day);
         $this->fandangoUpdater->update($day);
         $this->cinema21Updater->update($day);
+        $this->cineworldUpdater->update($day);
         $this->movieDetailsUpdater->updateAll($day);
     }
 }
