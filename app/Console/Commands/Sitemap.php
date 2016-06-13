@@ -5,6 +5,7 @@ namespace MoviesOwl\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use MoviesOwl\Cinemas\Cinema;
 use MoviesOwl\Movies\Movie;
@@ -43,6 +44,8 @@ class Sitemap extends Command
      */
     public function handle()
     {
+        Log::useFiles('php://stdout');
+
         // create new sitemap object
         $sitemap = App::make("sitemap");
 
@@ -76,12 +79,14 @@ class Sitemap extends Command
             return $carry;
         }, []);
         foreach($cities as $city) {
+            Log::info("Sitemap City - {{$city}}");
             foreach($days as $day) {
                 $sitemap->add(url("cities/{$city}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
             }
         }
         // the cinemas
         foreach($cinemas as $cinema) {
+            Log::info("Sitemap Cinema - {{$cinema->location}}");
             foreach($days as $day) {
                 $sitemap->add(url("{$cinema->slug}/{$day}"), \Carbon\Carbon::today(), '0.9', 'daily');
             }
@@ -102,6 +107,7 @@ class Sitemap extends Command
 //
             $cinemas = Cinema::whereIn('id', $cinemaIds)->get();
             foreach($cinemas as $cinema) {
+                Log::info("Sitemap - Cinema Movie {{$cinema->location}} {{$movie->title}}");
 //                foreach($days as $day) {
                 // hard coded for today, because doing x3 seems to cause the page to crash
                 $day = 'today';
