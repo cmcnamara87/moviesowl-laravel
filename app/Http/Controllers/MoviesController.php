@@ -18,37 +18,37 @@ class MoviesController extends Controller {
     }
 
 
-    public function index() {
-        $startingAfter = Carbon::today();
-        $endOfDay = $startingAfter->copy()->endOfDay();
-
-        $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-            ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->distinct()->lists('movie_id');
-
-        $movies = Movie::whereIn('id', $movieIds)->with(array('details'))->orderBy('tomato_meter', 'desc')->get();
-
-        // group the movies
-        $moviesByRating = array_reduce($movies->all(), function($carry, $movie) {
-            $rating = '';
-            if($movie->tomato_meter > 75) {
-                $rating = 'Great';
-            } else if ($movie->tomato_meter > 50) {
-                $rating = 'Good';
-            } else if ($movie->tomato_meter > 0) {
-                $rating = 'Bad';
-            } else {
-                $rating = 'Unknown';
-            }
-            if(!isset($carry[$rating])) {
-                $carry[$rating] = [];
-            }
-            $carry[$rating][] = $movie;
-            return $carry;
-        }, []);
-
-        return view('movies.index', compact('moviesByRating', 'movies'));
-    }
+//    public function index() {
+//        $startingAfter = Carbon::today();
+//        $endOfDay = $startingAfter->copy()->endOfDay();
+//
+//        $movieIds =  Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+//            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+//            ->distinct()->lists('movie_id');
+//
+//        $movies = Movie::whereIn('id', $movieIds)->with(array('details'))->orderBy('tomato_meter', 'desc')->get();
+//
+//        // group the movies
+//        $moviesByRating = array_reduce($movies->all(), function($carry, $movie) {
+//            $rating = '';
+//            if($movie->tomato_meter > 75) {
+//                $rating = 'Great';
+//            } else if ($movie->tomato_meter > 50) {
+//                $rating = 'Good';
+//            } else if ($movie->tomato_meter > 0) {
+//                $rating = 'Bad';
+//            } else {
+//                $rating = 'Unknown';
+//            }
+//            if(!isset($carry[$rating])) {
+//                $carry[$rating] = [];
+//            }
+//            $carry[$rating][] = $movie;
+//            return $carry;
+//        }, []);
+//
+//        return view('movies.index', compact('moviesByRating', 'movies'));
+//    }
 
     /**
      * Display the specified resource.
@@ -74,6 +74,7 @@ class MoviesController extends Controller {
             ->lists('cinema_id');
 
         $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)->get();
+        $country = $cinemas->first()->country;
         $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
             $cinemaLocation = $cinema->city . ', ' . $cinema->country;
             if(!isset($carry[$cinemaLocation])) {
@@ -84,6 +85,6 @@ class MoviesController extends Controller {
         }, []);
 
 
-        return view('movies.show', compact('movie', 'cinemasByCity', 'cityName', 'day'));
+        return view('movies.show', compact('movie', 'cinemasByCity', 'country', 'cityName', 'day'));
 	}
 }

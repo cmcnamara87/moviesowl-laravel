@@ -27,7 +27,7 @@
     "@type": "ListItem",
     "position": 2,
     "item": {
-      "@id": "{{ url("{$cinema->slug}/{$day}") }}",
+      "@id": "{{ url("cities/{$cityName}/{$day}") }}",
       "name": "{{ ucfirst($day) }}"
     }
   },{
@@ -102,6 +102,7 @@
                         </dl>
 
                         <!-- ad MoviesOwl Movie Details -->
+                        @if($country != 'Australia')
                         <div style="margin-top:40px;">
                             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                             <!-- MoviesOwl Movie Deatils -->
@@ -114,6 +115,7 @@
                                 (adsbygoogle = window.adsbygoogle || []).push({});
                             </script>
                         </div>
+                        @endif
                         <!-- /ad MoviesOwl Movie Details -->
                     </div>
                 </div>
