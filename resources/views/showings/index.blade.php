@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', "{$movie->title} - {$cinema->location} - Movie Times, Reviews and Tickets")
+@section('title', "{$movie->title} - {$cinema->location} - Movie Times " . ucfirst($day) . ", Reviews and Tickets")
 @section('description', "Find Show times and Buy Tickets for {$movie->title} at {$cinema->location}.")
 @section('content')
 
