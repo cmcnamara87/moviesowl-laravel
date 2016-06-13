@@ -102,5 +102,8 @@ class LoadMoviesCommand extends Command
         $this->cinema21Updater->update($day);
         $this->cineworldUpdater->update($day);
         $this->movieDetailsUpdater->updateAll($day);
+
+        $this->call('owl:sitemap');
+
     }
 }
