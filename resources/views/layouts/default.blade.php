@@ -14,7 +14,7 @@
 
     <div class="container" style="margin-top:50px;">
         <!-- Ad -->
-        @if(isset($cinema) && $cinema->country != "Australia")
+{{--        @if(isset($cinema) && $cinema->country != "Australia")--}}
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- Moviesowl -->
         <ins class="adsbygoogle"
@@ -25,7 +25,7 @@
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        @endif
+        {{--@endif--}}
         <!-- /Ad -->
     </div>
     

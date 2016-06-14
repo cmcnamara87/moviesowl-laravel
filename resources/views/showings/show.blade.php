@@ -32,7 +32,7 @@
     </div>
 
     <!-- MoviesOwl Showing ad -->
-    @if($cinema->country != "Australia")
+{{--    @if($cinema->country != "Australia")--}}
     <div style="margin-top:30px;">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- MoviesOwl Showing -->
@@ -45,7 +45,7 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
     </div>
-    @endif
+    {{--@endif--}}
     <!-- /MoviesOwl Showing ad -->
 
     <div class="container">
