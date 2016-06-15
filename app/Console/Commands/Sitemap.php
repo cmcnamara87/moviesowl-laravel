@@ -94,7 +94,7 @@ class Sitemap extends Command
 
 //        // the cinema movies
         $showings = DB::table('showings')->select('cinema_id', 'movie_id')
-            ->where('start_time', '>=', \Carbon\Carbon::today('America/New_York')->toDateTimeString())
+            ->where('start_time', '>=', \Carbon\Carbon::today('America/Los_Angeles')->toDateTimeString())
             ->where('start_time', '<=', \Carbon\Carbon::tomorrow('Australia/Sydney')->endOfDay()->toDateTimeString())
             ->orderBy('cinema_id', 'asc')
             ->distinct()
