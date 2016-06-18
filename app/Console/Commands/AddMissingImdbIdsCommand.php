@@ -181,7 +181,7 @@ class AddMissingImdbIdsCommand extends Command
         if ($widePosterAsset) {
             $movieDetails->wide_poster = $widePosterAsset;
         }
-        if ($trailerUrl) {
+        if (isset($trailerUrl)) {
             $movieDetails->trailer = $trailerUrl;
         }
         $movieDetails->save();
