@@ -24,16 +24,10 @@
             </ol>
         </div>
     </div>
-
-    <div class="container">
-        <ol class="breadcrumb">
-
-        </ol>
-    </div>
-
+    
     <!-- MoviesOwl Showing ad -->
 {{--    @if($cinema->country != "Australia")--}}
-    <div style="margin-top:30px;">
+    <div class="container" style="margin-top:30px;">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- MoviesOwl Showing -->
         <ins class="adsbygoogle"
