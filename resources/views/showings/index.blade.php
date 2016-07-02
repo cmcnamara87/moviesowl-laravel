@@ -9,7 +9,8 @@
   "@context": "http://schema.org/",
   "@type": "Review",
   "datePublished": "{{ \Carbon\Carbon::now()->toIso8601String() }}",
-  "description": "@if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif",
+  "description": "@if ($movie->tomato_meter > 75) {{ ucwords(strtolower($movie->title)) }} is a great movie! Critically loved and definitely worth checking out while its still at the cinemas! @elseif ($movie->tomato_meter > 59) {{ ucwords(strtolower($movie->title)) }} looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else Although {{ ucwords(strtolower($movie->title)) }} is getting generally unfavorable reviews, you should check it out if its something you are interested in. @endif",
+  "reviewBody": "@if ($movie->tomato_meter > 75) {{ ucwords(strtolower($movie->title)) }} is a great movie! Loved by critics and audiences alike, definitely worth checking out while its still at the cinemas! @elseif ($movie->tomato_meter > 59) {{ ucwords(strtolower($movie->title)) }} looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else Although {{ ucwords(strtolower($movie->title)) }} is getting generally unfavorable reviews, you should check it out if its something you are interested in. @endif",
   "itemReviewed": {
     "@type": "Movie",
     "name": "{{ $movie->title }}",
@@ -115,7 +116,7 @@
                                     <div class="media-body">
                                         <h5>Our Verdict</h5>
                                         <p>
-                                            @if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif
+                                            @if ($movie->tomato_meter > 75) {{ ucwords(strtolower($movie->title)) }} is a great movie! Loved by critics and audiences alike, definitely worth checking out while its still at the cinemas! @elseif ($movie->tomato_meter > 59) {{ ucwords(strtolower($movie->title)) }} looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else Although {{ ucwords(strtolower($movie->title)) }} is getting generally unfavorable reviews, you should check it out if its something you are interested in. @endif
                                         </p>
                                     </div>
                                 </div>
