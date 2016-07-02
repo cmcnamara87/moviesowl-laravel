@@ -3,6 +3,7 @@
 @section('description', "Find Show times and Buy Tickets for {$movie->title} at {$cinema->location}.")
 @section('content')
 
+@if ($movie->tomato_meter > 0)
 <script type="application/ld+json">
 {
   "@context": "http://schema.org/",
@@ -26,6 +27,7 @@
   }
 }
 </script>
+@endif
 
 
     @include('includes.movie-jumbotron')
@@ -98,6 +100,7 @@
                             {{ $movie->details->synopsis }}
                         </p>
 
+                        @if($movie->tomato_meter > 0)
                         <div class="panel panel-default" style="margin-bottom: 40px;">
                             <div class="panel-body">
                                 <div class="media">
@@ -105,14 +108,15 @@
                                         <img class="owl" src="{{ URL::asset('images/owl.png') }}" alt="" style="margin-top:10px;margin-left:10px;margin-right: 10px;"/>
                                     </div>
                                     <div class="media-body">
-                                        <h5>Our Review</h5>
+                                        <h5>Our Verdict</h5>
                                         <p>
-                                            @if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif
+                                            @if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                             <h4 style="margin-bottom: 30px;font-weight:200" >Pick a Time</h4>
                             @foreach ($showingsByTime as $timeOfDay => $showings)
