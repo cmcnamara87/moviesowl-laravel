@@ -16,7 +16,8 @@
     "name": "{{ $movie->title }}",
     "image": "http://moviesowl.com/{{ $movie->details->poster }}",
     "sameAs": "http://imdb.com/title/{{ $movie->imdb_id }}",
-    "director": "{{ $movie->details->director }}"
+    "director": "{{ $movie->details->director }}",
+    "dateCreated": "{{ $movie->created_at->toIso8601String() }}",
   },
   "reviewRating": {
     "@type": "Rating",
