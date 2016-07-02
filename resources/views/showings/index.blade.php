@@ -8,8 +8,8 @@
 {
   "@context": "http://schema.org/",
   "@type": "Review",
-  "datePublished": "{{ \Carbon\Carbon::now()->toIso8601String() }}"
-  "description": "@if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif"
+  "datePublished": "{{ \Carbon\Carbon::now()->toIso8601String() }}",
+  "description": "@if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif",
   "itemReviewed": {
     "@type": "Movie",
     "name": "{{ $movie->title }}",
