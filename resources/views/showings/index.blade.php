@@ -23,7 +23,8 @@
     "bestRating": "100"
   },
   "author": {
-    "name": "MoviesOwl"
+    "name": "Craig McNamara",
+    "sameAs": "https://twitter.com/cmcnamara87"
   },
   "publisher": {
     "@type": "Organization",
