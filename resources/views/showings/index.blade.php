@@ -8,9 +8,14 @@
 {
   "@context": "http://schema.org/",
   "@type": "Review",
+  "datePublished": "{{ \Carbon\Carbon::now()->toIso8601String() }}"
+  "description": "@if ($movie->tomato_meter > 75) A great movie! Critically loved. Definitely worth checking out! @elseif ($movie->tomato_meter > 59) Looks pretty good, but has mixed reviews, check it out if it looks like something you'd like. @else It's not high art, but you might still enjoy it. @endif"
   "itemReviewed": {
     "@type": "Movie",
-    "name": "{{ $movie->title }}"
+    "name": "{{ $movie->title }}",
+    "image": "http://moviesowl.com/{{ $movie->details->poster }}",
+    "sameAs": "http://imdb.com/title/{{ $movie->imdb_id }},
+    "director": "{{ $movie->details->director }}"
   },
   "reviewRating": {
     "@type": "Rating",
@@ -18,7 +23,6 @@
     "bestRating": "100"
   },
   "author": {
-    "@type": "Organisation",
     "name": "MoviesOwl"
   },
   "publisher": {
