@@ -14,7 +14,7 @@
     "@type": "Movie",
     "name": "{{ $movie->title }}",
     "image": "http://moviesowl.com/{{ $movie->details->poster }}",
-    "sameAs": "http://imdb.com/title/{{ $movie->imdb_id }},
+    "sameAs": "http://imdb.com/title/{{ $movie->imdb_id }}",
     "director": "{{ $movie->details->director }}"
   },
   "reviewRating": {
