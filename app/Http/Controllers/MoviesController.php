@@ -8,7 +8,8 @@ use Carbon\Carbon;
 use MoviesOwl\Repos\Movie\MovieRepository;
 use MoviesOwl\Showings\Showing;
 
-class MoviesController extends Controller {
+class MoviesController extends Controller
+{
 
     protected $movieRepo;
 
@@ -58,8 +59,8 @@ class MoviesController extends Controller {
      * @return Response
      * @internal param int $id
      */
-	public function show(Movie $movie, $cityName, $day = 'today')
-	{
+    public function show(Movie $movie, $cityName, $day = 'today')
+    {
         // todo: fix this hack, add a city table
         // currently i just get the first cinema, and get its timezone
         $cinema = Cinema::where('city', $cityName)->first();
@@ -68,23 +69,37 @@ class MoviesController extends Controller {
         // get all the cinemas that are showing this movie today
         $startingAfter = Carbon::$day($timezone);
         $endOfDay = $startingAfter->copy()->endOfDay();
-        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-            ->where('start_time', '<=', $endOfDay->toDateTimeString())
-            ->where('movie_id', $movie->id)
-            ->lists('cinema_id');
+//        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+//            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+//            ->where('movie_id', $movie->id)
+//            ->lists('cinema_id');
+//
+//        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)
+//            ->whereHas()->get();
 
-        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)->get();
-        $country = $cinemas->first()->country;
-        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
-            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
-            if(!isset($carry[$cinemaLocation])) {
-                $carry[$cinemaLocation] = [];
-            }
-            $carry[$cinemaLocation][] = $cinema;
-            return $carry;
-        }, []);
+        $cinemas = Cinema::whereHas('showings', function ($q) use ($movie, $startingAfter, $endOfDay) {
+            $q->where('movie_id', $movie->id);
+            $q->where('start_time', '>=', $startingAfter);
+            $q->where('start_time', '<=', $endOfDay);
+        })->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
+            $q->where('movie_id', $movie->id);
+            $q->where('start_time', '>=', $startingAfter);
+            $q->where('start_time', '<=', $endOfDay);
+        }))->get();
+
+//        $country = $cinemas->first()->country;
+//        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
+//            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
+//            if(!isset($carry[$cinemaLocation])) {
+//                $carry[$cinemaLocation] = [];
+//            }
+//            $carry[$cinemaLocation][] = $cinema;
+//            return $carry;
+//        }, []);
 
 
-        return view('movies.show', compact('movie', 'cinemasByCity', 'country', 'cityName', 'day'));
-	}
+
+
+        return view('movies.show', compact('movie', 'cinemas', 'country', 'cityName', 'day'));
+    }
 }

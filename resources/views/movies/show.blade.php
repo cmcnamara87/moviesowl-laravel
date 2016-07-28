@@ -44,7 +44,9 @@
     <div class="container" style="margin-top:30px;">
         <div class="row">
             <div class="col-sm-4">
+                @if(isset($movie->details->poster))
                 <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
+                @endif
             </div>
 
             <div class="col-sm-8">
@@ -53,23 +55,33 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <p style="margin-bottom: 40px;">
-                            {{ $movie->details->synopsis }}
+                            @if(isset($movie->details->synopsis))
+                                {{ $movie->details->synopsis }}
+                            @else
+                                No synopsis available.
+                            @endif
                         </p>
 
-                        @foreach ($cinemasByCity as $city => $cinemas)
-                            <h5>{{ $movie->title }} is showing at these {{ $cityName }} cinemas:</h5>
-                            <ul>
-                                @foreach ($cinemas as $cinema)
-                                    <li>
-                                        <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
-                                            {{ $cinema->location }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <h5>{{ $movie->title }} is showing at these {{ $cityName }} cinemas:</h5>
+                        <ul class="list-unstyled">
+                        @foreach ($cinemas as $cinema)
+                            <li>
+                                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
+                                    <strong>{{ $cinema->location }}</strong></a>
+                                <p class="text-muted">
+                                    @foreach($cinema->showings as $showing)
+                                        <a href="{{ url("showings/{$showing->id}") }}" class="text-muted">
+                                            {{ $showing->start_time->format('h:i A') }}</a>@if($showing != $cinema->showings->last()),@endif
+                                    @endforeach
+                                </p>
+
+                            </li>
                         @endforeach
+                        </ul>
                     </div>
                     <div class="col-sm-4">
                         <dl>
+                            @if(isset($movie->details))
                             <dt class="text-muted" style="font-weight: normal;font-size:12px;text-transform: uppercase">
                                 Rotten Tomatoes
                             </dt>
@@ -99,6 +111,7 @@
                             <dd>
                                 {{ $movie->details->cast }}
                             </dd>
+                            @endif
                         </dl>
 
                         <!-- ad MoviesOwl Movie Details -->
