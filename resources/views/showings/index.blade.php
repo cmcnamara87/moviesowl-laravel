@@ -149,6 +149,13 @@
                                     {{--@endforeach--}}
                                 @endif
                             @endforeach
+
+                            @if(!count($showingsByTime))
+                            <p class="text-muted">There are no sessions for {{ $movie->title  }} at {{ $cinema->location }} today.</p>
+                            @endif
+                            <a class="btn btn-primary" href="{{ url("movies/{$movie->slug}/{$cinema->city}/{$day}") }}">Find <strong>{{ $movie->title }}</strong> at other cinemas</a>
+
+
                     </div>
                     <div class="col-sm-4">
                         <dl>
