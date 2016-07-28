@@ -78,7 +78,7 @@ class PosterService
     }
 
     public function getAssetPath($name) {
-        return "images/posters/" . snake_case(str_replace('/', '', $name)) . ".jpg";
+        return "images/posters/" . snake_case(str_replace('/', '_', $name)) . ".jpg";
     }
 
     public function savePosterFromUrl ($url, $name) {

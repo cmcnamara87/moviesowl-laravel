@@ -117,7 +117,7 @@ class AddMissingImdbIdsCommand extends Command
             $this->info('Already has IMDb');
         } else {
             $this->info('Checking IMDB');
-            $imdbId = $this->getImdbId($movie->title);
+            $imdbId = $this->getImdbId($this->getCleanMovieTitle($movie));
             if (!$imdbId) {
                 $movieTitle = $this->ask('No matches, enter movie title', false);
                 if ($movieTitle) {
@@ -249,7 +249,9 @@ class AddMissingImdbIdsCommand extends Command
         }
 
 
-        $rottenTomatoesId = $this->getRottenTomatoesId($movie->title);
+        $movieTitle = $this->getCleanMovieTitle($movie);
+
+        $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);
         if (!$rottenTomatoesId) {
             $movieTitle = $this->ask('No matches, enter movie title', false);
             if ($movieTitle) {
@@ -262,5 +264,17 @@ class AddMissingImdbIdsCommand extends Command
         $movie->rotten_tomatoes_id = $rottenTomatoesId;
         $movie->save();
         return $this->rottenTomatoesService->updateMovie($movie);
+    }
+
+    /**
+     * @param $movie
+     * @return mixed
+     */
+    private function getCleanMovieTitle($movie)
+    {
+        $movieTitle = preg_replace("/[^A-Za-z0-9 ]/", '', $movie->title);
+        $movieTitle = str_replace('3D', '', $movieTitle);
+        $movieTitle = str_replace('2D', '', $movieTitle);
+        return $movieTitle;
     }
 }
