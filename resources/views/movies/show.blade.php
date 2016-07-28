@@ -57,12 +57,13 @@
                         </p>
 
                         @foreach ($cinemasByCity as $city => $cinemas)
-                            <h5>{{ $city }}</h5>
+                            <h5>{{ $city }} cinemas showing {{ $movie->title }}</h5>
+                            <p class="text-muted">{{ $movie->title }} is showing at the following cinemas:</p>
                             <ul>
                                 @foreach ($cinemas as $cinema)
                                     <li>
                                         <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
-                                            {{ $movie->title}} at {{ $cinema->location }}</a>
+                                            {{ $cinema->location }}</a>
                                     </li>
                                 @endforeach
                             </ul>
