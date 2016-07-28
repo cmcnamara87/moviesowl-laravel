@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-sm-8">
-                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $movie->title }}</h3>
+                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $movie->title }} in {{ $cityName }}</h3>
 
                 <div class="row">
                     <div class="col-sm-8">
@@ -57,8 +57,7 @@
                         </p>
 
                         @foreach ($cinemasByCity as $city => $cinemas)
-                            <h5>{{ $city }} cinemas showing {{ $movie->title }}</h5>
-                            <p class="text-muted">{{ $movie->title }} is showing at the following cinemas:</p>
+                            <h5>{{ $movie->title }} is showing at these {{ $cityName }} cinemas:</h5>
                             <ul>
                                 @foreach ($cinemas as $cinema)
                                     <li>
