@@ -77,7 +77,7 @@ class MoviesController extends Controller
 //        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)
 //            ->whereHas()->get();
 
-        $cinemas = Cinema::whereIn('id', $cinemaIds)->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
+        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
             $q->where('movie_id', $movie->id);
             $q->where('start_time', '>=', $startingAfter);
             $q->where('start_time', '<=', $endOfDay);
