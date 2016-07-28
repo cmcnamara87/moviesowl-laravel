@@ -69,19 +69,15 @@ class MoviesController extends Controller
         // get all the cinemas that are showing this movie today
         $startingAfter = Carbon::$day($timezone);
         $endOfDay = $startingAfter->copy()->endOfDay();
-//        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
-//            ->where('start_time', '<=', $endOfDay->toDateTimeString())
-//            ->where('movie_id', $movie->id)
-//            ->lists('cinema_id');
+        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+            ->where('start_time', '<=', $endOfDay->toDateTimeString())
+            ->where('movie_id', $movie->id)
+            ->lists('cinema_id');
 //
 //        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)
 //            ->whereHas()->get();
 
-        $cinemas = Cinema::whereHas('showings', function ($q) use ($movie, $startingAfter, $endOfDay) {
-            $q->where('movie_id', $movie->id);
-            $q->where('start_time', '>=', $startingAfter);
-            $q->where('start_time', '<=', $endOfDay);
-        })->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
+        $cinemas = Cinema::whereIn('id', $cinemaIds)->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
             $q->where('movie_id', $movie->id);
             $q->where('start_time', '>=', $startingAfter);
             $q->where('start_time', '<=', $endOfDay);
