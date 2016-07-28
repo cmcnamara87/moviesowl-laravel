@@ -45,8 +45,12 @@ class RottenTomatoesApi {
      * @param $title
      * @return mixed
      */
-    public function removePunctuation($title) {
-        $title = trim(preg_replace("/[^.a-zA-Z 0-9]+/", " ", $title));
-        return $title;
+    public function removePunctuation($movieTitle) {
+        $movieTitle = preg_replace("/[^A-Za-z0-9 ]/", '', $movieTitle);
+        $movieTitle = str_replace('3D', '', $movieTitle);
+        $movieTitle = str_replace('2D', '', $movieTitle);
+        $movieTitle = str_replace('Babes in Arms', '', $movieTitle);
+        $movieTitle = str_replace('and', '', $movieTitle);
+        return $movieTitle;
     }
 }

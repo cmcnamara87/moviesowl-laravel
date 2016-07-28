@@ -12,7 +12,7 @@ namespace MoviesOwl\OMDB;
 class OMDBApi {
 
     public function getMovies($title) {
-        $encodedTitle = urlencode($title);
+        $encodedTitle = urlencode($this->getCleanMovieTitle($title));
         $url = "http://www.omdbapi.com/?s=$encodedTitle&r=json&type=movie";
         return json_decode(@file_get_contents($url));
     }
@@ -25,5 +25,19 @@ class OMDBApi {
     public function getMovieByImdbId($id) {
         $url = "http://www.omdbapi.com/?i={$id}&plot=full&r=json";
         return json_decode(@file_get_contents($url));
+    }
+
+    /**
+     * @param $movie
+     * @return mixed
+     */
+    private function getCleanMovieTitle($movieTitle)
+    {
+        $movieTitle = preg_replace("/[^A-Za-z0-9 ]/", '', $movieTitle);
+        $movieTitle = str_replace('3D', '', $movieTitle);
+        $movieTitle = str_replace('2D', '', $movieTitle);
+        $movieTitle = str_replace('Babes in Arms', '', $movieTitle);
+        $movieTitle = str_replace('and', '', $movieTitle);
+        return $movieTitle;
     }
 }

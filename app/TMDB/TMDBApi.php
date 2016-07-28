@@ -24,7 +24,22 @@ class TMDBApi
     }
 
     public function searchTmdbMovieByTitle($title){
+        $title = $this->getCleanMovieTitle($title);
         $url = "http://api.themoviedb.org/3/search/movie?query={$title}&api_key=05629307398e2d06e10c5f0b99fd7b38";
         return json_decode(@file_get_contents($url));
+    }
+
+    /**
+     * @param $movie
+     * @return mixed
+     */
+    private function getCleanMovieTitle($movieTitle)
+    {
+        $movieTitle = preg_replace("/[^A-Za-z0-9 ]/", '', $movieTitle);
+        $movieTitle = str_replace('3D', '', $movieTitle);
+        $movieTitle = str_replace('2D', '', $movieTitle);
+        $movieTitle = str_replace('Babes in Arms', '', $movieTitle);
+        $movieTitle = str_replace('and', '', $movieTitle);
+        return $movieTitle;
     }
 }
