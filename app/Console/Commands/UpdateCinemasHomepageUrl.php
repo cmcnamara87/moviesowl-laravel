@@ -41,7 +41,7 @@ class UpdateCinemasHomepageUrl extends Command
     public function handle()
     {
         Log::useFiles('php://stdout');
-        $cinemas = Cinema::all();
+        $cinemas = Cinema::where('homepage_url', '=', '')->get();
         foreach ($cinemas as $cinema) {
             // search for cinema
             Log::info('Searching for cinema: ' . $cinema->location);
