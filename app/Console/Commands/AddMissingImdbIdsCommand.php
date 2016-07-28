@@ -275,6 +275,8 @@ class AddMissingImdbIdsCommand extends Command
         $movieTitle = preg_replace("/[^A-Za-z0-9 ]/", '', $movie->title);
         $movieTitle = str_replace('3D', '', $movieTitle);
         $movieTitle = str_replace('2D', '', $movieTitle);
+        $movieTitle = str_replace('Babes in Arms', '', $movieTitle);
+        $movieTitle = str_replace('and', '', $movieTitle);
         return $movieTitle;
     }
 }
