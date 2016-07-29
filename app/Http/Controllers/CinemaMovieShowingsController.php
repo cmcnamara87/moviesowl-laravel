@@ -76,11 +76,12 @@ class CinemaMovieShowingsController extends Controller {
             'afternoon' => [],
             'evening' => []
         ]);
+        $showingCount = $showings->count();
 //        foreach($showings as $showing) {
 //            // FIXME: might spam event...need to investigate this
 //            $this->seatingService->updateSeating($showing);
 //        }
-        return view('showings.index', compact('cinema', 'movie', 'showingsByTime', 'day'));
+        return view('showings.index', compact('cinema', 'movie', 'showingsByTime', 'day', 'showingCount'));
 	}
 
 	/**
