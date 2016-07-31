@@ -3,6 +3,8 @@
 @section('description', "Find Show times and Buy Tickets for {$movie->title} in {$cityName}.")
 @section('content')
 
+    @include('includes.movie-jumbotron')
+
     <div class="breadcrumb-wrapper" >
         <div class="container">
             <ol class="breadcrumb">
@@ -50,20 +52,15 @@
             </div>
 
             <div class="col-sm-8">
-                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $movie->title }} in {{ $cityName }}</h3>
+                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $cityName }}</h3>
 
                 <div class="row">
                     <div class="col-sm-8">
-                        <p style="margin-bottom: 40px;">
-                            @if(isset($movie->details->synopsis))
-                                {{ $movie->details->synopsis }}
-                            @else
-                                No synopsis available.
-                            @endif
-                        </p>
-
-                        <h5>{{ $movie->title }} is showing at these {{ $cityName }} cinemas:</h5>
                         <ul class="list-unstyled">
+                            @if(!count($cinemas))
+                           <p><strong>No sessions at any cinema {{ $day }}. </strong></p>
+
+                            @endif
                         @foreach ($cinemas as $cinema)
                             <li>
                                 <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
@@ -78,6 +75,16 @@
                             </li>
                         @endforeach
                         </ul>
+
+                        <div style="margin-top:20px;padding-top:20px;border-top:1px solid #ddd">
+                            <p style="margin-bottom: 40px;">
+                                @if(isset($movie->details->synopsis))
+                                    {{ $movie->details->synopsis }}
+                                @else
+                                    No synopsis available.
+                                @endif
+                            </p>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <dl>
