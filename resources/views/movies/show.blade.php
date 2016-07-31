@@ -76,7 +76,7 @@
                         @endforeach
                         </ul>
 
-                        <div style="margin-top:20px;padding-top:20px;border-top:1px solid #ddd">
+                        <div style="margin-top:30px;padding-top:30px;border-top:1px solid #ddd">
                             <p style="margin-bottom: 40px;">
                                 @if(isset($movie->details->synopsis))
                                     {{ $movie->details->synopsis }}

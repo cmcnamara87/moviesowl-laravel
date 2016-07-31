@@ -135,14 +135,13 @@
                         @endforeach
 
                         @if(!$showingCount)
-                            <p class="text-muted">There are no sessions for {{ $movie->title  }}
-                                at {{ $cinema->location }} today.</p>
+                            <p><strong>No sessions for {{ $day }}.</strong></p>
                         @endif
                         <a href="{{ url("movies/{$movie->slug}/{$cinema->city}/{$day}") }}">Find
                             <strong>{{ $movie->title }}</strong> in {{ $cinema->city }}</a>
 
                         <!-- details -->
-                        <div style="margin-top:20px;border-top:1px solid #ddd;padding-top:30px">
+                        <div style="margin-top:30px;border-top:1px solid #ddd;padding-top:40px">
                             @if($movie->details->trailer)
                                 <div class="videoWrapper" style="margin-bottom: 20px;">
                                     <!-- Copy & Pasted from YouTube -->
