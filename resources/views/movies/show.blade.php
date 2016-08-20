@@ -63,11 +63,11 @@
                             @endif
                         @foreach ($cinemas as $cinema)
                             <li>
-                                <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
+                                <a href="{{ URL::to("{$cinema->slug}/{$day}") }}">
                                     <strong>{{ $cinema->location }}</strong></a>
                                 <p class="text-muted">
                                     @foreach($cinema->showings as $showing)
-                                        <a href="{{ url("showings/{$showing->id}") }}" class="text-muted">
+                                        <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}" class="text-muted">
                                             {{ $showing->start_time->format('h:i A') }}</a>@if($showing != $cinema->showings->last()),@endif
                                     @endforeach
                                 </p>
