@@ -78,41 +78,22 @@ class MoviesController extends Controller
             ->where('cinema_id', $cinemas->pluck('id')->all())
             ->get();
 
+
         $cinemas = $cinemas->reduce(function ($carry, $cinema) use ($showings) {
-            $filteredShowings = $showings->filter(function ($showing, $key) use ($cinema) {
-                return $showing->cinema_id == $cinema->id ;
-            });
-            if($filteredShowings->count()) {
+            $filteredShowings = [];
+            foreach($showings as $showing) {
+                if($showing->cinema_id == $cinema->id) {
+                    $filteredShowings[] = $showing;
+                }
+            }
+            $filteredShowings = collect($filteredShowings);
+
+            if(count($filteredShowings)) {
                 $cinema->showings = $filteredShowings;
                 $carry[] = $cinema;
             }
             return $carry;
         }, []);
-        
-//
-//        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)
-//            ->whereHas()->get();
-
-//        $cinemas = Cinema::whereIn('id', $cinemaIds)
-//            ->where('city', $cityName)
-//            ->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
-//            $q->where('movie_id', $movie->id);
-//            $q->where('start_time', '>=', $startingAfter);
-//            $q->where('start_time', '<=', $endOfDay);
-//        }))->get();
-
-//        $country = $cinemas->first()->country;
-//        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
-//            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
-//            if(!isset($carry[$cinemaLocation])) {
-//                $carry[$cinemaLocation] = [];
-//            }
-//            $carry[$cinemaLocation][] = $cinema;
-//            return $carry;
-//        }, []);
-
-
-
 
         return view('movies.show', compact('movie', 'cinemas', 'country', 'cityName', 'day'));
     }
