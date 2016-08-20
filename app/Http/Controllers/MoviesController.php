@@ -66,22 +66,40 @@ class MoviesController extends Controller
         $cinema = Cinema::where('city', $cityName)->first();
         $timezone = $cinema->timezone;
 
+        // cinemas in city
+        $cinemas = Cinema::where('city', $cityName)->get();
+
         // get all the cinemas that are showing this movie today
         $startingAfter = Carbon::$day($timezone);
         $endOfDay = $startingAfter->copy()->endOfDay();
-        $cinemaIds = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
+        $showings = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
             ->where('movie_id', $movie->id)
-            ->lists('cinema_id');
+            ->where('cinema_id', $cinemas->pluck('id')->all())
+            ->get();
+
+        $cinemas = $cinemas->reduce(function ($carry, $cinema) use ($showings) {
+            $filteredShowings = $showings->filter(function ($showing, $key) use ($cinema) {
+                return $showing->cinema_id == $cinema->id ;
+            });
+            if($filteredShowings->count()) {
+                $cinema->showings = $filteredShowings;
+                $carry[] = $cinema;
+            }
+            return $carry;
+        }, []);
+        
 //
 //        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)
 //            ->whereHas()->get();
 
-        $cinemas = Cinema::whereIn('id', $cinemaIds)->where('city', $cityName)->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
-            $q->where('movie_id', $movie->id);
-            $q->where('start_time', '>=', $startingAfter);
-            $q->where('start_time', '<=', $endOfDay);
-        }))->get();
+//        $cinemas = Cinema::whereIn('id', $cinemaIds)
+//            ->where('city', $cityName)
+//            ->with(array('showings' => function ($q) use ($movie, $startingAfter, $endOfDay) {
+//            $q->where('movie_id', $movie->id);
+//            $q->where('start_time', '>=', $startingAfter);
+//            $q->where('start_time', '<=', $endOfDay);
+//        }))->get();
 
 //        $country = $cinemas->first()->country;
 //        $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
