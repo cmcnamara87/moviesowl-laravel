@@ -1,6 +1,6 @@
 <div class="jumbotron">
     <div class="container">
-        <h1>{{ $cinema->location }}</h1>
+        <h1><strong>{{ $cinema->location }}</strong></h1>
         <p class="hidden-xs">Movie Times, Reviews and Tickets for {{ \Carbon\Carbon::$day()->format('l jS \\of F Y') }} - {{ $cinema->city }}, {{ $cinema->country }} Cinema</p>
 
         <div class="btn-group" role="group" aria-label="..." style="margin: 10px 0;">

@@ -104,7 +104,7 @@
                 (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
-        
+
         <div class="row">
             <!-- poster -->
             <div class="col-sm-4 hidden-xs">
