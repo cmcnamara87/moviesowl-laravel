@@ -38,6 +38,7 @@ class OMDBApi {
         $movieTitle = str_replace('2D', '', $movieTitle);
         $movieTitle = str_replace('Babes in Arms', '', $movieTitle);
         $movieTitle = str_replace('and', '', $movieTitle);
+        Log::info(' stripped movie title: ' . $movieTitle);
         return $movieTitle;
     }
 }
