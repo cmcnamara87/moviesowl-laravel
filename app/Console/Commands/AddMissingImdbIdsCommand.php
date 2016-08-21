@@ -204,6 +204,13 @@ class AddMissingImdbIdsCommand extends Command
             foreach ($response->movies as $rtMovie) {
                 $this->info(($index + 1) . ' ' . $rtMovie->year . ' ' . $rtMovie->title . ' ' . $rtMovie->id);
                 $index += 1;
+                if($rtMovie->year == '2016' && $rtMovie->title == $movieTitle) {
+                    $rtIndex = $index;
+                }
+            }
+            if ($rtIndex) {
+                // rotten tomatoes id
+                return $response->movies[$rtIndex - 1]->id;
             }
             $rtIndex = $this->ask('Select a movie', false);
             if ($rtIndex) {
@@ -247,8 +254,6 @@ class AddMissingImdbIdsCommand extends Command
         if ($movie->rotten_tomatoes_id) {
             return $this->rottenTomatoesService->updateMovie($movie);
         }
-
-
         $movieTitle = $movie->title;
 
         $rottenTomatoesId = $this->getRottenTomatoesId($movieTitle);

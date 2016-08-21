@@ -9,6 +9,8 @@
 namespace MoviesOwl\OMDB;
 
 
+use Illuminate\Support\Facades\Log;
+
 class OMDBApi {
 
     public function getMovies($title) {
