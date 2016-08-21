@@ -44,6 +44,18 @@
 </script>
 
     <div class="container" style="margin-top:30px;">
+        <div style="margin-bottom: 10px;">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- MoviesOwl Top -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8017658135166310"
+                 data-ad-slot="8080263912"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
         <div class="row">
             <div class="col-sm-4">
                 @if(isset($movie->details->poster))
@@ -52,8 +64,6 @@
             </div>
 
             <div class="col-sm-8">
-                <h3 style="margin-top:0;margin-bottom: 30px;">{{ $cityName }}</h3>
-
                 <div class="row">
                     <div class="col-sm-8">
                         <ul class="list-unstyled">
