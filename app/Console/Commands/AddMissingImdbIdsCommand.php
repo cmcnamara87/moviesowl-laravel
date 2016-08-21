@@ -208,7 +208,7 @@ class AddMissingImdbIdsCommand extends Command
                     $rtIndex = $index;
                 }
             }
-            if ($rtIndex) {
+            if (isset($rtIndex)) {
                 // rotten tomatoes id
                 return $response->movies[$rtIndex - 1]->id;
             }
