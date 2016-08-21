@@ -69,9 +69,8 @@ class AddMissingImdbIdsCommand extends Command
         Log::useFiles('php://stdout');
 
         // Get movie posters for movies that are on today and tomorrow
-        $startOfDay = Carbon::today();
+        $startOfDay = Carbon::yesterday();
         $endOfDay = $startOfDay->copy()->tomorrow()->endOfDay();
-
 
         // Get the movies with the most showings (those are a priority, vs the one off movies)
         $movieIds = DB::table('showings')
@@ -80,10 +79,10 @@ class AddMissingImdbIdsCommand extends Command
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
             ->groupBy('movie_id')
             ->orderBy('total', 'desc')
-            ->lists('movie_id');
+            ->get();
 
         $movies = array_reduce($movieIds, function ($carry, $movieId) {
-            $movie = Movie::find($movieId);
+            $movie = Movie::find($movieId->movie_id);
             $this->info($movie->title);
             $this->info($movie->title . ' ' .
                 $movie->rotten_tomatoes_id . ' ' .
@@ -91,11 +90,12 @@ class AddMissingImdbIdsCommand extends Command
             if ($movie->rotten_tomatoes_id == '' || $movie->rotten_tomatoes_id == 0 || $movie->imdb_id == ''
                 || (isset($movie->details) && $movie->details && strpos($movie->details->poster, 'no_poster') !== false)
             ) {
-                $this->info('- Missing ' . $movie->title);
+                $this->info('- Missing ' . $movie->title . ' ' . $movieId->total);
                 $carry[] = $movie;
             }
             return $carry;
         }, []);
+
 
         // Update each movie
         foreach ($movies as $movie) {
