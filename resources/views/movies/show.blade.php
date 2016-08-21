@@ -44,7 +44,7 @@
 </script>
 
     <div class="container" style="margin-top:30px;">
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 30px;">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- MoviesOwl Top -->
             <ins class="adsbygoogle"

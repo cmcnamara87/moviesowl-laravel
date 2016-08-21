@@ -16,7 +16,7 @@
     </div>
 
     <div class="container">
-        <div style="margin-bottom: 10px;">
+        <div style="margin-top:30px;margin-bottom: 30px;">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- MoviesOwl Top -->
             <ins class="adsbygoogle"
