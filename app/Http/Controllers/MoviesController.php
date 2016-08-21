@@ -61,13 +61,9 @@ class MoviesController extends Controller
      */
     public function show(Movie $movie, $cityName, $day = 'today')
     {
-        // todo: fix this hack, add a city table
-        // currently i just get the first cinema, and get its timezone
-        $cinema = Cinema::where('city', $cityName)->first();
-        $timezone = $cinema->timezone;
-
         // cinemas in city
         $cinemas = Cinema::where('city', $cityName)->get();
+        $timezone = $cinemas->get(0)->timezone;
 
         // get all the cinemas that are showing this movie today
         $startingAfter = Carbon::$day($timezone);
@@ -75,10 +71,10 @@ class MoviesController extends Controller
         $showings = Showing::where('start_time', '>=', $startingAfter->toDateTimeString())
             ->where('start_time', '<=', $endOfDay->toDateTimeString())
             ->where('movie_id', $movie->id)
-            ->where('cinema_id', $cinemas->pluck('id')->all())
+            ->whereIn('cinema_id', $cinemas->pluck('id'))
             ->get();
 
-
+        // put the cinemas and showings together
         $cinemas = $cinemas->reduce(function ($carry, $cinema) use ($showings) {
             $filteredShowings = [];
             foreach($showings as $showing) {
