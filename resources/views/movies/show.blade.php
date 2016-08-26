@@ -57,7 +57,7 @@
             </script>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4 hidden-xs">
                 @if(isset($movie->details->poster))
                 <img src="/{{ $movie->details->poster }}" alt="{{ $movie->title  }}" style="width:100%">
                 @endif
@@ -65,7 +65,8 @@
 
             <div class="col-sm-8">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 col-xs-12">
+                        <h2 style="text-align: left;font-size: 24px;margin-top: 0;font-weight: bold;">Cinemas</h2>
                         <ul class="list-unstyled">
                             @if(!count($cinemas))
                            <p><strong>No sessions at any cinema {{ $day }}. </strong></p>
