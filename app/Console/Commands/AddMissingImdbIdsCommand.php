@@ -208,6 +208,13 @@ class AddMissingImdbIdsCommand extends Command
                     $rtIndex = $index;
                 }
             }
+            if(!isset($rtIndex)) {
+                foreach ($response->movies as $rtMovie) {
+                    if($rtMovie->year == '2015' && $rtMovie->title == $movieTitle) {
+                        $rtIndex = $index;
+                    }
+                }
+            }
             if (isset($rtIndex)) {
                 // rotten tomatoes id
                 return $response->movies[$rtIndex - 1]->id;
@@ -231,11 +238,24 @@ class AddMissingImdbIdsCommand extends Command
         $response = $this->OMDBApi->getMovies($movieTitle);
         if (isset($response->Search) && count($response->Search)) {
             $index = 0;
+
             foreach ($response->Search as $omdbMovie) {
                 $this->info(($index + 1) . ' ' . $omdbMovie->Year . ' ' . $omdbMovie->Title . ' ' . $omdbMovie->imdbID);
                 $index += 1;
+                if ($omdbMovie->Year == '2016' && $omdbMovie->Title == $movieTitle) {
+                    $movieIndex = $index;
+                }
             }
-            $movieIndex = $this->ask('Select a movie', false);
+            if(!isset($rtIndex)) {
+                foreach ($response->movies as $rtMovie) {
+                    if ($omdbMovie->Year == '2015' && $omdbMovie->Title == $movieTitle) {
+                        $movieIndex = $index;
+                    }
+                }
+            }
+            if(!isset($movieIndex)) {
+                $movieIndex = $this->ask('Select a movie', false);
+            }
             if ($movieIndex) {
                 // imdb id
                 return $response->Search[$movieIndex - 1]->imdbID;
