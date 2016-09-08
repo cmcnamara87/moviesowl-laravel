@@ -179,5 +179,6 @@
             });
         });
 
+        mixpanel.track("Viewed movie");
     </script>
 @stop

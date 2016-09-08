@@ -280,5 +280,6 @@
             });
         });
 
+        mixpanel.track("Viewed movie + cinema session times");
     </script>
 @stop

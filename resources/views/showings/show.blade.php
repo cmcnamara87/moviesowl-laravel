@@ -114,5 +114,8 @@
         </div>
     </div>
 
+    <script>
+        mixpanel.track("Viewed session");
+    </script>
 
 @stop
