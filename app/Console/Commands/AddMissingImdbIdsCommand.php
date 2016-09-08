@@ -247,7 +247,7 @@ class AddMissingImdbIdsCommand extends Command
                 }
             }
             if(!isset($rtIndex)) {
-                foreach ($response->movies as $rtMovie) {
+                foreach ($response->Search as $omdbMovie) {
                     if ($omdbMovie->Year == '2015' && $omdbMovie->Title == $movieTitle) {
                         $movieIndex = $index;
                     }
