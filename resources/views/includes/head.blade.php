@@ -3,6 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>@yield('title', 'MoviesOwl')</title>
+@if (trim($__env->yieldContent('description')))
+<meta name="description" content="@yield('description')">
+@endif
 
 <!-- load bootstrap from a cdn -->
 {{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">--}}

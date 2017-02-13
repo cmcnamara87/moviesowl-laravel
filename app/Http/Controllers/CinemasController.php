@@ -32,7 +32,7 @@ class CinemasController extends Controller {
 
         // lets group it
         $cinemasByCity = array_reduce($cinemas->all(), function($carry, $cinema) {
-            $cinemaLocation = $cinema->city . ', ' . $cinema->country;
+            $cinemaLocation = $cinema->city;
             if(!isset($carry[$cinemaLocation])) {
                 $carry[$cinemaLocation] = [];
             }

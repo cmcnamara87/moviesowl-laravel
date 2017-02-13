@@ -41,7 +41,9 @@ Route::resource('cinemas.movies', 'CinemaMovieController');
 Route::resource('cinemas.movies.showings', 'CinemaMovieShowingsController');
 Route::resource('showings', 'ShowingsController');
 Route::resource('push', 'PushController');
+Route::resource('cities', 'CitiesController');
 
 Route::get('/', 'CinemasController@index');
+Route::get('/cities/{cityName}/{day?}', 'CitiesController@show');
 Route::get('/{cinemas}/{day?}', 'CinemasController@show');
 Route::get('/{cinemas}/{movies}/{day?}', 'CinemaMovieShowingsController@index');

@@ -17,10 +17,7 @@ use MoviesOwl\Movies\Movie;
 
 class FandangoUpdater {
 
-    protected $apiKey = "x7frsgawevzrvyc6hwzwhcrr";
-
     public function update() {
-
         // boston lat lon
         // lat: 42.359968
         // lon: -71.060093
@@ -31,7 +28,7 @@ class FandangoUpdater {
 
     public function getMovies() {
         Log::info('Get sessions');
-        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-01-31&numDays=1&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=x7frsgawevzrvyc6hwzwhcrr";
+        $url = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-01-31&numDays=1&lat=42.359968&lng=-71.060093&radius=20&units=km&api_key=" . env('FANDANGO_API_KEY');
         $result = json_decode(@file_get_contents($url));
         Log::info($result);
         foreach ($result as $movieElement) {
@@ -81,7 +78,6 @@ class FandangoUpdater {
         foreach($showingsChunks as $chunk) {
             DB::table('showings')->insert($chunk);
         }
-
     }
 
 

@@ -1,14 +1,14 @@
 @extends('layouts.default')
 @section('title', $movie->title . ' at ' .
- $showing->start_time->toDateTimeString() . ' at ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
-@section('canonical_url', URL::to('showings/' . $showing->id))
+ $showing->start_time->format('l jS \\of F Y h:i: A') . ' - ' .  $cinema->location . ' - Movie Times, Reviews and Tickets')
+@section('description', 'Book tickets for ' . $showing->start_time->format('l jS \\of F Y h:i: A') . ' ' . $movie->title . ' at ' .$cinema->location)
 @section('content')
 
     @include('includes.movie-jumbotron')
 
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ URL::to('cinemas/') }}">{{ $cinema->city }}</a></li>
+            <li><a href="{{ url("cities/{$cinema->city}") }}">{{ $cinema->city }}</a></li>
             <li><a href="{{ URL::to("{$cinema->slug}/{$day}") }}">{{ $cinema->location }}</a></li>
             <li>
                 <a href="{{ URL::to("{$cinema->slug}/{$movie->slug}/{$day}") }}">
@@ -50,7 +50,7 @@
                         <div style="margin-bottom: 30px;">
                             <a class="btn btn-lg btn-primary" target="_blank"
                                href="@if(strlen($showing->tickets_url)) {{ $showing->tickets_url }} @else {{ $showing->cinema->homepage_url }} @endif"
-                               onclick="ga('send', 'event', 'button', 'buy-tickets', '{{ $cinema->location }}', '{{ $movie->title }}');">
+                               onclick="ga('send', 'event', 'button', 'buy_tickets');">
                                 Buy Tickets <i class="fa fa-external-link"></i>
                             </a>
                         </div>
